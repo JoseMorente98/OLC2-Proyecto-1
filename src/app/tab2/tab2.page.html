@@ -4,6 +4,16 @@
       Tab 2
     </ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment (ionChange)="segmentChanged($event)" value="Error">
+      <ion-segment-button value="Error" >
+        <ion-label>Friends</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Tabla">
+        <ion-label>Enemies</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">

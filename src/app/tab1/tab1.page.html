@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Organización de Lenguajes y Compiladores 2
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,72 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Organización de Lenguajes y Compiladores 2</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Entrada</ion-card-title>
+            <ion-card-subtitle>Editor de Texto</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <ngx-codemirror #codemirror
+              [options]="codeMirrorOptions"
+              [(ngModel)]="obj"
+              (ngModelChange)="setEditorContent($event)">
+            </ngx-codemirror>
+          </ion-card-content>
+          <ion-button expand="block" fill="outline">
+            <ion-icon slot="start" name="language-outline"></ion-icon>
+            Traducir
+          </ion-button>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Salida</ion-card-title>
+            <ion-card-subtitle>Consola de Traducción</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <ngx-codemirror #codemirror
+              [options]="codeMirrorOptions"
+              [(ngModel)]="obj"
+              (ngModelChange)="setEditorContent($event)">
+            </ngx-codemirror>
+          </ion-card-content>
+
+          <ion-button expand="block" fill="outline">
+            <ion-icon slot="start" name="play-outline"></ion-icon>
+            Ejecutar
+          </ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    
+  </ion-grid>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Salida</ion-card-title>
+        <ion-card-subtitle>Consola de Ejecución</ion-card-subtitle>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ngx-codemirror #codemirror
+          [options]="codeMirrorOptions"
+          [(ngModel)]="obj"
+          (ngModelChange)="setEditorContent($event)">
+        </ngx-codemirror>
+      </ion-card-content>
+    </ion-card>
+
+  
+  
+  
 </ion-content>
