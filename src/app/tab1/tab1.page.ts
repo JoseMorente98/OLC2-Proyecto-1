@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LexicoControlador } from 'src/jmorente/controlador/lexico.controlador';
 
 @Component({
   selector: 'app-tab1',
@@ -17,6 +18,13 @@ export class Tab1Page {
     matchBrackets: true,
     lint: true
   };
+  strEntrada:string;
+
   constructor() {}
+
+
+  analizar() {
+    LexicoControlador.getInstancia().ejecutarAnalisis(this.strEntrada);
+  }
 
 }

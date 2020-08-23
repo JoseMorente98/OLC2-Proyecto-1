@@ -25,11 +25,11 @@
           <ion-card-content>
             <ngx-codemirror #codemirror
               [options]="codeMirrorOptions"
-              [(ngModel)]="obj"
+              [(ngModel)]="strEntrada"
               (ngModelChange)="setEditorContent($event)">
             </ngx-codemirror>
           </ion-card-content>
-          <ion-button expand="block" fill="outline">
+          <ion-button expand="block" fill="outline" (click)='analizar()'>
             <ion-icon slot="start" name="language-outline"></ion-icon>
             Traducir
           </ion-button>
