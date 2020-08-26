@@ -1,5 +1,5 @@
 import { TokenControlador } from './token.controlador';
-declare var parser: any;
+//declare var parser: any;
 //var analizadorLexico = require('../analizador/lexico.analizador');
 //const parser = require('../gramatica/gramatica.js');
 import * as parser from '../gramatica/gramatica';
@@ -21,6 +21,7 @@ export class LexicoControlador {
     ejecutarAnalisis(strEntrada:string) {
         let columna = 0;
         let fila = 0;
+        console.clear()
         //var symbols = fs.readFileSync('./jison/lexico.jison', 'utf8');
         //var parser = new JisonLex(symbols);
         let ast = parser.parse(strEntrada);

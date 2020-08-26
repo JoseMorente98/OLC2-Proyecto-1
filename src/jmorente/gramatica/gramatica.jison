@@ -19,6 +19,7 @@ string  (\"[^"]*\")
 "-"                     return '-'
 "+"                     return '+'
 ";"                     return ';'
+":"                     return ':'
 ","                     return ','
 
 "<"                     return '<'
@@ -37,6 +38,7 @@ string  (\"[^"]*\")
 "{"                     return '{'
 "}"                     return '}'
 "let"                   return 'LET'
+"var"                   return 'VAR'
 "const"                 return 'CONST'
 "if"                    return 'IF'
 "else"                  return 'ELSE'
@@ -48,6 +50,7 @@ string  (\"[^"]*\")
 "break"                 return 'BREAK'
 "return"                return 'RETURN'
 "function"              return 'FUNCTION'
+"string"                return 'PR_STRING'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'ID';
 <<EOF>>               return 'EOF';
@@ -67,5 +70,30 @@ string  (\"[^"]*\")
 %%
 
 Init    
-    : 'BREAK' EOF 
+    : INSTRUCCIONES EOF 
+    {
+        return $1;
+    } 
+;
+
+INSTRUCCIONES
+    : INSTRUCCIONES INSTRUCCION{
+        $1.push($2);
+        $$ = $1;
+    }
+    | INSTRUCCION{
+        $$ = [$1];
+    }
+;
+
+INSTRUCCION
+    : DECLARACION {
+        $$ = $1;
+    }
+;
+
+DECLARACION 
+    : 'VAR' ID ':' 'PR_STRING' '=' STRING ';'{
+        $$ = $1;
+    }
 ;
