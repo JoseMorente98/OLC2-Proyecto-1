@@ -51,6 +51,8 @@ string  (\"[^"]*\")
 "return"                return 'RETURN'
 "function"              return 'FUNCTION'
 "string"                return 'PR_STRING'
+"number"                return 'PR_NUMBER'
+"boolean"                return 'PR_BOOLEAN'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'ID';
 <<EOF>>               return 'EOF';
@@ -93,7 +95,22 @@ INSTRUCCION
 ;
 
 DECLARACION 
-    : 'VAR' ID ':' 'PR_STRING' '=' STRING ';'{
+    : 'VAR' ID ':' TIPO '=' STRING ';'{
+        $$ = $1;
+    }
+;
+
+TIPO
+    : 'PR_STRING'
+    {
+        $$ = $1;
+    }
+    | 'PR_NUMBER'
+    { 
+        $$ = $1;
+    }
+    | 'PR_BOOLEAN'
+    { 
         $$ = $1;
     }
 ;
