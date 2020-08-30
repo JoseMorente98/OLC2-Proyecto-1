@@ -23,7 +23,7 @@ string  (\"[^"]*\")
 ";"                     return ';'
 ":"                     return ':'
 ","                     return ','
-","                     return '.'
+"."                     return '.'
 
 "<"                     return '<'
 ">"                     return '>'
@@ -68,6 +68,8 @@ string  (\"[^"]*\")
 "boolean"               return 'PR_BOOLEAN'
 "true"                  return 'PR_TRUE'
 "false"                 return 'PR_FALSE'
+"of"                    return 'PR_OF'
+"in"                    return 'PR_IN'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'ID';
 <<EOF>>               return 'EOF';
@@ -157,6 +159,16 @@ INSTRUCCION
     }
     |
     DOWHILE
+    {
+        $$ = $1;
+    }
+    |
+    FOR
+    {
+        $$ = $1;
+    }
+    |
+    CONSOLE
     {
         $$ = $1;
     }
@@ -488,5 +500,70 @@ DEFAULT
     | /* EPSILON */
     {
         $$ = null;
+    }
+;
+
+FOR 
+    : 'PR_FOR' '(' FOREXP ')' SENTENCIA
+    {
+        $$ = $1;
+    }
+;
+
+FOREXP
+    : 'PR_LET' ID TIPOFOR ID
+    {
+        $$ = $1;
+    }
+    | 'PR_VAR' ID TIPOFOR ID
+    {
+        $$ = $1;
+    }
+    | 'PR_CONST' ID TIPOFOR ID
+    {
+        $$ = $1;
+    }
+    | DECLARACION_FOR ';' EXPRESION ';' EXPRESION
+    {
+        $$ = $1;
+    }
+;
+
+TIPOFOR
+    : 'PR_OF'
+    {
+        $$ = $1;
+    }
+    | 'PR_IN'
+    { 
+        $$ = $1;
+    }
+;
+
+DECLARACION_FOR
+    : 'PR_VAR' ID ':' TIPO '=' EXPRESION
+    {
+        $$ = $1;
+    }
+    |
+    'PR_VAR' ID '=' EXPRESION
+    {
+        $$ = $1;
+    }
+    | 'PR_LET' ID ':' TIPO '=' EXPRESION
+    {
+        $$ = $1;
+    }
+    |
+    'PR_LET' ID '=' EXPRESION
+    {
+        $$ = $1;
+    }
+;
+
+CONSOLE: 
+    'PR_CONSOLE' '.' 'PR_LOG' '(' EXPRESION ')' ';'
+    {
+        $$ = $1;
     }
 ;

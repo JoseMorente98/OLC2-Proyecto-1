@@ -226,3 +226,73 @@ switch (key) {
         break;
 }
 
+for (const key in object) {
+    switch (key) {
+        case value:
+            
+            break;
+    
+        default:
+            break;
+    }
+}
+
+for (const iterator of object) {
+    switch (key) {
+        case value:
+            
+            break;
+    
+        default:
+            break;
+    }
+}
+
+for (var index:number = 0; index < 100*2; index++) {
+    //const element = array[index];
+    switch (key) {
+        case value:
+            while (condition) {
+                
+            }
+            break;
+    
+        default:
+            break;
+    }
+}
+
+for (const iterator of object) {
+    switch (key) {
+        case value:
+            while (condition) {
+                
+            }
+            break;
+    
+        default:
+            if (condition) {
+                do {
+                    
+                } while (condition);
+            }
+            break;
+    }
+}
+
+/**
+ * 
+ * IMPRIMIR LOGS
+ */
+console.log(2+variable1*variable1);
+console.log(232%12);
+console.log(232^2);
+console.log(2.52);
+console.log((variable1==variable1));
+console.log(!!!!!!!!!!variable2);
+console.log((variable1!=variable1 )&&(variable1!=variable1 ));
+console.log((variable1!=variable1 && variable1 == variable4));
+console.log((variable1!=variable1));
+console.log("HOLA PERROS!" + "cOMO Estas" + variable1);
+console.log(variable1++);
+console.log(variable1--);
