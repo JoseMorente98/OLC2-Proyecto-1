@@ -18,6 +18,8 @@ string  (\"[^"]*\")
 "/"                     return '/'
 "-"                     return '-'
 "+"                     return '+'
+"%"                     return '%'
+"^"                    return '^'
 ";"                     return ';'
 ":"                     return ':'
 ","                     return ','
@@ -44,24 +46,25 @@ string  (\"[^"]*\")
 "}"                     return '}'
 
 
-"let"                   return 'LET'
-"var"                   return 'VAR'
-"const"                 return 'CONST'
-"if"                    return 'IF'
-"else"                  return 'ELSE'
-"while"                 return 'WHILE'
-"do"                    return 'DO'
-"for"                   return 'FOR'
-"console"               return 'CONSOLE'
-"log"                   return 'LOG'
-"break"                 return 'BREAK'
-"return"                return 'RETURN'
-"function"              return 'FUNCTION'
+"let"                   return 'PR_LET'
+"var"                   return 'PR_VAR'
+"const"                 return 'PR_CONST'
+"if"                    return 'PR_IF'
+"else"                  return 'PR_ELSE'
+"while"                 return 'PR_WHILE'
+"do"                    return 'PR_DO'
+"for"                   return 'PR_FOR'
+"console"               return 'PR_CONSOLE'
+"log"                   return 'PR_LOG'
+"break"                 return 'PR_BREAK'
+"continue"              return 'PR_CONTINUE'
+"return"                return 'PR_RETURN'
+"function"              return 'PR_FUNCTION'
 "string"                return 'PR_STRING'
 "number"                return 'PR_NUMBER'
-"boolean"                return 'PR_BOOLEAN'
-"true"                return 'PR_TRUE'
-"false"                return 'PR_FALSE'
+"boolean"               return 'PR_BOOLEAN'
+"true"                  return 'PR_TRUE'
+"false"                 return 'PR_FALSE'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'ID';
 <<EOF>>               return 'EOF';
@@ -75,6 +78,8 @@ string  (\"[^"]*\")
 %left '>=', '<=', '<', '>'
 %left '+' '-'
 %left '*' '/'
+%left '%' '^'
+%left '!'
 
 %start Init
 
@@ -117,59 +122,79 @@ INSTRUCCION
     {
         $$ = $1;
     }
+    |
+    BREAK
+    {
+        $$ = $1;
+    }
+    |
+    CONTINUE
+    {
+        $$ = $1;
+    }
+    |
+    RETURN
+    {
+        $$ = $1;
+    }
+    |
+    IF
+    {
+        $$ = $1;
+    }
 ;
 
 DECLARACION_VAR 
-    : 'VAR' ID ':' TIPO ARREGLO '=' EXPRESION ';'
+    : 'PR_VAR' ID ':' TIPO ARREGLO '=' EXPRESION ';'
     {
         $$ = $1;
     }
     |
-    'VAR' ID ':' TIPO ARREGLO';'
+    'PR_VAR' ID ':' TIPO ARREGLO';'
     {
         $$ = $1;
     }
     |
-    'VAR' ID ARREGLO '=' EXPRESION ';'
+    'PR_VAR' ID ARREGLO '=' EXPRESION ';'
     {
         $$ = $1;
     }
     |
-    'VAR' ID ARREGLO ';'
+    'PR_VAR' ID ARREGLO ';'
     {
         $$ = $1;
     }
 ;
 
 DECLARACION_LET
-    : 'LET' ID ':' TIPO ARREGLO '=' EXPRESION ';'
+    : 'PR_LET' ID ':' TIPO ARREGLO '=' EXPRESION ';'
     {
         $$ = $1;
     }
     |
-    'LET' ID ':' TIPO ARREGLO';'
+    'PR_LET' ID ':' TIPO ARREGLO';'
     {
         $$ = $1;
     }
     |
-    'LET' ID ARREGLO '=' EXPRESION ';'
+    'PR_LET' ID ARREGLO '=' EXPRESION ';'
     {
         $$ = $1;
     }
     |
-    'LET' ID ARREGLO ';'
+    'PR_LET' ID ARREGLO ';'
     {
         $$ = $1;
     }
 ;
 
 DECLARACION_CONST
-    : 'CONST' ID ':' TIPO '=' EXPRESION ';'
+    : 'PR_CONST' ID ':' TIPO '=' EXPRESION ';'
     {
         $$ = $1;
     }
     |
-    'CONST' ID '=' EXPRESION ';'
+    'PR_CONST' ID '=' EXPRESION ';'
     {
         $$ = $1;
     }
@@ -218,7 +243,92 @@ ARREGLO
 ;
 
 EXPRESION     
-    : IDENTIFICADOR
+    : EXPRESION '+' EXPRESION
+    {
+        $$ = $1
+    } 
+    |
+    EXPRESION '-' EXPRESION
+    {
+        $$ = $1
+    } 
+    |
+    EXPRESION '*' EXPRESION
+    {
+        $$ = $1
+    } 
+    |
+    EXPRESION '/' EXPRESION
+    {
+        $$ = $1
+    } 
+    |
+    EXPRESION '%' EXPRESION
+    {
+        $$ = $1
+    } 
+    |
+    EXPRESION '^' EXPRESION
+    {
+        $$ = $1
+    } 
+    |
+    EXPRESION '<' EXPRESION
+    {
+        $$ = $1
+    } 
+    |
+    EXPRESION '<=' EXPRESION
+    {
+        $$ = $1
+    } 
+    |
+    EXPRESION '>' EXPRESION
+    {
+        $$ = $1
+    } 
+    |
+    EXPRESION '>=' EXPRESION
+    {
+        $$ = $1
+    } 
+    |
+    EXPRESION '==' EXPRESION
+    {
+        $$ = $1
+    } 
+    |
+    EXPRESION '!=' EXPRESION
+    {
+        $$ = $1
+    }
+    |
+    EXPRESION '&&' EXPRESION
+    {
+        $$ = $1
+    }
+    |
+    EXPRESION '||' EXPRESION
+    {
+        $$ = $1
+    }
+    |
+    '!' EXPRESION
+    {
+        $$ = $1
+    }
+    |
+    EXPRESION '+' '+'
+    {
+        $$ = $1
+    }
+    |
+    EXPRESION '-' '-'
+    {
+        $$ = $1
+    }
+    |
+    IDENTIFICADOR
     {
         $$ = $1;
     }
@@ -252,5 +362,63 @@ IDENTIFICADOR
     | ID
     { 
         $$ = $1;
+    }
+;
+
+BREAK 
+    : 'PR_BREAK'  ';'
+    {
+        $$ = $1;
+    }
+;
+
+CONTINUE 
+    : 'PR_CONTINUE'  ';'
+    {
+        $$ = $1;
+    }
+;
+
+RETURN 
+    : 'PR_RETURN'  ';'
+    {
+        $$ = $1;
+    }
+    | 'PR_RETURN' EXPRESION ';'
+    {
+        $$ = $1;
+    }
+;
+
+IF 
+    : 'PR_IF' '(' EXPRESION ')' SENTENCIA ELSEIF
+    {
+        $$ = $1;
+    }
+;
+
+SENTENCIA 
+    : '{' INSTRUCCIONES '}'
+    {
+        $$ = $1;
+    }
+    | '{' '}'
+    {
+        $$ = $1;
+    }
+;
+
+ELSEIF 
+    : 'PR_ELSE' SENTENCIA
+    {
+        $$ = $1;
+    }
+    | 'PR_ELSE' IF
+    {
+        $$ = $1;
+    }
+    | /* EPSILON */
+    {
+        $$ = null;
     }
 ;

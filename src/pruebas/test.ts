@@ -68,3 +68,75 @@ hola:string = "HOLA";
 varnum:number = 12345;
 variableBol:boolean = "HOLA";
 columna: number = 0;
+
+
+/**
+ * 
+ * ASIGNACION SIN TIPO
+ */
+variable1 = 2+variable1*variable1;
+variable1 = 232%12;
+variable1 = 232^2;
+variable1 = 2.52;
+variable2 = (variable1==variable1);
+variable2 = !!!!!!!!!!variable2;
+variable2 = (variable1!=variable1 )&&(variable1!=variable1 );
+variable2 = (variable1!=variable1 && variable1 == variable4);
+variable2 = (variable1!=variable1);
+variable6 = "HOLA PERROS!" + "cOMO Estas" + variable1;
+variable1 = variable1++;
+variable1 = variable1--;
+
+
+break;
+
+return;
+
+continue;
+
+/**
+ * 
+ * ASIGNACION SIN TIPO
+ */
+return 2+variable1*variable1;
+return 232%12;
+return 232^2;
+return 2.52;
+return (variable1==variable1);
+return !!!!!!!!!!variable2;
+return (variable1!=variable1 )&&(variable1!=variable1 );
+return (variable1!=variable1 && variable1 == variable4);
+return (variable1!=variable1);
+return "HOLA PERROS!" + "cOMO Estas" + variable1;
+return variable1++;
+return variable1--;
+
+if ((variable1!=variable1 )&&(variable1!=variable1 )) {
+    return 2+variable1*variable1;
+    return 232%12;
+    return 232^2;
+    return 2.52;
+    return (variable1==variable1);
+    return !!!!!!!!!!variable2;
+    return (variable1!=variable1 )&&(variable1!=variable1 );
+    return (variable1!=variable1 && variable1 == variable4);
+    return (variable1!=variable1);
+    return "HOLA PERROS!" + "cOMO Estas" + variable1;
+    return variable1++;
+    return variable1--;
+}
+
+if (condition) {
+    break;
+    
+} else {
+    
+}
+
+if (!!!!!!!!!!variable2) {
+    
+} else if ((variable1!=variable1 )&&(variable1!=variable1 )) {
+    
+} else {
+    return;
+}
