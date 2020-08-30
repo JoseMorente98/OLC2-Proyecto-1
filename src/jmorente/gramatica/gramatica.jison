@@ -3,7 +3,7 @@
 %lex
 %options case-insensitive
 number  [0-9]+
-decimal {entero}"."{entero}
+decimal [0-9]+("."[0-9]+)
 string  (\"[^"]*\")
 %%
 
@@ -11,9 +11,9 @@ string  (\"[^"]*\")
 "//".*                /* skip comments */
 [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]   /* IGNORE */
 
-{number}                return 'NUMERO'
 {decimal}               return 'DECIMAL'
-{string}                return 'STRING'
+{number}                return 'NUMERO'
+{string}                return 'CADENA'
 "*"                     return '*'
 "/"                     return '/'
 "-"                     return '-'
@@ -21,6 +21,7 @@ string  (\"[^"]*\")
 ";"                     return ';'
 ":"                     return ':'
 ","                     return ','
+","                     return '.'
 
 "<"                     return '<'
 ">"                     return '>'
@@ -37,6 +38,12 @@ string  (\"[^"]*\")
 ")"                     return ')' 
 "{"                     return '{'
 "}"                     return '}'
+"["                     return '['
+"]"                     return ']'
+"}"                     return '}'
+"}"                     return '}'
+
+
 "let"                   return 'LET'
 "var"                   return 'VAR'
 "const"                 return 'CONST'
@@ -53,6 +60,8 @@ string  (\"[^"]*\")
 "string"                return 'PR_STRING'
 "number"                return 'PR_NUMBER'
 "boolean"                return 'PR_BOOLEAN'
+"true"                return 'PR_TRUE'
+"false"                return 'PR_FALSE'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'ID';
 <<EOF>>               return 'EOF';
@@ -89,13 +98,91 @@ INSTRUCCIONES
 ;
 
 INSTRUCCION
-    : DECLARACION {
+    : DECLARACION_VAR
+    {
+        $$ = $1;
+    }
+    |
+    DECLARACION_LET
+    {
+        $$ = $1;
+    }
+    |
+    DECLARACION_CONST
+    {
+        $$ = $1;
+    }
+    |
+    DECLARACION_SIN_TIPO
+    {
         $$ = $1;
     }
 ;
 
-DECLARACION 
-    : 'VAR' ID ':' TIPO '=' STRING ';'{
+DECLARACION_VAR 
+    : 'VAR' ID ':' TIPO ARREGLO '=' EXPRESION ';'
+    {
+        $$ = $1;
+    }
+    |
+    'VAR' ID ':' TIPO ARREGLO';'
+    {
+        $$ = $1;
+    }
+    |
+    'VAR' ID ARREGLO '=' EXPRESION ';'
+    {
+        $$ = $1;
+    }
+    |
+    'VAR' ID ARREGLO ';'
+    {
+        $$ = $1;
+    }
+;
+
+DECLARACION_LET
+    : 'LET' ID ':' TIPO ARREGLO '=' EXPRESION ';'
+    {
+        $$ = $1;
+    }
+    |
+    'LET' ID ':' TIPO ARREGLO';'
+    {
+        $$ = $1;
+    }
+    |
+    'LET' ID ARREGLO '=' EXPRESION ';'
+    {
+        $$ = $1;
+    }
+    |
+    'LET' ID ARREGLO ';'
+    {
+        $$ = $1;
+    }
+;
+
+DECLARACION_CONST
+    : 'CONST' ID ':' TIPO '=' EXPRESION ';'
+    {
+        $$ = $1;
+    }
+    |
+    'CONST' ID '=' EXPRESION ';'
+    {
+        $$ = $1;
+    }
+;
+
+DECLARACION_SIN_TIPO
+    : ID ':' TIPO ARREGLO '=' EXPRESION ';'
+    {
+        $$ = $1;
+    }
+    |
+    ID '=' EXPRESION ';'
+    {
         $$ = $1;
     }
 ;
@@ -110,6 +197,59 @@ TIPO
         $$ = $1;
     }
     | 'PR_BOOLEAN'
+    { 
+        $$ = $1;
+    }
+;
+
+ARREGLO
+    : '[' ']'
+    {
+        $$ = $1;
+    }
+    | '[' ']' '[' ']'
+    { 
+        $$ = $1;
+    }
+    |  /* EPSILON */
+    { 
+        $$ = null;
+    }
+;
+
+EXPRESION     
+    : IDENTIFICADOR
+    {
+        $$ = $1;
+    }
+;
+
+IDENTIFICADOR
+    : '(' EXPRESION ')'
+    {
+        $$ = $1;
+    }
+    | CADENA
+    { 
+        $$ = $1;
+    }
+    | NUMERO
+    { 
+        $$ = $1;
+    }
+    | DECIMAL
+    { 
+        $$ = $1;
+    }
+    | 'PR_TRUE'
+    { 
+        $$ = $1;
+    }
+    | 'PR_FALSE'
+    { 
+        $$ = $1;
+    }
+    | ID
     { 
         $$ = $1;
     }

@@ -3,7 +3,7 @@ export class Token {
     lexema: string;
     descripcion: string;
     fila: number;
-    columna: number;
+    columna: number = 0;
 
     constructor(id:number, lexema:string, descripcion:string, fila:number, columna:number) {
         this.id = id;
