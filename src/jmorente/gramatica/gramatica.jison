@@ -51,6 +51,9 @@ string  (\"[^"]*\")
 "const"                 return 'PR_CONST'
 "if"                    return 'PR_IF'
 "else"                  return 'PR_ELSE'
+"switch"                return 'PR_SWITCH'
+"default"               return 'PR_DEFAULT'
+"case"                  return 'PR_CASE'
 "while"                 return 'PR_WHILE'
 "do"                    return 'PR_DO'
 "for"                   return 'PR_FOR'
@@ -139,6 +142,21 @@ INSTRUCCION
     }
     |
     IF
+    {
+        $$ = $1;
+    }
+    |
+    SWITCH
+    {
+        $$ = $1;
+    }
+    |
+    WHILE
+    {
+        $$ = $1;
+    }
+    |
+    DOWHILE
     {
         $$ = $1;
     }
@@ -414,6 +432,56 @@ ELSEIF
         $$ = $1;
     }
     | 'PR_ELSE' IF
+    {
+        $$ = $1;
+    }
+    | /* EPSILON */
+    {
+        $$ = null;
+    }
+;
+
+WHILE 
+    : 'PR_WHILE' '(' EXPRESION ')' SENTENCIA
+    {
+        $$ = $1;
+    }
+;
+
+DOWHILE 
+    : 'PR_DO' SENTENCIA 'PR_WHILE' '(' EXPRESION ')' ';'
+    {
+        $$ = $1;
+    }
+;
+
+SWITCH
+    : 'PR_SWITCH' '(' EXPRESION ')' '{' CASES DEFAULT '}'
+    {
+        $$ = $1;
+    }
+;
+
+CASES 
+    : CASES CASE
+    {
+        $$ = $1;
+    }
+    | CASE
+    {
+        $$ = $1;
+    }
+;
+
+CASE
+    : 'PR_CASE'  EXPRESION ':' INSTRUCCIONES
+    {
+        $$ = $1;
+    }
+;
+
+DEFAULT 
+    : 'PR_DEFAULT' ':' INSTRUCCIONES
     {
         $$ = $1;
     }

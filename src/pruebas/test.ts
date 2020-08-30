@@ -111,6 +111,10 @@ return "HOLA PERROS!" + "cOMO Estas" + variable1;
 return variable1++;
 return variable1--;
 
+if (condition) {
+    
+}
+
 if ((variable1!=variable1 )&&(variable1!=variable1 )) {
     return 2+variable1*variable1;
     return 232%12;
@@ -140,3 +144,85 @@ if (!!!!!!!!!!variable2) {
 } else {
     return;
 }
+
+while (condition) {
+    
+}
+
+while (true) {
+    var variable1:number = 1; // number variable
+    var variable2:boolean = true; // number variable
+    var variable3:boolean = false; // number variable
+    var variable4:number = variable1; // number variable
+    var variable5:number = 13.22; // number variable
+    var variable6:string = "Hola"; // number variable
+}
+
+do {
+    return 2+variable1*variable1;
+    return 232%12;
+    return 232^2;
+    return 2.52;
+    return (variable1==variable1);
+    return !!!!!!!!!!variable2;
+    return (variable1!=variable1 )&&(variable1!=variable1 );
+    return (variable1!=variable1 && variable1 == variable4);
+    return (variable1!=variable1);
+    return "HOLA PERROS!" + "cOMO Estas" + variable1;
+    return variable1++;
+    return variable1--;
+} while (!!!!!!!!!!variable2);
+
+do {
+    var variable1:number = 1; // number variable
+    var variable2:boolean = true; // number variable
+    var variable3:boolean = false; // number variable
+    var variable4:number = variable1; // number variable
+    var variable5:number = 13.22; // number variable
+    var variable6:string = "Hola"; // number variable
+} while ((variable1!=variable1 )&&(variable1!=variable1 ));
+
+switch (key) {
+    case value:
+        var variable5:number = 13.22; // number variable
+        do {
+            
+        } while (condition);
+        break;
+        var variable5:number = 13.22; // number variable
+        while (condition) {
+            
+        }
+    default:
+        break;
+}
+
+switch (key) {
+    case value:
+        var variable5:number = 13.22; // number variable
+        if (condition) {
+            
+        }
+        break;
+    case value:
+        var variable5:number = 13.22; // number variable
+        if (condition) {
+            
+        } else {
+            
+        }
+        break;
+    case value+0:
+
+        break;
+}
+
+switch (key) {
+    case value:
+        
+        break;
+
+    default:
+        break;
+}
+
