@@ -15,7 +15,7 @@ var age533:string[][]; // number variable
 /**
  * 
  * DECLARACION VARIABLE STRING
- *
+ */
 let age7:string = "32"; // number variable
 let age8:string[][] = "32"; // number variable
 let age9:string[] = "32"; // number variable
@@ -28,7 +28,7 @@ let age12 = "Hola"; // number variable
 /**
  * 
  * DECLARACION CONST
- *
+ */
 const variable:string = "32"; // number variable
 const abcde = "32"; // number variable
 

@@ -216,36 +216,55 @@ DECLARACION_VAR
 ;
 
 DECLARACION_LET
-    : 'PR_LET' ID ':' TIPO ARREGLO '=' EXPRESION ';'
+    : 'PR_LET' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
     }
     |
-    'PR_LET' ID ':' TIPO ARREGLO';'
+    'PR_LET' ID ':' TIPO ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
+    }
+    |
+    'PR_LET' ID '=' EXPRESION ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
+    }
+    |
+    'PR_LET' ID ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3)};
+    }
+    | 'PR_LET' ID ':' TIPO ARREGLO '=' EXPRESION ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6, $7.node, $8)};
+    }
+    |
+    'PR_LET' ID ':' TIPO ARREGLO ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6)};
     }
     |
     'PR_LET' ID ARREGLO '=' EXPRESION ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
     }
     |
     'PR_LET' ID ARREGLO ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
     }
 ;
 
 DECLARACION_CONST
     : 'PR_CONST' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
     }
     |
     'PR_CONST' ID '=' EXPRESION ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
     }
 ;
 
