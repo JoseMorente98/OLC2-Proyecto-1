@@ -93,24 +93,24 @@ string  (\"[^"]*\")
 Init    
     : INSTRUCCIONES EOF 
     {
-        return $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
+        return $$;
     } 
 ;
 
 INSTRUCCIONES
     : INSTRUCCIONES INSTRUCCION{
-        $1.push($2);
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node, $2.node)};
     }
     | INSTRUCCION{
-        $$ = [$1];
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
 ;
 
 INSTRUCCION
     : DECLARACION_VAR
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1)};
     }
     |
     DECLARACION_LET

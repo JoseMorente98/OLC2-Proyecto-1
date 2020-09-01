@@ -14,7 +14,7 @@ var age6 = "Hola"; // number variable
 /**
  * 
  * DECLARACION VARIABLE STRING
- */
+ *
 let age7:string = "32"; // number variable
 let age8:string[][] = "32"; // number variable
 let age9:string[] = "32"; // number variable
@@ -27,14 +27,14 @@ let age12 = "Hola"; // number variable
 /**
  * 
  * DECLARACION CONST
- */
+ *
 const variable:string = "32"; // number variable
 const abcde = "32"; // number variable
 
 /**
  * 
  * OTRAS VARIABLES
- */
+ *
 var variable1 = 1; // number variable
 var variable2 = true; // number variable
 var variable3 = false; // number variable
@@ -52,7 +52,7 @@ var variable6:string = "Hola"; // number variable
 /**
  * 
  * ASIGNACION SIN TIPO
- */
+ *
 variable1 = 2;
 variable1 = 232;
 variable1 = 2.52;
@@ -63,7 +63,7 @@ variable6 = "HOLA PERROS!";
 
 /**
  * DECLARACION SIN LET NI VAR
- */
+ *
 hola:string = "HOLA";
 varnum:number = 12345;
 variableBol:boolean = "HOLA";
@@ -73,7 +73,7 @@ columna: number = 0;
 /**
  * 
  * ASIGNACION SIN TIPO
- */
+ *
 variable1 = 2+variable1*variable1;
 variable1 = 232%12;
 variable1 = 232^2;
@@ -97,7 +97,7 @@ continue;
 /**
  * 
  * ASIGNACION SIN TIPO
- */
+ *
 return 2+variable1*variable1;
 return 232%12;
 return 232^2;
@@ -283,7 +283,7 @@ for (const iterator of object) {
 /**
  * 
  * IMPRIMIR LOGS
- */
+ *
 console.log(2+variable1*variable1);
 console.log(232%12);
 console.log(232^2);
@@ -295,4 +295,6 @@ console.log((variable1!=variable1 && variable1 == variable4));
 console.log((variable1!=variable1));
 console.log("HOLA PERROS!" + "cOMO Estas" + variable1);
 console.log(variable1++);
-console.log(variable1--);
+console.log(variable1--);*/
+
+console.log('Hola')

@@ -85,21 +85,26 @@ var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
 
-        return $$[$0-1];
+        this.$ = {node: newNode(yy, yystate, $$[$0-1].node)};
+        return this.$;
     
 break;
 case 2:
 
-        $$[$0-1].push($$[$0]);
-        this.$ = $$[$0-1];
+        this.$ = {node: newNode(yy, yystate, $$[$0-1].node, $$[$0].node)};
     
 break;
 case 3:
 
-        this.$ = [$$[$0]];
+        this.$ = {node: newNode(yy, yystate, $$[$0].node)};
     
 break;
-case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 29: case 52: case 74: case 83:
+case 4:
+
+        this.$ = {node: newNode(yy, yystate, $$[$0])};
+    
+break;
+case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 29: case 52: case 74: case 83:
 
         this.$ = $$[$0];
     
