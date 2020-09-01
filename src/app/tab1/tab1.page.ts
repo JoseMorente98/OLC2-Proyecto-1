@@ -24,6 +24,9 @@ export class Tab1Page {
 
 
   analizar() {
+    if (document.getElementById("grafo")) {
+      document.getElementById("grafo").remove();
+    }
     LexicoControlador.getInstancia().ejecutarAnalisis(this.strEntrada);
   }
 
