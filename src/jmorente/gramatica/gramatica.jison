@@ -110,7 +110,7 @@ INSTRUCCIONES
 INSTRUCCION
     : DECLARACION_VAR
     {
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     DECLARACION_LET
@@ -175,24 +175,43 @@ INSTRUCCION
 ;
 
 DECLARACION_VAR 
-    : 'PR_VAR' ID ':' TIPO ARREGLO '=' EXPRESION ';'
+    : 'PR_VAR' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
     }
     |
-    'PR_VAR' ID ':' TIPO ARREGLO';'
+    'PR_VAR' ID ':' TIPO ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
+    }
+    |
+    'PR_VAR' ID '=' EXPRESION ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
+    }
+    |
+    'PR_VAR' ID ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3)};
+    }
+    | 'PR_VAR' ID ':' TIPO ARREGLO '=' EXPRESION ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6, $7.node, $8)};
+    }
+    |
+    'PR_VAR' ID ':' TIPO ARREGLO ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6)};
     }
     |
     'PR_VAR' ID ARREGLO '=' EXPRESION ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
     }
     |
     'PR_VAR' ID ARREGLO ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
     }
 ;
 
@@ -245,30 +264,26 @@ DECLARACION_SIN_TIPO
 TIPO
     : 'PR_STRING'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1)};
     }
     | 'PR_NUMBER'
     { 
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1)};
     }
     | 'PR_BOOLEAN'
     { 
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1)};
     }
 ;
 
 ARREGLO
     : '[' ']'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2)};
     }
     | '[' ']' '[' ']'
     { 
-        $$ = $1;
-    }
-    |  /* EPSILON */
-    { 
-        $$ = null;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4)};
     }
 ;
 
@@ -360,38 +375,38 @@ EXPRESION
     |
     IDENTIFICADOR
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
 ;
 
 IDENTIFICADOR
     : '(' EXPRESION ')'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2.node, $3)};
     }
     | CADENA
     { 
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1)};
     }
     | NUMERO
     { 
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1)};
     }
     | DECIMAL
     { 
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1)};
     }
     | 'PR_TRUE'
     { 
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1)};
     }
     | 'PR_FALSE'
     { 
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1)};
     }
     | ID
     { 
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1)};
     }
 ;
 

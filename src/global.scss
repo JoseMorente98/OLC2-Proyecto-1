@@ -35,18 +35,18 @@
 }
 
 .node circle {
-    fill: #fff;
-    stroke: steelblue;
+    fill: #ABBF15;
+    stroke: #2E5902;
     stroke-width: 3px;
 }
 
 .node text {
     font: 12px sans-serif;
-    color: white;
+    fill: white;
 }
 
 .link {
     fill: none;
-    stroke: #ccc;
+    stroke: #D6D984;
     stroke-width: 2px;
 }

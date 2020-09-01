@@ -3,13 +3,14 @@
  * DECLARACION VARIABLE STRING
  */
 var age:string = "32"; // number variable
+var age4:string = "32"; // number variable
+var age6:number = 12; // number variable
+var age4:string = "32"; // number variable
 var age2:string[][] = ""; // number variable
 var age3:string[] = "32"; // number variable
-var age4:string = "32"; // number variable
 var age5:string; // number variable
 var age423:string[]; // number variable
 var age533:string[][]; // number variable
-var age6 = "Hola"; // number variable
 
 /**
  * 

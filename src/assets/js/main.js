@@ -2,6 +2,7 @@
 function newNode(yy, state, ...nodes) {
     const parent = getNonTerminal(yy, state);
     const children = [];
+    console.log('==============NODES=============')
     console.log(nodes)
     for (let node of nodes) {
         node.parent = node.parent ? node.parent : parent;
