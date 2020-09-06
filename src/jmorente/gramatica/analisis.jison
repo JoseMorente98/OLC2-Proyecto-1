@@ -4,13 +4,19 @@
     const { Literal } = require('../expresion/literal.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
     const { Imprimir } = require('../instruccion/console.instruccion');
+    const { While } = require('../instruccion/while.instruccion');
+    const { Sentencia } = require('../instruccion/sentencia.instruccion');
 %}
 
 %lex
 %options case-insensitive
-number  [0-9]+
-decimal [0-9]+("."[0-9]+)
-string  (\"[^"]*\")
+BSL                 "\\".
+BSL2                 "\"".
+number              ([+-]?[0-9]+)
+decimal             ([+-]?[0-9]+("."[0-9]+))
+string              (\"([^"]|{BSL})*\")
+string2             (\'([^']|{BSL}|{BSL2})*\')
+string3             (\`([^`]|{BSL}|{BSL2})*\`)
 %%
 
 \s+                   /* skip whitespace */
@@ -20,6 +26,8 @@ string  (\"[^"]*\")
 {decimal}               return 'DECIMAL'
 {number}                return 'NUMERO'
 {string}                return 'CADENA'
+{string2}               return 'CADENA'
+{string3}               return 'CADENA'
 "*"                     return '*'
 "/"                     return '/'
 "-"                     return '-'
@@ -161,7 +169,7 @@ INSTRUCCION
     |
     WHILE
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     DOWHILE
@@ -304,15 +312,15 @@ DECLARACION_SIN_TIPO
 TIPO
     : 'PR_STRING'
     {
-        $$ = $1;
+        $$ = 1;
     }
     | 'PR_NUMBER'
     { 
-        $$ = $1;
+        $$ = 0;
     }
     | 'PR_BOOLEAN'
     { 
-        $$ = $1;
+        $$ = 2;
     }
 ;
 
@@ -489,11 +497,11 @@ IF
 SENTENCIA 
     : '{' INSTRUCCIONES '}'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node, $3)};
+        $$ = new Sentencia($2, @1.first_line, @1.first_column)
     }
     | '{' '}'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2)};
+        $$ = $1;
     }
 ;
 
@@ -515,7 +523,7 @@ ELSEIF
 WHILE 
     : 'PR_WHILE' '(' EXPRESION ')' SENTENCIA
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node)};
+        $$ = new While($3, $5, @1.first_line, @1.first_column);
     }
 ;
 

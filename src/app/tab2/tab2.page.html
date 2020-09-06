@@ -23,5 +23,12 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Organización de Lenguajes y Compiladores 2 page"></app-explore-container>
+  <ion-item *ngFor="let item of data">
+    <ion-label class="ion-text-wrap">
+      <p><strong>Descripción: </strong>{{item.descripcion}}</p>
+      <p><strong>Fila: </strong>{{item.fila}}</p>
+      <p><strong>Columna: </strong>{{item.columna}}</p>
+      <p><strong>Tipo: </strong>{{item.tipo}}</p>
+    </ion-label>
+  </ion-item>
 </ion-content>

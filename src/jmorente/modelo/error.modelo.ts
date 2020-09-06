@@ -1,14 +1,12 @@
 export class ModeloError {
     id: number;
-    lexema: string;
     descripcion: string;
     tipo: string;
     fila: number;
     columna: number;
 
-    constructor(id:number, lexema:string, descripcion:string, tipo:string, fila:number, columna:number) {
+    constructor(id:number, descripcion:string, tipo:string, fila:number, columna:number) {
         this.id = id;
-        this.lexema = lexema;
         this.descripcion = descripcion;
         this.tipo = tipo;
         this.fila = fila;
@@ -29,14 +27,6 @@ export class ModeloError {
     
     public set setDescripcion(v : string) {
         this.descripcion = v;
-    }
-    
-    public get getLexema() : string {
-        return this.lexema;
-    }
-
-    public set setLexema(v : string) {
-        this.lexema = v;
     }
     
     public get getFila() : number {
@@ -66,7 +56,6 @@ export class ModeloError {
     toString() {
         return {
             "id" : this.id,
-            "lexema" : this.lexema,
             "descripcion" : this.descripcion,
             "tipo" : this.tipo,
             "fila" : this.fila,

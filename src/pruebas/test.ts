@@ -1,7 +1,7 @@
 /**
  * 
  * DECLARACION VARIABLE STRING
- */
+ *
 var age:string = "32"; // number variable
 var age4:string = "32"; // number variable
 var age6:number = 12; // number variable
@@ -15,7 +15,7 @@ var age533:string[][]; // number variable
 /**
  * 
  * DECLARACION VARIABLE STRING
- */
+ *
 let age7:string = "32"; // number variable
 //let age8:string[][] = "32"; // number variable
 //let age9:string[] = "32"; // number variable
@@ -28,14 +28,14 @@ let age12 = "Hola"; // number variable
 /**
  * 
  * DECLARACION CONST
- */
+ *
 const variable:string = "32"; // number variable
 const abcde = "32"; // number variable
 
 /**
  * 
  * OTRAS VARIABLES
- */
+ *
 var variable1 = 1; // number variable
 var variable2 = true; // number variable
 var variable3 = false; // number variable
@@ -53,7 +53,7 @@ var variable6:string = "Hola"; // number variable
 /**
  * 
  * ASIGNACION SIN TIPO
- */
+ *
 variable1 = 2;
 variable1 = 232;
 variable1 = 2.52;
@@ -284,7 +284,7 @@ for (const iterator of object) {
 /**
  * 
  * IMPRIMIR LOGS
- */
+ *
 console.log(2+variable1*variable1);
 console.log(232%12);
 console.log(232^2);
@@ -296,7 +296,7 @@ console.log((variable1!=variable1 && variable1 == variable4));
 console.log((variable1!=variable1));
 console.log("HOLA PERROS!" + "cOMO Estas" + variable1);
 console.log(variable1++);
-console.log(variable1--);*/
+console.log(variable1--);*
 
 console.log('Hola')
 
@@ -328,4 +328,4 @@ if(true){
         f1();
         console.log("hola mundo");
     }
-}
+}*/

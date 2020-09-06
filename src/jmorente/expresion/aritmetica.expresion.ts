@@ -20,6 +20,8 @@ export class Arithmetic extends Expression {
 
     public execute(environment : Environment) : Retorno {
         let result : Retorno;
+        const leftValue = this.left.execute(environment);
+        const rightValue = this.right.execute(environment);
         /*const leftValue = this.left.execute(environment);
         const rightValue = this.right.execute(environment);
         let result : Retorno;

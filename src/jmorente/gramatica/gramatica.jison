@@ -8,9 +8,13 @@
 
 %lex
 %options case-insensitive
-number  [0-9]+
-decimal [0-9]+("."[0-9]+)
-string  (\"[^"]*\")
+BSL                 "\\".
+BSL2                 "\"".
+number              ([+-]?[0-9]+)
+decimal             ([+-]?[0-9]+("."[0-9]+))
+string              (\"([^"]|{BSL})*\")
+string2             (\'([^']|{BSL}|{BSL2})*\')
+string3             (\`([^`]|{BSL}|{BSL2})*\`)
 %%
 
 \s+                   /* skip whitespace */
@@ -20,6 +24,8 @@ string  (\"[^"]*\")
 {decimal}               return 'DECIMAL'
 {number}                return 'NUMERO'
 {string}                return 'CADENA'
+{string2}               return 'CADENA'
+{string3}               return 'CADENA'
 "*"                     return '*'
 "/"                     return '/'
 "-"                     return '-'
@@ -99,39 +105,24 @@ string  (\"[^"]*\")
 Init    
     : INSTRUCCIONES EOF 
     {
-        $$ = 
-        {
-            node: newNode(yy, yystate, $1.node),
-            ejecutar: $1
-        };
+        $$ = { node: newNode(yy, yystate, $1.node) };
         return $$;
     } 
 ;
 
 INSTRUCCIONES
     : INSTRUCCIONES INSTRUCCION{
-        $$ = 
-        {
-            node: newNode(yy, yystate, $1.node, $2.node),
-            ejecutar: $1
-        };
+        $$ = { node: newNode(yy, yystate, $1.node, $2.node) };
     }
     | INSTRUCCION{
-        $$ = 
-        {
-            node: newNode(yy, yystate, $1.node),
-            ejecutar: $1
-        };
+        $$ = { node: newNode(yy, yystate, $1.node)};
     }
 ;
 
 INSTRUCCION
     : DECLARACION_VAR
     {
-        $$ = {
-            node: newNode(yy, yystate, $1.node),
-            ejecutar: $1
-        };
+        $$ = { node: newNode(yy, yystate, $1.node) };
     }
     |
     DECLARACION_LET
@@ -211,34 +202,22 @@ INSTRUCCION
 DECLARACION_VAR 
     : 'PR_VAR' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7),
-            ejecutar: new Declaracion($2, $4, $6, @1.first_line, @1.first_column)
-        };
+        $$ = { node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7) };
     }
     |
     'PR_VAR' ID ':' TIPO ';'
     {
-        $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4.node, $5),
-            ejecutar: new Declaracion($2, $4, null, @1.first_line, @1.first_column)
-        };
+        $$ = { node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
     }
     |
     'PR_VAR' ID '=' EXPRESION ';'
     {
-        $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4.node, $5),
-            ejecutar: new Declaracion($2, null, $4, @1.first_line, @1.first_column)
-        };
+        $$ = { node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
     }
     |
     'PR_VAR' ID ';'
     {
-        $$ = {
-            node: newNode(yy, yystate, $1, $2, $3),
-            ejecutar: new Declaracion($2, null, null, @1.first_line, @1.first_column)
-        };
+        $$ = { node: newNode(yy, yystate, $1, $2, $3) };
     }
     | 'PR_VAR' ID ':' TIPO ARREGLO '=' EXPRESION ';'
     {

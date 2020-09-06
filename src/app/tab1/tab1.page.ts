@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LexicoControlador } from 'src/jmorente/controlador/lexico.controlador';
+import { ErrorControlador } from 'src/jmorente/controlador/error.controlador';
 import * as parser from '../../jmorente/gramatica/gramatica';
 import * as analisis from '../../jmorente/gramatica/analisis';
 import * as graficar from '../../jmorente/ast/chart';
@@ -46,36 +46,26 @@ export class Tab1Page {
     if (document.getElementById("grafo")) {
       document.getElementById("grafo").remove();
     }
-    
-    console.clear()
-    const env = new Environment(null);
-    //var symbols = fs.readFileSync('./jison/lexico.jison', 'utf8');
-    //var parser = new JisonLex(symbols);
-    let ast = parser.parse(this.strEntrada);
-    let ast2 = analisis.parse(this.strEntrada);
-    // console.log("==========AST===========")
-    // console.log(ast)
 
-    setTimeout(() => {
-        graficar.generateTree([ast.node]);
-        //console.log(grafica)
-    }, 1000);
+    try {
+      console.clear()
+      const env = new Environment(null);
+      let graficaAST = parser.parse(this.strEntrada);
+      let analisisAST = analisis.parse(this.strEntrada);
 
-    // console.log("=========PRIMERA ITERACION=========")
-    for (const iterator of ast2) {
-        if (iterator instanceof Declaracion) {
-            console.log(iterator)
-            iterator.execute(env);
-        }
-    }
-    console.log("=========SEGUNDA ITERACION=========")
+      setTimeout(() => {
+          graficar.generateTree([graficaAST.node]);
+      }, 1000);
 
-    for(const instr of ast2){
-        if (instr instanceof Imprimir) {
+      /**
+       * EJECUTAR EJECUCION
+       */
+      for(const instr of analisisAST){
+        /*if (instr instanceof Imprimir) {
           let str = instr.execute(env);
             console.log(str);
             this.strSalida += str.value;
-        }
+        }*/
         try {
             const actual = instr.execute(env);
             // console.log("========ACTUAL=======")
@@ -85,10 +75,19 @@ export class Tab1Page {
                 console.error("ERROR SEMANTICO")
             }
         } catch (error) {
-            // errores.push(error);  
             console.error(error)
         }
+      }
+    } catch (error) {
+      /**
+       * INGRESAR ERRORES PARA REPORTE
+       */
+      console.error(error)
+      //ErrorControlador.getInstancia().agregarError(error.error, "Semántico", error.fila, error.columna);
     }
+    
+    // IMPRIMIR ERRORES
+    ErrorControlador.getInstancia().imprimirError();
   }
 
 }

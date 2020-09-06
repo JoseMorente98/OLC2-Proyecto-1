@@ -23,6 +23,8 @@ export class Literal extends Expression {
                 return {value : Number(this.value), type : Type.NUMBER};
             case 1:
                 return {value : this.value, type : Type.STRING};
+            case 2:
+                return {value : Boolean(this.value), type : Type.BOOLEAN};
         }
     }
 }

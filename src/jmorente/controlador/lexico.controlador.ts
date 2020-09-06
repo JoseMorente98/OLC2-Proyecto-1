@@ -9,6 +9,7 @@ import * as graficar from '../ast/chart';
 import { Imprimir } from '../instruccion/console.instruccion';
 import { Environment } from '../simbolos/enviroment.simbolos';
 import { Declaracion } from '../instruccion/declaracion.instruccion';
+import { While } from '../instruccion/while.instruccion';
 
 //var fs = require('fs');
 export class LexicoControlador {
@@ -50,6 +51,9 @@ export class LexicoControlador {
             if (iterator instanceof Imprimir) {
                 iterator.execute(env);
             }
+            if (iterator instanceof While) {
+                iterator.execute(env);
+            }
         }
         console.log("=========SEGUNDA ITERACION=========")
 
@@ -60,6 +64,9 @@ export class LexicoControlador {
 
             }
             if (instr instanceof Imprimir) {
+                instr.execute(env);
+            }
+            if (instr instanceof While) {
                 instr.execute(env);
             }
             try {
