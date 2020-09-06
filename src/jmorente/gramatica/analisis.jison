@@ -99,39 +99,24 @@ string  (\"[^"]*\")
 Init    
     : INSTRUCCIONES EOF 
     {
-        $$ = 
-        {
-            node: newNode(yy, yystate, $1.node),
-            ejecutar: $1
-        };
         return $$;
     } 
 ;
 
 INSTRUCCIONES
     : INSTRUCCIONES INSTRUCCION{
-        $$ = 
-        {
-            node: newNode(yy, yystate, $1.node, $2.node),
-            ejecutar: $1
-        };
+        $1.push($2);
+        $$ = $1
     }
     | INSTRUCCION{
-        $$ = 
-        {
-            node: newNode(yy, yystate, $1.node),
-            ejecutar: $1
-        };
+        $$ = [$1]
     }
 ;
 
 INSTRUCCION
     : DECLARACION_VAR
     {
-        $$ = {
-            node: newNode(yy, yystate, $1.node),
-            ejecutar: $1
-        };
+        $$ = $1
     }
     |
     DECLARACION_LET
@@ -191,10 +176,7 @@ INSTRUCCION
     |
     CONSOLE
     {
-        $$ = {
-            node: newNode(yy, yystate, $1.node),
-            ejecutar: $1
-        };
+        $$ = $1
     }
     |
     LLAMADA_FUNCION
@@ -211,34 +193,22 @@ INSTRUCCION
 DECLARACION_VAR 
     : 'PR_VAR' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7),
-            ejecutar: new Declaracion($2, $4, $6, @1.first_line, @1.first_column)
-        };
+        $$ = new Declaracion($2, $4, $6, @1.first_line, @1.first_column);
     }
     |
     'PR_VAR' ID ':' TIPO ';'
     {
-        $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4.node, $5),
-            ejecutar: new Declaracion($2, $4, null, @1.first_line, @1.first_column)
-        };
+        $$ = new Declaracion($2, $4, null, @1.first_line, @1.first_column);
     }
     |
     'PR_VAR' ID '=' EXPRESION ';'
     {
-        $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4.node, $5),
-            ejecutar: new Declaracion($2, null, $4, @1.first_line, @1.first_column)
-        };
+        $$ = new Declaracion($2, null, $4, @1.first_line, @1.first_column);
     }
     |
     'PR_VAR' ID ';'
     {
-        $$ = {
-            node: newNode(yy, yystate, $1, $2, $3),
-            ejecutar: new Declaracion($2, null, null, @1.first_line, @1.first_column)
-        };
+        $$ = new Declaracion($2, null, null, @1.first_line, @1.first_column);
     }
     | 'PR_VAR' ID ':' TIPO ARREGLO '=' EXPRESION ';'
     {
@@ -334,15 +304,15 @@ DECLARACION_SIN_TIPO
 TIPO
     : 'PR_STRING'
     {
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = $1;
     }
     | 'PR_NUMBER'
     { 
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = $1;
     }
     | 'PR_BOOLEAN'
     { 
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = $1;
     }
 ;
 
@@ -445,7 +415,7 @@ EXPRESION
     |
     IDENTIFICADOR
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
 ;
 
@@ -456,45 +426,27 @@ IDENTIFICADOR
     }
     | CADENA
     { 
-        $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Literal($1, @1.first_line, @1.first_column, 1)
-        };
+        $$ = new Literal($1, @1.first_line, @1.first_column, 1)
     }
     | NUMERO
     { 
-        $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Literal($1, @1.first_line, @1.first_column, 0)
-        };
+        $$ = new Literal($1, @1.first_line, @1.first_column, 0)
     }
     | DECIMAL
     { 
-        $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Literal($1, @1.first_line, @1.first_column, 0)
-        };
+        $$ = new Literal($1, @1.first_line, @1.first_column, 0)
     }
     | 'PR_TRUE'
     { 
-        $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Literal($1, @1.first_line, @1.first_column, 2)
-        };
+        $$ = new Literal($1, @1.first_line, @1.first_column, 2)
     }
     | 'PR_FALSE'
     { 
-        $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Literal($1, @1.first_line, @1.first_column, 2)
-        };
+        $$ = new Literal($1, @1.first_line, @1.first_column, 2)
     }
     | ID
     { 
-        $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Acceso($1, @1.first_line, @1.first_column)
-        };
+        $$ = new Acceso($1, @1.first_line, @1.first_column)
     }
 ;
 
@@ -675,10 +627,7 @@ DECLARACION_FOR
 CONSOLE: 
     'PR_CONSOLE' '.' 'PR_LOG' '(' EXPRESION ')' ';'
     {
-        $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4, $5.node, $6, $7),
-            ejecutar: new Imprimir($5, @1.first_line, @1.first_column)
-        };
+        $$ =  new Imprimir($5, @1.first_line, @1.first_column)
     }
 ;
 

@@ -71,7 +71,7 @@
     recoverable: (boolean: TRUE when the parser has a error recovery rule available for this particular error)
   }
 */
-var gramatica = (function(){
+var analisis = (function(){
 var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,19],$V1=[1,22],$V2=[1,20],$V3=[1,21],$V4=[1,23],$V5=[1,24],$V6=[1,25],$V7=[1,26],$V8=[1,28],$V9=[1,29],$Va=[1,27],$Vb=[1,30],$Vc=[1,31],$Vd=[1,32],$Ve=[5,22,23,30,31,60,61,62,63,67,69,70,71,75,76,77,83,86],$Vf=[1,53],$Vg=[1,45],$Vh=[1,47],$Vi=[1,48],$Vj=[1,49],$Vk=[1,50],$Vl=[1,51],$Vm=[1,52],$Vn=[1,58],$Vo=[1,66],$Vp=[1,74],$Vq=[1,75],$Vr=[1,76],$Vs=[1,82],$Vt=[1,83],$Vu=[1,84],$Vv=[1,85],$Vw=[1,86],$Vx=[1,87],$Vy=[1,88],$Vz=[1,89],$VA=[1,90],$VB=[1,91],$VC=[1,92],$VD=[1,93],$VE=[1,94],$VF=[1,95],$VG=[24,28,37,38,39,40,41,42,43,44,45,46,47,48,49,50,54,92],$VH=[26,28,35,54,92],$VI=[54,92],$VJ=[5,22,23,30,31,60,61,62,63,67,68,69,70,71,75,76,77,83,86],$VK=[1,159],$VL=[26,28],$VM=[24,28,37,38,43,44,45,46,47,48,49,50,54,92],$VN=[24,28,37,38,39,40,43,44,45,46,47,48,49,50,54,92],$VO=[24,28,43,44,45,46,47,48,49,50,54,92],$VP=[24,28,47,48,49,50,54,92],$VQ=[1,185],$VR=[1,186],$VS=[1,194],$VT=[1,196],$VU=[1,214],$VV=[1,228],$VW=[67,75,76],$VX=[2,108],$VY=[67,86];
 var parser = {trace: function trace () { },
 yy: {},
@@ -85,80 +85,53 @@ var $0 = $$.length - 1;
 switch (yystate) {
 case 1:
 
-        this.$ = 
-        {
-            node: newNode(yy, yystate, $$[$0-1].node),
-            ejecutar: $$[$0-1]
-        };
         return this.$;
     
 break;
 case 2:
 
-        this.$ = 
-        {
-            node: newNode(yy, yystate, $$[$0-1].node, $$[$0].node),
-            ejecutar: $$[$0-1]
-        };
+        $$[$0-1].push($$[$0]);
+        this.$ = $$[$0-1]
     
 break;
 case 3:
 
-        this.$ = 
-        {
-            node: newNode(yy, yystate, $$[$0].node),
-            ejecutar: $$[$0]
-        };
+        this.$ = [$$[$0]]
     
 break;
-case 4: case 16:
+case 4: case 16: case 62:
 
-        this.$ = {
-            node: newNode(yy, yystate, $$[$0].node),
-            ejecutar: $$[$0]
-        };
+        this.$ = $$[$0]
     
 break;
-case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15: case 17: case 62: case 84: case 115:
+case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15: case 17: case 84: case 115:
 
         this.$ = {node: newNode(yy, yystate, $$[$0].node)};
     
 break;
-case 18: case 108: case 110:
+case 18: case 40: case 108: case 110:
 
         this.$ = $$[$0];
     
 break;
 case 19:
 
-        this.$ = {
-            node: newNode(yy, yystate, $$[$0-6], $$[$0-5], $$[$0-4], $$[$0-3].node, $$[$0-2], $$[$0-1].node, $$[$0]),
-            ejecutar: new Declaracion($$[$0-5], $$[$0-3], $$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column)
-        };
+        this.$ = new Declaracion($$[$0-5], $$[$0-3], $$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column);
     
 break;
 case 20:
 
-        this.$ = {
-            node: newNode(yy, yystate, $$[$0-4], $$[$0-3], $$[$0-2], $$[$0-1].node, $$[$0]),
-            ejecutar: new Declaracion($$[$0-3], $$[$0-1], null, _$[$0-4].first_line, _$[$0-4].first_column)
-        };
+        this.$ = new Declaracion($$[$0-3], $$[$0-1], null, _$[$0-4].first_line, _$[$0-4].first_column);
     
 break;
 case 21:
 
-        this.$ = {
-            node: newNode(yy, yystate, $$[$0-4], $$[$0-3], $$[$0-2], $$[$0-1].node, $$[$0]),
-            ejecutar: new Declaracion($$[$0-3], null, $$[$0-1], _$[$0-4].first_line, _$[$0-4].first_column)
-        };
+        this.$ = new Declaracion($$[$0-3], null, $$[$0-1], _$[$0-4].first_line, _$[$0-4].first_column);
     
 break;
 case 22:
 
-        this.$ = {
-            node: newNode(yy, yystate, $$[$0-2], $$[$0-1], $$[$0]),
-            ejecutar: new Declaracion($$[$0-1], null, null, _$[$0-2].first_line, _$[$0-2].first_column)
-        };
+        this.$ = new Declaracion($$[$0-1], null, null, _$[$0-2].first_line, _$[$0-2].first_column);
     
 break;
 case 23: case 31:
@@ -201,14 +174,9 @@ case 38:
         this.$ = {node: newNode(yy, yystate, $$[$0-6], $$[$0-5], $$[$0-4].node, $$[$0-3], $$[$0-2], $$[$0-1].node, $$[$0])};
     
 break;
-case 40: case 93:
-
-        this.$ = {node: newNode(yy, yystate, $$[$0])};
-    
-break;
-case 41: case 42: case 94:
+case 41: case 42:
  
-        this.$ = {node: newNode(yy, yystate, $$[$0])};
+        this.$ = $$[$0];
     
 break;
 case 43: case 70: case 71: case 72: case 76:
@@ -243,34 +211,22 @@ case 63: case 73: case 75:
 break;
 case 64:
  
-        this.$ = {
-            node: newNode(yy, yystate, $$[$0]),
-            ejecutar: new Literal($$[$0], _$[$0].first_line, _$[$0].first_column, 1)
-        };
+        this.$ = new Literal($$[$0], _$[$0].first_line, _$[$0].first_column, 1)
     
 break;
 case 65: case 66:
  
-        this.$ = {
-            node: newNode(yy, yystate, $$[$0]),
-            ejecutar: new Literal($$[$0], _$[$0].first_line, _$[$0].first_column, 0)
-        };
+        this.$ = new Literal($$[$0], _$[$0].first_line, _$[$0].first_column, 0)
     
 break;
 case 67: case 68:
  
-        this.$ = {
-            node: newNode(yy, yystate, $$[$0]),
-            ejecutar: new Literal($$[$0], _$[$0].first_line, _$[$0].first_column, 2)
-        };
+        this.$ = new Literal($$[$0], _$[$0].first_line, _$[$0].first_column, 2)
     
 break;
 case 69:
  
-        this.$ = {
-            node: newNode(yy, yystate, $$[$0]),
-            ejecutar: new Acceso($$[$0], _$[$0].first_line, _$[$0].first_column)
-        };
+        this.$ = new Acceso($$[$0], _$[$0].first_line, _$[$0].first_column)
     
 break;
 case 74:
@@ -331,6 +287,16 @@ case 92:
         this.$ = {node: newNode(yy, yystate, $$[$0-4].node, $$[$0-3], $$[$0-2].node, $$[$0-1], $$[$0].node)};
     
 break;
+case 93:
+
+        this.$ = {node: newNode(yy, yystate, $$[$0])};
+    
+break;
+case 94:
+ 
+        this.$ = {node: newNode(yy, yystate, $$[$0])};
+    
+break;
 case 95: case 97:
 
         this.$ = {node: newNode(yy, yystate, $$[$0-5], $$[$0-4], $$[$0-3], $$[$0-2].node, $$[$0-1], $$[$0].node)};
@@ -343,10 +309,7 @@ case 96: case 98:
 break;
 case 99:
 
-        this.$ = {
-            node: newNode(yy, yystate, $$[$0-6], $$[$0-5], $$[$0-4], $$[$0-3], $$[$0-2].node, $$[$0-1], $$[$0]),
-            ejecutar: new Imprimir($$[$0-2], _$[$0-6].first_line, _$[$0-6].first_column)
-        };
+        this.$ =  new Imprimir($$[$0-2], _$[$0-6].first_line, _$[$0-6].first_column)
     
 break;
 case 100: case 105:
@@ -1001,9 +964,9 @@ return new Parser;
 
 
 if (typeof require !== 'undefined' && typeof exports !== 'undefined') {
-exports.parser = gramatica;
-exports.Parser = gramatica.Parser;
-exports.parse = function () { return gramatica.parse.apply(gramatica, arguments); };
+exports.parser = analisis;
+exports.Parser = analisis.Parser;
+exports.parse = function () { return analisis.parse.apply(analisis, arguments); };
 exports.main = function commonjsMain (args) {
     if (!args[1]) {
         console.log('Usage: '+args[0]+' FILE');

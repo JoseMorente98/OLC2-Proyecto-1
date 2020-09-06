@@ -88,3 +88,14 @@ switch (key) {
         
         break;
 }
+
+/**
+ * 
+ * LLAMADA FUNCION
+ */
+hola();
+llamar();
+Llamarfuncion();
+Llamarfuncion(parametro1, parametro2, parametro3);
+abcde("hola", como, 4+2);
+

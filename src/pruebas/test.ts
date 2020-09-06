@@ -284,7 +284,7 @@ for (const iterator of object) {
 /**
  * 
  * IMPRIMIR LOGS
- *
+ */
 console.log(2+variable1*variable1);
 console.log(232%12);
 console.log(232^2);
