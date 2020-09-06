@@ -30,8 +30,11 @@ export class LexicoControlador {
         console.log("==========AST===========")
         console.log(ast)
 
-        let grafica = graficar.generateTree([ast.node]);
-        console.log(grafica)
+        setTimeout(() => {
+            let grafica = graficar.generateTree([ast.node]);
+            console.log(grafica)
+        }, 1000);
+        
         /*for(const instr of ast){
             try {
                 //if(instr instanceof Function)

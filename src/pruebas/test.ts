@@ -17,8 +17,8 @@ var age533:string[][]; // number variable
  * DECLARACION VARIABLE STRING
  */
 let age7:string = "32"; // number variable
-let age8:string[][] = "32"; // number variable
-let age9:string[] = "32"; // number variable
+//let age8:string[][] = "32"; // number variable
+//let age9:string[] = "32"; // number variable
 let age10:string = "32"; // number variable
 let age11:string; // number variable
 let age43:string[]; // number variable
@@ -35,7 +35,7 @@ const abcde = "32"; // number variable
 /**
  * 
  * OTRAS VARIABLES
- *
+ */
 var variable1 = 1; // number variable
 var variable2 = true; // number variable
 var variable3 = false; // number variable
@@ -53,7 +53,7 @@ var variable6:string = "Hola"; // number variable
 /**
  * 
  * ASIGNACION SIN TIPO
- *
+ */
 variable1 = 2;
 variable1 = 232;
 variable1 = 2.52;
@@ -299,3 +299,33 @@ console.log(variable1++);
 console.log(variable1--);*/
 
 console.log('Hola')
+
+function HolaAbc() {
+    function Saludar(params:string) {
+        function DESANIDAR(params:string) {
+            function ABC(params:string) {
+        
+            }
+        }
+    }
+
+    function hola(params:boolean) {
+        
+    }
+}
+
+function hola(params:number, params2:number) {
+    
+}
+
+function f1() : number{
+    return 10;
+}
+
+
+if(true){
+    if(true){
+        f1();
+        console.log("hola mundo");
+    }
+}

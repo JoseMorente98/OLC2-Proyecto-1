@@ -1,5 +1,3 @@
-
-
 %lex
 %options case-insensitive
 number  [0-9]+
@@ -19,7 +17,7 @@ string  (\"[^"]*\")
 "-"                     return '-'
 "+"                     return '+'
 "%"                     return '%'
-"^"                    return '^'
+"^"                     return '^'
 ";"                     return ';'
 ":"                     return ':'
 ","                     return ','
@@ -115,52 +113,52 @@ INSTRUCCION
     |
     DECLARACION_LET
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     DECLARACION_CONST
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     DECLARACION_SIN_TIPO
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     BREAK
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     CONTINUE
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     RETURN
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     IF
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     SWITCH
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     WHILE
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     DOWHILE
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     FOR
@@ -169,6 +167,11 @@ INSTRUCCION
     }
     |
     CONSOLE
+    {
+        $$ = $1;
+    }
+    |
+    FUNCIONES
     {
         $$ = $1;
     }
@@ -269,14 +272,19 @@ DECLARACION_CONST
 ;
 
 DECLARACION_SIN_TIPO
-    : ID ':' TIPO ARREGLO '=' EXPRESION ';'
+    : ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
+    }
+    |
+    ID ':' TIPO ARREGLO '=' EXPRESION ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $7)};
     }
     |
     ID '=' EXPRESION ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
     }
 ;
 
@@ -309,87 +317,87 @@ ARREGLO
 EXPRESION     
     : EXPRESION '+' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '-' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '*' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '/' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '%' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '^' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '<' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '<=' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '>' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '>=' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '==' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '!=' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     }
     |
     EXPRESION '&&' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     }
     |
     EXPRESION '||' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     }
     |
     '!' EXPRESION
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1, $2.node)};
     }
     |
     EXPRESION '+' '+'
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3)};
     }
     |
     EXPRESION '-' '-'
     {
-        $$ = $1
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3)};
     }
     |
     IDENTIFICADOR
@@ -432,54 +440,58 @@ IDENTIFICADOR
 BREAK 
     : 'PR_BREAK'  ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2)};
     }
 ;
 
 CONTINUE 
     : 'PR_CONTINUE'  ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2)};
     }
 ;
 
 RETURN 
     : 'PR_RETURN'  ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2)};
     }
     | 'PR_RETURN' EXPRESION ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2.node, $3)};
     }
 ;
 
 IF 
     : 'PR_IF' '(' EXPRESION ')' SENTENCIA ELSEIF
     {
-        $$ = $1;
+        if($6 == undefined) {
+            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node)};
+        } else {
+            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6.node)};
+        }
     }
 ;
 
 SENTENCIA 
     : '{' INSTRUCCIONES '}'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2.node, $3)};
     }
     | '{' '}'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2)};
     }
 ;
 
 ELSEIF 
     : 'PR_ELSE' SENTENCIA
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2.node)};
     }
     | 'PR_ELSE' IF
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2.node)};
     }
     | /* EPSILON */
     {
@@ -490,46 +502,50 @@ ELSEIF
 WHILE 
     : 'PR_WHILE' '(' EXPRESION ')' SENTENCIA
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node)};
     }
 ;
 
 DOWHILE 
     : 'PR_DO' SENTENCIA 'PR_WHILE' '(' EXPRESION ')' ';'
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2.node, $3, $4, $5.node, $6, $7)};
     }
 ;
 
 SWITCH
     : 'PR_SWITCH' '(' EXPRESION ')' '{' CASES DEFAULT '}'
     {
-        $$ = $1;
+        if($7 == undefined) {
+            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $8)};
+        } else {
+            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $7.node, $8)};
+        }
     }
 ;
 
 CASES 
     : CASES CASE
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node, $2.node)};
     }
     | CASE
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
 ;
 
 CASE
     : 'PR_CASE'  EXPRESION ':' INSTRUCCIONES
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2.node, $3, $4.node)};
     }
 ;
 
 DEFAULT 
     : 'PR_DEFAULT' ':' INSTRUCCIONES
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node)};
     }
     | /* EPSILON */
     {
@@ -597,6 +613,79 @@ DECLARACION_FOR
 
 CONSOLE: 
     'PR_CONSOLE' '.' 'PR_LOG' '(' EXPRESION ')' ';'
+    {
+        $$ = $1;
+    }
+;
+
+FUNCIONES: 
+    'PR_FUNCTION' ID '(' ')' SENTENCIAFUNCION
+    {
+        $$ = $1;
+    }
+    |
+    'PR_FUNCTION' ID '(' PARAMETROS ')' SENTENCIAFUNCION
+    {
+        $$ = $1;
+    }
+;
+
+SENTENCIAFUNCION: 
+    '{' FUNCIONHIJA '}'
+    {
+        $$ = $1;
+    }
+    |
+    '{' '}'
+    {
+        $$ = $1;
+    }
+;
+
+FUNCIONHIJA: 
+    FUNCIONH OTRAFUNCIONH
+    {
+        $$ = $1;
+    }
+;
+
+FUNCIONH: 
+    'PR_FUNCTION' ID '(' ')' SENTENCIAFUNCION
+    {
+        $$ = $1;
+    }
+    |
+    'PR_FUNCTION' ID '(' PARAMETROS ')' SENTENCIAFUNCION
+    {
+        $$ = $1;
+    }
+;
+
+OTRAFUNCIONH: 
+    FUNCIONH OTRAFUNCIONH
+    {
+        $$ = $1;
+    }
+    | /*EPSILON*/
+    {
+        $$ = $1;
+    }
+;
+
+PARAMETROS: 
+    PARAMETROS ',' PARAMETRO
+    {
+        $$ = $1;
+    }
+    |
+    PARAMETRO
+    {
+        $$ = $1;
+    }
+;
+
+PARAMETRO: 
+    ID ':' TIPO
     {
         $$ = $1;
     }
