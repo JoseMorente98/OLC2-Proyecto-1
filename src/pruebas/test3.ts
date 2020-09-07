@@ -118,3 +118,20 @@ var varAAE:number = varAA ^ 2;
 var varAAF:number = varAA % 3;
 var varAAF:number = varAA++;
 var varAAF:number = varAA--;
+
+
+var constante:boolean = true==true;
+var constanteA:boolean = true==false;
+var constanteA:boolean = "hola"=="hola";
+var constanteB:boolean = true!=true;
+var constanteC:boolean = 5 < 7;
+var constanteE:boolean = 5 > 7;
+var constanteF:boolean = 5 >= 7;
+var constanteD:boolean = 5 <= 7;
+
+var varAAA:number = 10 + 12;//22
+var varAAB:number = varAAA - 12;//12
+var constanteD:boolean = 5 <= varAAA;//true
+var constanteD:boolean = varAAA <= 5;//false
+var constanteD:boolean = varAAB <= varAAA;//true
+var constanteD:boolean = varAAB >= varAAA;//false

@@ -372,19 +372,19 @@ EXPRESION
         $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
-    EXPRESION '<=' EXPRESION
-    {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
-    } 
-    |
     EXPRESION '>' EXPRESION
     {
         $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
-    EXPRESION '>=' EXPRESION
+    EXPRESION '<' '=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: newNode(yy, yystate, $1.node, "<=", $4.node)};
+    }
+    |
+    EXPRESION '>' '=' EXPRESION
+    {
+        $$ = {node: newNode(yy, yystate, $1.node, "<=", $4.node)};
     } 
     |
     EXPRESION '==' EXPRESION

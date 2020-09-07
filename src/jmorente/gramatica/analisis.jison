@@ -1,6 +1,7 @@
  
 %{
     const {Aritmetica, OpcionAritmetica} = require('../expresion/aritmetica.expresion');
+    const {Relacional, OpcionRelacional} = require('../expresion/relacional.expresion');
     const { Acceso } = require('../expresion/acceso.expresion');
     const { Literal } = require('../expresion/literal.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
@@ -369,32 +370,32 @@ EXPRESION
     |
     EXPRESION '<' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
-    } 
-    |
-    EXPRESION '<=' EXPRESION
-    {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Relacional($1, $3, OpcionRelacional.MENOR, @1.first_line,@1.first_column);
     } 
     |
     EXPRESION '>' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Relacional($1, $3, OpcionRelacional.MAYOR, @1.first_line,@1.first_column);
     } 
     |
-    EXPRESION '>=' EXPRESION
+    EXPRESION '<' '=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Relacional($1, $4, OpcionRelacional.MENOR_IGUAL, @1.first_line,@1.first_column);
+    } 
+    |
+    EXPRESION '>' '=' EXPRESION
+    {
+        $$ = new Relacional($1, $4, OpcionRelacional.MAYOR_IGUAL, @1.first_line,@1.first_column);
     } 
     |
     EXPRESION '==' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Relacional($1, $3, OpcionRelacional.IGUAL, @1.first_line,@1.first_column);
     } 
     |
     EXPRESION '!=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Relacional($1, $3, OpcionRelacional.DIFERENTE, @1.first_line,@1.first_column);
     }
     |
     EXPRESION '&&' EXPRESION
@@ -431,7 +432,7 @@ EXPRESION
 IDENTIFICADOR
     : '(' EXPRESION ')'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node, $3)};
+        $$ = $2;
     }
     | CADENA
     { 
