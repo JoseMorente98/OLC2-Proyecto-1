@@ -9,6 +9,7 @@
     const { SinTipo } = require('../instruccion/sintipo.instruccion');
     const { Imprimir } = require('../instruccion/console.instruccion');
     const { While } = require('../instruccion/while.instruccion');
+    const { DoWhile } = require('../instruccion/do-while.instruccion');
     const { Sentencia } = require('../instruccion/sentencia.instruccion');
 %}
 
@@ -178,7 +179,7 @@ INSTRUCCION
     |
     DOWHILE
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     FOR
@@ -534,7 +535,7 @@ WHILE
 DOWHILE 
     : 'PR_DO' SENTENCIA 'PR_WHILE' '(' EXPRESION ')' ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node, $3, $4, $5.node, $6, $7)};
+        $$ = new DoWhile($5, $2, @1.first_line, @1.first_column);
     }
 ;
 
