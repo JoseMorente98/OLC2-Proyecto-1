@@ -6,6 +6,7 @@ import * as graficar from '../../jmorente/ast/chart';
 import { Environment } from 'src/jmorente/simbolos/enviroment.simbolos';
 import { Imprimir } from 'src/jmorente/instruccion/console.instruccion';
 import { Declaracion } from 'src/jmorente/instruccion/declaracion.instruccion';
+import { SalidaControlador } from 'src/jmorente/controlador/salida.controlador';
 
 
 @Component({
@@ -46,9 +47,13 @@ export class Tab1Page {
     if (document.getElementById("grafo")) {
       document.getElementById("grafo").remove();
     }
-
     try {
+      /**
+       * LIMPIAR VARIABLES
+       */
+      SalidaControlador.getInstancia().clear();
       console.clear()
+      this.strSalida = "";
       const env = new Environment(null);
       let graficaAST = parser.parse(this.strEntrada);
       let analisisAST = analisis.parse(this.strEntrada);
@@ -61,15 +66,8 @@ export class Tab1Page {
        * EJECUTAR EJECUCION
        */
       for(const instr of analisisAST){
-        /*if (instr instanceof Imprimir) {
-          let str = instr.execute(env);
-            console.log(str);
-            this.strSalida += str.value;
-        }*/
         try {
             const actual = instr.execute(env);
-            // console.log("========ACTUAL=======")
-            // console.log(actual)
             if(actual != null || actual != undefined){
                 //errores.push(new Error_(actual.line, actual.column, 'Semantico', actual.type + ' fuera de un ciclo'));
                 console.error("ERROR SEMANTICO")
@@ -85,7 +83,7 @@ export class Tab1Page {
       console.error(error)
       //ErrorControlador.getInstancia().agregarError(error.error, "Semántico", error.fila, error.columna);
     }
-    
+    this.strSalida = SalidaControlador.getInstancia().getSalida;
     // IMPRIMIR ERRORES
     ErrorControlador.getInstancia().imprimirError();
   }
