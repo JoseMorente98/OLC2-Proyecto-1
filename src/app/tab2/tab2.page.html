@@ -23,12 +23,14 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-item *ngFor="let item of data">
-    <ion-label class="ion-text-wrap">
-      <p><strong>Descripción: </strong>{{item.descripcion}}</p>
-      <p><strong>Fila: </strong>{{item.fila}}</p>
-      <p><strong>Columna: </strong>{{item.columna}}</p>
-      <p><strong>Tipo: </strong>{{item.tipo}}</p>
-    </ion-label>
-  </ion-item>
+  <div *ngIf="itemSelect=='Error'">
+    <ion-item *ngFor="let item of data">
+      <ion-label class="ion-text-wrap">
+        <p><strong>Descripción: </strong>{{item.descripcion}}</p>
+        <p><strong>Fila: </strong>{{item.fila}}</p>
+        <p><strong>Columna: </strong>{{item.columna}}</p>
+        <p><strong>Tipo: </strong>{{item.tipo}}</p>
+      </ion-label>
+    </ion-item>
+  </div>
 </ion-content>

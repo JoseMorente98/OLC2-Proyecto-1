@@ -199,7 +199,37 @@ case 44:
         this.$ = {node: newNode(yy, yystate, $$[$0-3], $$[$0-2], $$[$0-1], $$[$0])};
     
 break;
-case 45: case 46: case 47: case 48: case 49: case 50: case 51: case 52: case 53: case 54: case 55: case 56: case 57: case 58: case 114:
+case 45:
+
+        this.$ = new Aritmetica($$[$0-2], $$[$0], OpcionAritmetica.SUMA, _$[$0-2].first_line,_$[$0-2].first_column);
+    
+break;
+case 46:
+
+        this.$ = new Aritmetica($$[$0-2], $$[$0], OpcionAritmetica.RESTA, _$[$0-2].first_line,_$[$0-2].first_column);
+    
+break;
+case 47:
+
+        this.$ = new Aritmetica($$[$0-2], $$[$0], OpcionAritmetica.MULTIPLICACION, _$[$0-2].first_line,_$[$0-2].first_column);
+    
+break;
+case 48:
+
+        this.$ = new Aritmetica($$[$0-2], $$[$0], OpcionAritmetica.DIVISION, _$[$0-2].first_line,_$[$0-2].first_column);
+    
+break;
+case 49:
+
+        this.$ = new Aritmetica($$[$0-2], $$[$0], OpcionAritmetica.MODULO, _$[$0-2].first_line,_$[$0-2].first_column);
+    
+break;
+case 50:
+
+        this.$ = new Aritmetica($$[$0-2], $$[$0], OpcionAritmetica.EXPONENTE, _$[$0-2].first_line,_$[$0-2].first_column);
+    
+break;
+case 51: case 52: case 53: case 54: case 55: case 56: case 57: case 58: case 114:
 
         this.$ = {node: newNode(yy, yystate, $$[$0-2].node, $$[$0-1], $$[$0].node)};
     
@@ -209,9 +239,14 @@ case 59: case 77: case 78:
         this.$ = {node: newNode(yy, yystate, $$[$0-1], $$[$0].node)};
     
 break;
-case 60: case 61:
+case 60:
 
-        this.$ = {node: newNode(yy, yystate, $$[$0-2].node, $$[$0-1], $$[$0])};
+        this.$ = new Aritmetica($$[$0-2], $$[$0-2], OpcionAritmetica.INCREMENTO, _$[$0-2].first_line,_$[$0-2].first_column);
+    
+break;
+case 61:
+
+        this.$ = new Aritmetica($$[$0-2], $$[$0-2], OpcionAritmetica.DECREMENTO, _$[$0-2].first_line,_$[$0-2].first_column);
     
 break;
 case 63: case 73:
@@ -221,7 +256,7 @@ case 63: case 73:
 break;
 case 64:
  
-        this.$ = new Literal($$[$0], _$[$0].first_line, _$[$0].first_column, 1)
+        this.$ = new Literal($$[$0], _$[$0].first_line, _$[$0].first_column, 1);
     
 break;
 case 65: case 66:
@@ -513,6 +548,7 @@ parse: function parse(input) {
     return true;
 }};
 
+    const {Aritmetica, OpcionAritmetica} = require('../expresion/aritmetica.expresion');
     const { Acceso } = require('../expresion/acceso.expresion');
     const { Literal } = require('../expresion/literal.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');

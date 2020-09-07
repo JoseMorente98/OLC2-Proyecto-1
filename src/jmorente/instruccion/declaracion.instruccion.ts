@@ -18,14 +18,18 @@ export class Declaracion extends Instruction{
 
     public execute(environment: Environment) {
         try {
-            //console.error("DECLARACION")
-            //console.log(environment)
+            console.error("DECLARACION")
+            console.log(environment)
             const val = this.value.execute(environment);
-            //console.log(val)
-            if(this.type != val.type) {
-                throw {error: "El tipo " + val.value + " no es asignable con " + this.obtenerTipo(this.type), fila: this.fila, columna : this.columna};
-            } else {
+            console.log(val)
+            if(this.type == undefined) {
                 environment.guardar(this.id, val.value, val.type);
+            } else {
+                if(this.type != val.type) {
+                    throw {error: "El tipo " + val.value + " no es asignable con " + this.obtenerTipo(this.type), fila: this.fila, columna : this.columna};
+                } else {
+                    environment.guardar(this.id, val.value, val.type);
+                }
             }
         } catch (error) {
             /**

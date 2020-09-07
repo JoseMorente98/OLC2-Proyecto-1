@@ -78,7 +78,7 @@ Inicio();
     //debería lanzar un error, cualquiera
     //comentar luego de que lanze el error
     console.log("========= Error Ambitos ==============");
-    console.log("Debería lanzar error: "+amb1);
+    //console.log("Debería lanzar error: "+amb1);
     let amb1 = "Desde ambito2";
     console.log("======================================");
     console.log("================ Nice ================");

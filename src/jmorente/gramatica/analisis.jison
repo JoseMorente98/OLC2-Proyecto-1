@@ -1,5 +1,6 @@
  
 %{
+    const {Aritmetica, OpcionAritmetica} = require('../expresion/aritmetica.expresion');
     const { Acceso } = require('../expresion/acceso.expresion');
     const { Literal } = require('../expresion/literal.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
@@ -338,32 +339,32 @@ ARREGLO
 EXPRESION     
     : EXPRESION '+' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Aritmetica($1, $3, OpcionAritmetica.SUMA, @1.first_line,@1.first_column);
     } 
     |
     EXPRESION '-' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Aritmetica($1, $3, OpcionAritmetica.RESTA, @1.first_line,@1.first_column);
     } 
     |
     EXPRESION '*' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Aritmetica($1, $3, OpcionAritmetica.MULTIPLICACION, @1.first_line,@1.first_column);
     } 
     |
     EXPRESION '/' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Aritmetica($1, $3, OpcionAritmetica.DIVISION, @1.first_line,@1.first_column);
     } 
     |
     EXPRESION '%' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Aritmetica($1, $3, OpcionAritmetica.MODULO, @1.first_line,@1.first_column);
     } 
     |
     EXPRESION '^' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Aritmetica($1, $3, OpcionAritmetica.EXPONENTE, @1.first_line,@1.first_column);
     } 
     |
     EXPRESION '<' EXPRESION
@@ -413,12 +414,12 @@ EXPRESION
     |
     EXPRESION '+' '+'
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3)};
+        $$ = new Aritmetica($1, $1, OpcionAritmetica.INCREMENTO, @1.first_line,@1.first_column);
     }
     |
     EXPRESION '-' '-'
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3)};
+        $$ = new Aritmetica($1, $1, OpcionAritmetica.DECREMENTO, @1.first_line,@1.first_column);
     }
     |
     IDENTIFICADOR
@@ -434,7 +435,7 @@ IDENTIFICADOR
     }
     | CADENA
     { 
-        $$ = new Literal($1, @1.first_line, @1.first_column, 1)
+        $$ = new Literal($1, @1.first_line, @1.first_column, 1);
     }
     | NUMERO
     { 
