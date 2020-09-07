@@ -135,3 +135,38 @@ var constanteD:boolean = 5 <= varAAA;//true
 var constanteD:boolean = varAAA <= 5;//false
 var constanteD:boolean = varAAB <= varAAA;//true
 var constanteD:boolean = varAAB >= varAAA;//false
+var constanteD:boolean = varAAB >= varAAA;//false
+var constanteF:boolean = varAAB && varAAA;//false
+var constanteG:boolean = varAAB || varAAA;//false
+var constanteH:boolean = !varAAB;//false
+
+var constanteF:boolean = true && true;//false
+var constanteG:boolean = false || varAAA;//false
+var constanteH:boolean = !varAAB;//false
+
+
+var constanteAND:boolean = false && false;//false
+var constanteAND:boolean = false && true;//false
+var constanteAND:boolean = true && false;//false
+var constanteAND:boolean = true && true;//true
+
+
+var constanteOR:boolean = false || false;//false
+var constanteOR:boolean = false || true;//true
+var constanteOR:boolean = true || false;//true
+var constanteOR:boolean = true || true;//true
+
+var constanteNOT:boolean = !true;//false
+var constanteNOT:boolean = !false;//true
+
+
+var varAAA:number = 10 + 12;//22
+var constanteAND1:boolean = varAAA && true;//true
+var constanteNOT2:boolean = varAAA || true;//true
+console.log(constanteAND1)
+console.log(constanteNOT2)
+
+var varAAA:number = 10 + 12;//22
+var varAAAs:string = "hola" + 12;//22
+var constanteNOT:boolean = !varAAA;//false
+var constanteNOT2:boolean = !varAAAs;//false

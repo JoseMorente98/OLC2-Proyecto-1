@@ -259,14 +259,19 @@ case 56:
         this.$ = new Relacional($$[$0-2], $$[$0], OpcionRelacional.DIFERENTE, _$[$0-2].first_line,_$[$0-2].first_column);
     
 break;
-case 57: case 58: case 114:
+case 57:
 
-        this.$ = {node: newNode(yy, yystate, $$[$0-2].node, $$[$0-1], $$[$0].node)};
+        this.$ = new Logica($$[$0-2], $$[$0], OpcionLogica.AND, _$[$0-2].first_line,_$[$0-2].first_column);
     
 break;
-case 59: case 77: case 78:
+case 58:
 
-        this.$ = {node: newNode(yy, yystate, $$[$0-1], $$[$0].node)};
+        this.$ = new Logica($$[$0-2], $$[$0], OpcionLogica.OR, _$[$0-2].first_line,_$[$0-2].first_column);
+    
+break;
+case 59:
+
+        this.$ = new Logica($$[$0], $$[$0], OpcionLogica.NOT, _$[$0-1].first_line,_$[$0-1].first_column);
     
 break;
 case 60:
@@ -321,6 +326,11 @@ break;
 case 75:
 
         this.$ = new Sentencia($$[$0-1], _$[$0-2].first_line, _$[$0-2].first_column)
+    
+break;
+case 77: case 78:
+
+        this.$ = {node: newNode(yy, yystate, $$[$0-1], $$[$0].node)};
     
 break;
 case 79: case 87:
@@ -425,6 +435,11 @@ break;
 case 113:
 
         this.$ = {node: newNode(yy, yystate, $$[$0-4], $$[$0-3], $$[$0-2].node, $$[$0-1], $$[$0])};
+    
+break;
+case 114:
+
+        this.$ = {node: newNode(yy, yystate, $$[$0-2].node, $$[$0-1], $$[$0].node)};
     
 break;
 }
@@ -580,6 +595,7 @@ parse: function parse(input) {
 
     const {Aritmetica, OpcionAritmetica} = require('../expresion/aritmetica.expresion');
     const {Relacional, OpcionRelacional} = require('../expresion/relacional.expresion');
+    const {Logica, OpcionLogica} = require('../expresion/logica.expresion');
     const { Acceso } = require('../expresion/acceso.expresion');
     const { Literal } = require('../expresion/literal.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');

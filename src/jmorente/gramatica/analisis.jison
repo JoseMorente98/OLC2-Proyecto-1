@@ -2,6 +2,7 @@
 %{
     const {Aritmetica, OpcionAritmetica} = require('../expresion/aritmetica.expresion');
     const {Relacional, OpcionRelacional} = require('../expresion/relacional.expresion');
+    const {Logica, OpcionLogica} = require('../expresion/logica.expresion');
     const { Acceso } = require('../expresion/acceso.expresion');
     const { Literal } = require('../expresion/literal.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
@@ -400,17 +401,17 @@ EXPRESION
     |
     EXPRESION '&&' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Logica($1, $3, OpcionLogica.AND, @1.first_line,@1.first_column);
     }
     |
     EXPRESION '||' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = new Logica($1, $3, OpcionLogica.OR, @1.first_line,@1.first_column);
     }
     |
     '!' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node)};
+        $$ = new Logica($2, $2, OpcionLogica.NOT, @1.first_line,@1.first_column);
     }
     |
     EXPRESION '+' '+'
