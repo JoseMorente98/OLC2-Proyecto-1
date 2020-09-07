@@ -10,8 +10,8 @@
 %options case-insensitive
 BSL                 "\\".
 BSL2                 "\"".
-number              ([+-]?[0-9]+)
-decimal             ([+-]?[0-9]+("."[0-9]+))
+number              ([-]?[0-9]+)
+decimal             ([-]?[0-9]+("."[0-9]+))
 string              (\"([^"]|{BSL})*\")
 string2             (\'([^']|{BSL}|{BSL2})*\')
 string3             (\`([^`]|{BSL}|{BSL2})*\`)

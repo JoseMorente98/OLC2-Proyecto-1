@@ -47,21 +47,21 @@ var sexo:boolean = true;
 
 /**
  * STRING
- */
+ *
 var variable1:string = "Hola \n Mundo";
 var variable5:string = 1;
 var variable5:string = true;
 
 /**
  * NUMBER
- */
+ *
 var variable10:number = 1;
 var variable12:number = "1";
 var variable11:number = true;
 
 /**
  * BOOLEAN
- */
+ *
 var variable20:boolean = 1;
 var variable22:boolean = "Hola";
 var variable21:boolean = true;
@@ -75,7 +75,7 @@ var varC = true;
 
 /**
  * VARIABLES SIN TIPO
- */
+ *
 var varA:string = "Hola \n Mundo" + 5;
 var varB:number =  5 + "Hola numer";
 var varBC:number =  5 - "Hola numer";
@@ -90,7 +90,7 @@ console.log(varE);
 
 /**
  * SUMA DE VARIABLE
- */
+ *
 var varA:string = "Hola \n Mundo" + 5;
 var varB:string = 6 + 5;
 var varC:string = true + true;
@@ -220,3 +220,23 @@ var cadena4:string = `cadena de texto ${apellido} \t texto`;
 var cadena5:string = `cadena de texto ${apellido} \" texto`;
 var cadena6:string = `cadena de texto ${apellido} texto`;
 console.log(cadena);
+
+/**
+ * MANEJO DE SIN TIPOS
+ */
+var apellido:string = "Morente";
+apellido = "González" + true;
+console.log(apellido);
+var nombre:string = "Morente";
+nombre = 1;
+console.log(nombre);
+var sexo:boolean = true;
+sexo = false;
+sexo = "true";
+console.log(sexo);
+
+var edad:number = 0;
+while (edad < 5) {
+    edad = edad + 1;
+    console.log('HOLA MUNDO');
+}

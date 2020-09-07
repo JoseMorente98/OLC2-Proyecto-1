@@ -6,6 +6,7 @@
     const { Acceso } = require('../expresion/acceso.expresion');
     const { Literal } = require('../expresion/literal.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
+    const { SinTipo } = require('../instruccion/sintipo.instruccion');
     const { Imprimir } = require('../instruccion/console.instruccion');
     const { While } = require('../instruccion/while.instruccion');
     const { Sentencia } = require('../instruccion/sentencia.instruccion');
@@ -15,8 +16,8 @@
 %options case-insensitive
 BSL                 "\\".
 BSL2                 "\"".
-number              ([+-]?[0-9]+)
-decimal             ([+-]?[0-9]+("."[0-9]+))
+number              ([-]?[0-9]+)
+decimal             ([-]?[0-9]+("."[0-9]+))
 string              (\"([^"]|{BSL})*\")
 string2             (\'([^']|{BSL}|{BSL2})*\')
 string3             (\`([^`]|{BSL}|{BSL2})*\`)
@@ -142,7 +143,7 @@ INSTRUCCION
     |
     DECLARACION_SIN_TIPO
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     BREAK
@@ -308,7 +309,7 @@ DECLARACION_SIN_TIPO
     |
     ID '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+        $$ = new SinTipo($1, $3, @1.first_line, @1.first_column);
     }
 ;
 

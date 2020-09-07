@@ -72,6 +72,17 @@ export class Environment{
         return null;
     }
 
+    public setVar(id: string, valor: any, type: Type){
+        let env : Environment | null = this;
+        while(env != null){
+            if(env.variables.has(id)){
+                env.variables.set(id, new Symbol(valor, id, type))
+                return;
+            }
+            env = env.anterior;
+        }
+    }
+
     public guardar(id: string, valor: any, type: Type){
         let env : Environment | null = this;
         while(env != null){

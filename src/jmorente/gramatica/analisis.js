@@ -99,12 +99,12 @@ case 3:
         this.$ = [$$[$0]]
     
 break;
-case 4: case 13: case 16: case 62:
+case 4: case 7: case 13: case 16: case 62:
 
         this.$ = $$[$0]
     
 break;
-case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 14: case 15: case 17: case 84: case 115:
+case 5: case 6: case 8: case 9: case 10: case 11: case 12: case 14: case 15: case 17: case 84: case 115:
 
         this.$ = {node: newNode(yy, yystate, $$[$0].node)};
     
@@ -149,7 +149,7 @@ case 25: case 33: case 37:
         this.$ = {node: newNode(yy, yystate, $$[$0-5], $$[$0-4], $$[$0-3].node, $$[$0-2], $$[$0-1].node, $$[$0])};
     
 break;
-case 26: case 34: case 39: case 90: case 91:
+case 26: case 34: case 90: case 91:
 
         this.$ = {node: newNode(yy, yystate, $$[$0-3], $$[$0-2], $$[$0-1].node, $$[$0])};
     
@@ -172,6 +172,11 @@ break;
 case 38:
 
         this.$ = {node: newNode(yy, yystate, $$[$0-6], $$[$0-5], $$[$0-4].node, $$[$0-3], $$[$0-2], $$[$0-1].node, $$[$0])};
+    
+break;
+case 39:
+
+        this.$ = new SinTipo($$[$0-3], $$[$0-1], _$[$0-3].first_line, _$[$0-3].first_column);
     
 break;
 case 40:
@@ -599,6 +604,7 @@ parse: function parse(input) {
     const { Acceso } = require('../expresion/acceso.expresion');
     const { Literal } = require('../expresion/literal.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
+    const { SinTipo } = require('../instruccion/sintipo.instruccion');
     const { Imprimir } = require('../instruccion/console.instruccion');
     const { While } = require('../instruccion/while.instruccion');
     const { Sentencia } = require('../instruccion/sentencia.instruccion');
@@ -1058,7 +1064,7 @@ case 62:return 'TK_Desconocido';
 break;
 }
 },
-rules: [/^(?:\s+)/i,/^(?:\/\/.*)/i,/^(?:[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/])/i,/^(?:(([+-]?[0-9]+(\.[0-9]+))))/i,/^(?:(([+-]?[0-9]+)))/i,/^(?:(("([^"]|(\\.))*")))/i,/^(?:(('([^']|(\\.)|(".))*')))/i,/^(?:((`([^`]|(\\.)|(".))*`)))/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:-)/i,/^(?:\+)/i,/^(?:%)/i,/^(?:\^)/i,/^(?:;)/i,/^(?::)/i,/^(?:,)/i,/^(?:\.)/i,/^(?:<)/i,/^(?:>)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:\|\|)/i,/^(?:&&)/i,/^(?:!)/i,/^(?:=)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\})/i,/^(?:\})/i,/^(?:let\b)/i,/^(?:var\b)/i,/^(?:const\b)/i,/^(?:if\b)/i,/^(?:else\b)/i,/^(?:switch\b)/i,/^(?:default\b)/i,/^(?:case\b)/i,/^(?:while\b)/i,/^(?:do\b)/i,/^(?:for\b)/i,/^(?:console\b)/i,/^(?:log\b)/i,/^(?:break\b)/i,/^(?:continue\b)/i,/^(?:return\b)/i,/^(?:function\b)/i,/^(?:string\b)/i,/^(?:number\b)/i,/^(?:boolean\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:of\b)/i,/^(?:in\b)/i,/^(?:([a-zA-Z_])[a-zA-Z0-9_ñÑ]*)/i,/^(?:$)/i,/^(?:.)/i],
+rules: [/^(?:\s+)/i,/^(?:\/\/.*)/i,/^(?:[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/])/i,/^(?:(([-]?[0-9]+(\.[0-9]+))))/i,/^(?:(([-]?[0-9]+)))/i,/^(?:(("([^"]|(\\.))*")))/i,/^(?:(('([^']|(\\.)|(".))*')))/i,/^(?:((`([^`]|(\\.)|(".))*`)))/i,/^(?:\*)/i,/^(?:\/)/i,/^(?:-)/i,/^(?:\+)/i,/^(?:%)/i,/^(?:\^)/i,/^(?:;)/i,/^(?::)/i,/^(?:,)/i,/^(?:\.)/i,/^(?:<)/i,/^(?:>)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:==)/i,/^(?:!=)/i,/^(?:\|\|)/i,/^(?:&&)/i,/^(?:!)/i,/^(?:=)/i,/^(?:\()/i,/^(?:\))/i,/^(?:\{)/i,/^(?:\})/i,/^(?:\[)/i,/^(?:\])/i,/^(?:\})/i,/^(?:\})/i,/^(?:let\b)/i,/^(?:var\b)/i,/^(?:const\b)/i,/^(?:if\b)/i,/^(?:else\b)/i,/^(?:switch\b)/i,/^(?:default\b)/i,/^(?:case\b)/i,/^(?:while\b)/i,/^(?:do\b)/i,/^(?:for\b)/i,/^(?:console\b)/i,/^(?:log\b)/i,/^(?:break\b)/i,/^(?:continue\b)/i,/^(?:return\b)/i,/^(?:function\b)/i,/^(?:string\b)/i,/^(?:number\b)/i,/^(?:boolean\b)/i,/^(?:true\b)/i,/^(?:false\b)/i,/^(?:of\b)/i,/^(?:in\b)/i,/^(?:([a-zA-Z_])[a-zA-Z0-9_ñÑ]*)/i,/^(?:$)/i,/^(?:.)/i],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62],"inclusive":true}}
 });
 return lexer;
