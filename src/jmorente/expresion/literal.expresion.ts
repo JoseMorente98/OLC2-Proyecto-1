@@ -24,7 +24,7 @@ export class Literal extends Expression {
             case 1:
                 return {value : this.value, type : Type.STRING};
             case 2:
-                return {value : Boolean(this.value), type : Type.BOOLEAN};
+                return {value : (this.value=="false")?false:true, type : Type.BOOLEAN};
         }
     }
 }
