@@ -450,7 +450,7 @@ function  FactorialIterativo(n2:number){
     }while(numero1 <5);
 }
 
- function  figura0(numero:number){
+function  figura0(numero:number){
     let i = 0;
     while(i < numero){
         let j = 0;

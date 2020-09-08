@@ -10,8 +10,8 @@
 %options case-insensitive
 BSL                 "\\".
 BSL2                 "\"".
-number              ([-]?[0-9]+)
-decimal             ([-]?[0-9]+("."[0-9]+))
+number              ([0-9]+)
+decimal             ([0-9]+("."[0-9]+))
 string              (\"([^"]|{BSL})*\")
 string2             (\'([^']|{BSL}|{BSL2})*\')
 string3             (\`([^`]|{BSL}|{BSL2})*\`)
@@ -365,6 +365,16 @@ EXPRESION
     EXPRESION '^' EXPRESION
     {
         $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+    } 
+    |
+    EXPRESION '*' '*' EXPRESION
+    {
+        $$ = {node: newNode(yy, yystate, $1.node, "**", $4.node)};
+    } 
+    |
+    '-' EXPRESION
+    {
+        $$ = {node: newNode(yy, yystate, "-", $2.node)};
     } 
     |
     EXPRESION '<' EXPRESION

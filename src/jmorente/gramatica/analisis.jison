@@ -9,6 +9,7 @@
     const { SinTipo } = require('../instruccion/sintipo.instruccion');
     const { Imprimir } = require('../instruccion/console.instruccion');
     const { While } = require('../instruccion/while.instruccion');
+    const { If } = require('../instruccion/if.instruccion');
     const { DoWhile } = require('../instruccion/do-while.instruccion');
     const { Sentencia } = require('../instruccion/sentencia.instruccion');
 %}
@@ -17,8 +18,8 @@
 %options case-insensitive
 BSL                 "\\".
 BSL2                 "\"".
-number              ([-]?[0-9]+)
-decimal             ([-]?[0-9]+("."[0-9]+))
+number              ([0-9]+)
+decimal             ([0-9]+("."[0-9]+))
 string              (\"([^"]|{BSL})*\")
 string2             (\'([^']|{BSL}|{BSL2})*\')
 string3             (\`([^`]|{BSL}|{BSL2})*\`)
@@ -164,7 +165,7 @@ INSTRUCCION
     |
     IF
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     SWITCH
@@ -371,6 +372,16 @@ EXPRESION
         $$ = new Aritmetica($1, $3, OpcionAritmetica.EXPONENTE, @1.first_line,@1.first_column);
     } 
     |
+    EXPRESION '*' '*' EXPRESION
+    {
+        $$ = new Aritmetica($1, $4, OpcionAritmetica.EXPONENTE, @1.first_line,@1.first_column);
+    } 
+    |
+    '-' EXPRESION
+    {
+        $$ = new Aritmetica($2, $2, OpcionAritmetica.NEGATIVO, @1.first_line,@1.first_column);
+    } 
+    |
     EXPRESION '<' EXPRESION
     {
         $$ = new Relacional($1, $3, OpcionRelacional.MENOR, @1.first_line,@1.first_column);
@@ -491,11 +502,7 @@ RETURN
 IF 
     : 'PR_IF' '(' EXPRESION ')' SENTENCIA ELSEIF
     {
-        if($6 == undefined) {
-            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node)};
-        } else {
-            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6.node)};
-        }
+        $$ = new If($3, $5, $6, @1.first_line, @1.first_column);
     }
 ;
 
@@ -513,11 +520,11 @@ SENTENCIA
 ELSEIF 
     : 'PR_ELSE' SENTENCIA
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node)};
+        $$ = $2;
     }
     | 'PR_ELSE' IF
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node)};
+        $$ = $2;
     }
     | /* EPSILON */
     {

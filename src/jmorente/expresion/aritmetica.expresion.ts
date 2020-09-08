@@ -10,7 +10,8 @@ export enum OpcionAritmetica{
     EXPONENTE,
     MODULO,
     INCREMENTO,
-    DECREMENTO
+    DECREMENTO,
+    NEGATIVO
 }
 
 export class Aritmetica extends Expression {
@@ -199,6 +200,26 @@ export class Aritmetica extends Expression {
                 default:
                     throw {error: "Operador " + this.obtenerOperador(this.type) + " NO puede ser aplicado a los tipos " + this.obtenerTipo(leftValue.type), fila: this.fila, columna : this.columna};
             }
+        }else if(this.type == OpcionAritmetica.NEGATIVO) {
+            /**
+             * SI EL IZQUIERDO ES -
+             * - NUMBER : NUMBER
+             * - BOOLEAN : 0 o -1
+             * - STRING: NAN
+             */
+            switch (leftValue.type) {
+                case 0:
+                    result = {value : (-leftValue.value), type : Type.NUMBER};
+                    break;
+                case 1:
+                    result = {value : (-leftValue.value), type : Type.NUMBER};
+                    break;
+                case 2:
+                    result = {value : (-leftValue.value), type : Type.NUMBER};
+                    break;
+                default:
+                    throw {error: "Operador " + this.obtenerOperador(this.type) + " NO puede ser aplicado a los tipos " + this.obtenerTipo(leftValue.type), fila: this.fila, columna : this.columna};
+            }
         } else {
             throw {error: "Operador " + this.obtenerOperador(this.type) + " NO puede ser aplicado a los tipos " + this.obtenerTipo(leftValue.type) + " con " + this.obtenerTipo(rightValue.type), fila: this.fila, columna : this.columna};
         }
@@ -236,6 +257,8 @@ export class Aritmetica extends Expression {
                 return "++"
             case 7:
                 return "--"
+            case 7:
+                return "-"
         }
         return ""
     }

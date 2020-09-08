@@ -235,8 +235,17 @@ sexo = false;
 sexo = "true";
 console.log(sexo);
 
-var edad:number = 0;
+var edad:number = "aba";
 while (edad < 5) {
     edad = edad + 1;
     console.log('HOLA MUNDO');
 }
+
+var edad:number = 0;
+do {
+    edad = edad + 1;
+    console.log('HOLA MUNDO');
+} while (edad < 5);
+
+var edad:number = 7^2/14;
+console.log(edad);
