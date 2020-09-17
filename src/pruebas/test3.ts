@@ -228,14 +228,14 @@ var apellido:string = "Morente";
 apellido = "González" + true;
 console.log(apellido);
 var nombre:string = "Morente";
-nombre = 1;
+//nombre = 1;
 console.log(nombre);
 var sexo:boolean = true;
-sexo = false;
-sexo = "true";
+sexo = false;//
+//sexo = "true";
 console.log(sexo);
 
-var edad:number = "aba";
+//var edad:number = "aba";
 while (edad < 5) {
     edad = edad + 1;
     console.log('HOLA MUNDO');

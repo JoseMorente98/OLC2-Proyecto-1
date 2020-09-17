@@ -5,9 +5,9 @@ import { Type } from '../abstract/retorno.abstract';
 import { ErrorControlador } from '../controlador/error.controlador';
 
 export class Declaracion extends Instruction{
-    private id: string;
-    private value: Expression;
-    private type: any;
+    public id: string;
+    public value: Expression;
+    public type: any;
 
     constructor(id: string, type:any, value: Expression, fila: number, columna: number){
         super(fila, columna);

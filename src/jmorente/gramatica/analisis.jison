@@ -9,6 +9,7 @@
     const { SinTipo } = require('../instruccion/sintipo.instruccion');
     const { Imprimir } = require('../instruccion/console.instruccion');
     const { While } = require('../instruccion/while.instruccion');
+    const { For } = require('../instruccion/for.instruccion');
     const { If } = require('../instruccion/if.instruccion');
     const { DoWhile } = require('../instruccion/do-while.instruccion');
     const { Sentencia } = require('../instruccion/sentencia.instruccion');
@@ -135,7 +136,7 @@ INSTRUCCION
     |
     DECLARACION_LET
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     DECLARACION_CONST
@@ -185,7 +186,7 @@ INSTRUCCION
     |
     FOR
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     CONSOLE
@@ -248,17 +249,17 @@ DECLARACION_VAR
 DECLARACION_LET
     : 'PR_LET' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
+        $$ = new Declaracion($2, $4, $6, @1.first_line, @1.first_column);
     }
     |
     'PR_LET' ID ':' TIPO ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
+        $$ = new Declaracion($2, $4, null, @1.first_line, @1.first_column);
     }
     |
     'PR_LET' ID '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
+        $$ = new Declaracion($2, null, $4, @1.first_line, @1.first_column);
     }
     |
     'PR_LET' ID ';'
@@ -587,9 +588,9 @@ DEFAULT
 ;
 
 FOR 
-    : 'PR_FOR' '(' FOREXP ')' SENTENCIA
+    : 'PR_FOR' '(' DECLARACION_FOR ';' EXPRESION ';' EXPRESION ')' SENTENCIA
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node)};
+        $$ = new For($3, $5, $7, $9, @1.first_line, @1.first_column);
     }
 ;
 
@@ -624,23 +625,14 @@ TIPOFOR
 ;
 
 DECLARACION_FOR
-    : 'PR_VAR' ID ':' TIPO '=' EXPRESION
+    : 'PR_LET' ID ':' TIPO '=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node)};
-    }
-    |
-    'PR_VAR' ID '=' EXPRESION
-    {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node)};
-    }
-    | 'PR_LET' ID ':' TIPO '=' EXPRESION
-    {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node)};
+        $$ = new Declaracion($2, $4, $6, @1.first_line, @1.first_column);
     }
     |
     'PR_LET' ID '=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node)};
+        $$ = new Declaracion($2, null, $4, @1.first_line, @1.first_column);
     }
 ;
 

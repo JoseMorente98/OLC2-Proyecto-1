@@ -1,5 +1,5 @@
 
-var punteo = 0;
+//var punteo = 0;
 
 /*
         SALIDA ESPERADA:
@@ -185,3 +185,9 @@ console.log("==============relacionales1=============");
                 console.log("salida incorrecta!!");
             }
         console.log("======================================");
+
+
+for (let index = 0; index < 12; index++) {
+    console.log("Hola Mundo");
+    
+}
