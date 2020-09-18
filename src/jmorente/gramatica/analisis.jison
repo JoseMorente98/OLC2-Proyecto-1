@@ -13,6 +13,12 @@
     const { If } = require('../instruccion/if.instruccion');
     const { DoWhile } = require('../instruccion/do-while.instruccion');
     const { Sentencia } = require('../instruccion/sentencia.instruccion');
+    const { Switch } = require('../instruccion/switch.instruccion');
+    const { Case } = require('../instruccion/case.instruccion');
+    const { Default } = require('../instruccion/default.instruccion');
+    const { Return } = require('../instruccion/return.instruccion');
+    const { Break } = require('../instruccion/break.instruccion');
+    const { Continue } = require('../instruccion/continue.instruccion');
 %}
 
 %lex
@@ -151,17 +157,17 @@ INSTRUCCION
     |
     BREAK
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     CONTINUE
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     RETURN
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     IF
@@ -171,7 +177,7 @@ INSTRUCCION
     |
     SWITCH
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     WHILE
@@ -313,6 +319,11 @@ DECLARACION_SIN_TIPO
     ID '=' EXPRESION ';'
     {
         $$ = new SinTipo($1, $3, @1.first_line, @1.first_column);
+    }
+    |
+    EXPRESION ';'
+    {
+        $$ = $1
     }
 ;
 
@@ -478,25 +489,25 @@ IDENTIFICADOR
 BREAK 
     : 'PR_BREAK'  ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2)};
+        $$ = new Break(@1.first_line, @1.first_column);
     }
 ;
 
 CONTINUE 
     : 'PR_CONTINUE'  ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2)};
+        $$ = new Continue(@1.first_line, @1.first_column);
     }
 ;
 
 RETURN 
     : 'PR_RETURN'  ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2)};
+        $$ = new Return(@1.first_line, @1.first_column);
     }
     | 'PR_RETURN' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node, $3)};
+        $$ = new Return($2, @1.first_line, @1.first_column);
     }
 ;
 
@@ -550,36 +561,33 @@ DOWHILE
 SWITCH
     : 'PR_SWITCH' '(' EXPRESION ')' '{' CASES DEFAULT '}'
     {
-        if($7 == undefined) {
-            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $8)};
-        } else {
-            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $7.node, $8)};
-        }
+        $$ = new Switch($3, $6, $7, @1.first_line, @1.first_column);
     }
 ;
 
 CASES 
     : CASES CASE
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2.node)};
+        $$ = $1.push($2)
+        $$ = $1
     }
     | CASE
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = [$1]
     }
 ;
 
 CASE
     : 'PR_CASE'  EXPRESION ':' INSTRUCCIONES
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node, $3, $4.node)};
+        $$ = new Case($2, new Sentencia($4, @1.first_line, @1.first_column), @1.first_line, @1.first_column);
     }
 ;
 
 DEFAULT 
     : 'PR_DEFAULT' ':' INSTRUCCIONES
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node)};
+        $$ = new Default(new Sentencia($3, @1.first_line, @1.first_column), @1.first_line, @1.first_column)
     }
     | /* EPSILON */
     {

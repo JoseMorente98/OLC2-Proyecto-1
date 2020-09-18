@@ -308,6 +308,11 @@ DECLARACION_SIN_TIPO
     {
         $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
     }
+    |
+    EXPRESION ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1.node)};
+    }
 ;
 
 TIPO
