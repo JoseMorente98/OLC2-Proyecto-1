@@ -82,6 +82,7 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 "false"                 return 'PR_FALSE'
 "of"                    return 'PR_OF'
 "in"                    return 'PR_IN'
+"type"                  return 'PR_TYPE'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'ID';
 <<EOF>>               return 'EOF';
@@ -135,6 +136,11 @@ INSTRUCCION
         $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
+    DECLARACION_TYPE
+    {
+        $$ = {node: newNode(yy, yystate, $1.node)};
+    }
+    |
     DECLARACION_SIN_TIPO
     {
         $$ = {node: newNode(yy, yystate, $1.node)};
@@ -182,10 +188,7 @@ INSTRUCCION
     |
     CONSOLE
     {
-        $$ = {
-            node: newNode(yy, yystate, $1.node),
-            ejecutar: $1
-        };
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     LLAMADA_FUNCION
@@ -315,6 +318,31 @@ DECLARACION_SIN_TIPO
     }
 ;
 
+DECLARACION_TYPE
+    : 'PR_TYPE' ID '=' '{' DATOS_PRIMITIVOS '}' ';' 
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4, $5.node, $6, $7)};
+    }
+;
+
+DATOS_PRIMITIVOS
+    : DATOS_PRIMITIVOS ',' DATO_PRIMITIVO
+    {
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+    }
+    | DATO_PRIMITIVO
+    {
+        $$ = {node: newNode(yy, yystate, $1.node)};
+    }
+;
+
+DATO_PRIMITIVO
+    : ID ':' TIPO
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node)};
+    }
+;
+
 TIPO
     : 'PR_STRING'
     {
@@ -325,6 +353,10 @@ TIPO
         $$ = {node: newNode(yy, yystate, $1)};
     }
     | 'PR_BOOLEAN'
+    { 
+        $$ = {node: newNode(yy, yystate, $1)};
+    }
+    | ID
     { 
         $$ = {node: newNode(yy, yystate, $1)};
     }

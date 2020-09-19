@@ -1,6 +1,6 @@
 
-let let1 = 1;
-let punteo = 0;
+//let let1 = 1;
+//let punteo = 0;
 
 Inicio();
 
@@ -466,3 +466,20 @@ function  figura0(numero:number){
     }
     console.log("if la figura es un triangulo de numeros + 5 :3");
 }
+
+/**
+ * DECLARACION DE TYPE
+ */
+type persona = {
+    nombre:string,
+    apellido: string,
+    edad: number,
+    trabaja: boolean,
+    estudia: boolean
+};
+
+type hola = {
+    nombre:string,
+    apellido: string,
+    edad: hola
+};

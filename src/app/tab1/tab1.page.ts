@@ -56,16 +56,20 @@ export class Tab1Page {
       this.strSalida = "";
       const env = new Environment(null);
       let graficaAST = parser.parse(this.strEntrada);
-      let analisisAST = analisis.parse(this.strEntrada);
-
+  
       setTimeout(() => {
           graficar.generateTree([graficaAST.node]);
       }, 1000);
 
+      
+      /*let analisisAST = analisis.parse(this.strEntrada);
+
+      
+
       /**
        * EJECUTAR EJECUCION
        */
-      for(const instr of analisisAST){
+      /*for(const instr of analisisAST){
         try {
             const actual = instr.execute(env);
             if(actual != null || actual != undefined){
@@ -75,12 +79,12 @@ export class Tab1Page {
         } catch (error) {
             console.error(error)
         }
-      }
+      }*/
     } catch (error) {
       /**
        * INGRESAR ERRORES PARA REPORTE
        */
-      console.error(error)
+      console.log(error)
       //ErrorControlador.getInstancia().agregarError(error.error, "Semántico", error.fila, error.columna);
     }
     this.strSalida = SalidaControlador.getInstancia().getSalida;

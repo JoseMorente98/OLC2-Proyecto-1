@@ -328,13 +328,13 @@ DECLARACION_SIN_TIPO
 ;
 
 TIPO
-    : 'PR_STRING'
-    {
-        $$ = 1;
-    }
-    | 'PR_NUMBER'
+    : 'PR_NUMBER'
     { 
         $$ = 0;
+    }
+    | 'PR_STRING'
+    {
+        $$ = 1;
     }
     | 'PR_BOOLEAN'
     { 
