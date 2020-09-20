@@ -4,8 +4,6 @@ import * as parser from '../../jmorente/gramatica/gramatica';
 import * as analisis from '../../jmorente/gramatica/analisis';
 import * as graficar from '../../jmorente/ast/chart';
 import { Environment } from 'src/jmorente/simbolos/enviroment.simbolos';
-import { Imprimir } from 'src/jmorente/instruccion/console.instruccion';
-import { Declaracion } from 'src/jmorente/instruccion/declaracion.instruccion';
 import { SalidaControlador } from 'src/jmorente/controlador/salida.controlador';
 
 
@@ -62,14 +60,12 @@ export class Tab1Page {
       }, 1000);
 
       
-      /*let analisisAST = analisis.parse(this.strEntrada);
-
-      
+      let analisisAST = analisis.parse(this.strEntrada);
 
       /**
        * EJECUTAR EJECUCION
        */
-      /*for(const instr of analisisAST){
+      for(const instr of analisisAST){
         try {
             const actual = instr.execute(env);
             if(actual != null || actual != undefined){
@@ -79,7 +75,7 @@ export class Tab1Page {
         } catch (error) {
             console.error(error)
         }
-      }*/
+      }
     } catch (error) {
       /**
        * INGRESAR ERRORES PARA REPORTE

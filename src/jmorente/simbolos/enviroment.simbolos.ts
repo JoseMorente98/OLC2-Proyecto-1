@@ -3,6 +3,7 @@ import { Symbol } from './symbol.simbolos';
 
 export class Environment{
     private variables: Map<string, Symbol>;
+    private types: Map<string, Symbol>;
     public funciones: Map<string, Function>;
 
     /**
@@ -12,6 +13,7 @@ export class Environment{
     constructor(public anterior : Environment | null){
         this.variables = new Map();
         this.funciones = new Map();
+        this.types = new Map();
     }
 
     /*public guardar(id: string, valor: any, type: Type){
@@ -94,4 +96,28 @@ export class Environment{
         }
         this.variables.set(id, new Symbol(valor, id, type));
     }
+
+    public guardarTypes(id: string, valor: any, type: Type){
+        let env : Environment | null = this;
+        while(env != null){
+            if(env.types.has(id)){
+                env.types.set(id, new Symbol(valor, id, type));
+                return;
+            }
+            env = env.anterior;
+        }
+        this.types.set(id, new Symbol(valor, id, type));
+    }
+
+    public getTypes(id: string) : Symbol | undefined | null{
+        let env : Environment | null = this;
+        while(env != null){
+            if(env.types.has(id)){
+                return env.types.get(id);
+            }
+            env = env.anterior;
+        }
+        return null;
+    }
+    
 }

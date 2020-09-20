@@ -121,11 +121,7 @@ INSTRUCCIONES
 ;
 
 INSTRUCCION
-    : DECLARACION_VAR
-    {
-        $$ = { node: newNode(yy, yystate, $1.node) };
-    }
-    |
+    : 
     DECLARACION_LET
     {
         $$ = {node: newNode(yy, yystate, $1.node)};
@@ -199,47 +195,6 @@ INSTRUCCION
     FUNCIONES
     {
         $$ = $1;
-    }
-;
-
-DECLARACION_VAR 
-    : 'PR_VAR' ID ':' TIPO '=' EXPRESION ';'
-    {
-        $$ = { node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7) };
-    }
-    |
-    'PR_VAR' ID ':' TIPO ';'
-    {
-        $$ = { node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
-    }
-    |
-    'PR_VAR' ID '=' EXPRESION ';'
-    {
-        $$ = { node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
-    }
-    |
-    'PR_VAR' ID ';'
-    {
-        $$ = { node: newNode(yy, yystate, $1, $2, $3) };
-    }
-    | 'PR_VAR' ID ':' TIPO ARREGLO '=' EXPRESION ';'
-    {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6, $7.node, $8)};
-    }
-    |
-    'PR_VAR' ID ':' TIPO ARREGLO ';'
-    {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6)};
-    }
-    |
-    'PR_VAR' ID ARREGLO '=' EXPRESION ';'
-    {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
-    }
-    |
-    'PR_VAR' ID ARREGLO ';'
-    {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
     }
 ;
 
@@ -473,6 +428,11 @@ EXPRESION
     {
         $$ = {node: newNode(yy, yystate, $1.node)};
     }
+    |
+    EXPRESION_JSON
+    {
+        $$ = {node: newNode(yy, yystate, $1.node)};
+    }
 ;
 
 IDENTIFICADOR
@@ -521,6 +481,32 @@ IDENTIFICADOR
             node: newNode(yy, yystate, $1),
             ejecutar: new Acceso($1, @1.first_line, @1.first_column)
         };
+    }
+;
+
+EXPRESION_JSON
+    : '{' OBJETOS '}'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2.node, $3)};
+    }
+;
+
+OBJETOS
+    : 
+    OBJETOS ',' OBJECT
+    {
+        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+    }
+    | OBJECT
+    {
+        $$ = {node: newNode(yy, yystate, $1.node)};
+    }
+;
+
+OBJECT
+    : ID ':' EXPRESION
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node)};
     }
 ;
 

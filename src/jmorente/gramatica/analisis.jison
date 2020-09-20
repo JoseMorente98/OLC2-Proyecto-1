@@ -5,6 +5,7 @@
     const {Logica, OpcionLogica} = require('../expresion/logica.expresion');
     const { Acceso } = require('../expresion/acceso.expresion');
     const { Literal } = require('../expresion/literal.expresion');
+    const { LiteralObjeto } = require('../expresion/literal-objeto.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
     const { SinTipo } = require('../instruccion/sintipo.instruccion');
     const { Imprimir } = require('../instruccion/console.instruccion');
@@ -19,6 +20,9 @@
     const { Return } = require('../instruccion/return.instruccion');
     const { Break } = require('../instruccion/break.instruccion');
     const { Continue } = require('../instruccion/continue.instruccion');
+    const { Types } = require('../instruccion/type.instruccion');
+    const { TypePrimitivo } = require('../instruccion/type-primitivo.instruccion');
+    const { Value } = require('../instruccion/value.instruccion');
 %}
 
 %lex
@@ -97,6 +101,8 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 "false"                 return 'PR_FALSE'
 "of"                    return 'PR_OF'
 "in"                    return 'PR_IN'
+"type"                  return 'PR_TYPE'
+
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'ID';
 <<EOF>>               return 'EOF';
@@ -135,11 +141,7 @@ INSTRUCCIONES
 ;
 
 INSTRUCCION
-    : DECLARACION_VAR
-    {
-        $$ = $1
-    }
-    |
+    :
     DECLARACION_LET
     {
         $$ = $1
@@ -148,6 +150,11 @@ INSTRUCCION
     DECLARACION_CONST
     {
         $$ = {node: newNode(yy, yystate, $1.node)};
+    }
+    |
+    DECLARACION_TYPE
+    {
+        $$ = $1
     }
     |
     DECLARACION_SIN_TIPO
@@ -211,56 +218,15 @@ INSTRUCCION
     }
 ;
 
-DECLARACION_VAR 
-    : 'PR_VAR' ID ':' TIPO '=' EXPRESION ';'
-    {
-        $$ = new Declaracion($2, $4, $6, @1.first_line, @1.first_column);
-    }
-    |
-    'PR_VAR' ID ':' TIPO ';'
-    {
-        $$ = new Declaracion($2, $4, null, @1.first_line, @1.first_column);
-    }
-    |
-    'PR_VAR' ID '=' EXPRESION ';'
-    {
-        $$ = new Declaracion($2, null, $4, @1.first_line, @1.first_column);
-    }
-    |
-    'PR_VAR' ID ';'
-    {
-        $$ = new Declaracion($2, null, null, @1.first_line, @1.first_column);
-    }
-    | 'PR_VAR' ID ':' TIPO ARREGLO '=' EXPRESION ';'
-    {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6, $7.node, $8)};
-    }
-    |
-    'PR_VAR' ID ':' TIPO ARREGLO ';'
-    {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6)};
-    }
-    |
-    'PR_VAR' ID ARREGLO '=' EXPRESION ';'
-    {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
-    }
-    |
-    'PR_VAR' ID ARREGLO ';'
-    {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
-    }
-;
-
 DECLARACION_LET
     : 'PR_LET' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = new Declaracion($2, $4, $6, @1.first_line, @1.first_column);
+        $$ = new Declaracion($2, $4.type, $6, @1.first_line, @1.first_column, $4.tipo);
     }
     |
     'PR_LET' ID ':' TIPO ';'
     {
-        $$ = new Declaracion($2, $4, null, @1.first_line, @1.first_column);
+        $$ = new Declaracion($2, $4.type, null, @1.first_line, @1.first_column, $4.tipo);
     }
     |
     'PR_LET' ID '=' EXPRESION ';'
@@ -327,18 +293,67 @@ DECLARACION_SIN_TIPO
     }
 ;
 
-TIPO
+DECLARACION_TYPE
+    : 'PR_TYPE' ID '=' '{' DATOS_PRIMITIVOS '}' ';' 
+    {
+        $$ = new Types($2, 3, $5, @1.first_line, @1.first_column);
+    }
+;
+
+DATOS_PRIMITIVOS
+    : DATOS_PRIMITIVOS ',' DATO_PRIMITIVO
+    {
+        $1.push($3)
+        $$ = $1;
+    }
+    | DATO_PRIMITIVO
+    {
+        $$ = [$1];
+    }
+;
+
+DATO_PRIMITIVO
+    : ID ':' TIPO_TYPE
+    {
+        $$ = new TypePrimitivo($1, $3, @1.first_line, @1.first_column)
+    }
+;
+
+TIPO_TYPE
     : 'PR_NUMBER'
     { 
-        $$ = 0;
+        $$ = $1;
     }
     | 'PR_STRING'
     {
-        $$ = 1;
+        $$ = $1;
     }
     | 'PR_BOOLEAN'
     { 
-        $$ = 2;
+        $$ = $1;
+    }
+    | ID
+    { 
+        $$ = $1;
+    }
+;
+
+TIPO
+    : 'PR_NUMBER'
+    { 
+        $$ = {type: 0, tipo: $1};
+    }
+    | 'PR_STRING'
+    {
+        $$ = {type: 1, tipo: $1};
+    }
+    | 'PR_BOOLEAN'
+    { 
+        $$ = {type: 2, tipo: $1};
+    }
+    | ID
+    { 
+        $$ = {type: 3, tipo: $1};
     }
 ;
 
@@ -453,6 +468,11 @@ EXPRESION
     {
         $$ = $1
     }
+    |
+    EXPRESION_JSON
+    {
+        $$ = $1
+    }
 ;
 
 IDENTIFICADOR
@@ -483,6 +503,33 @@ IDENTIFICADOR
     | ID
     { 
         $$ = new Acceso($1, @1.first_line, @1.first_column)
+    }
+;
+
+EXPRESION_JSON
+    : '{' OBJETOS '}'
+    {
+        $$ = new LiteralObjeto($2, @1.first_line, @1.first_column);
+    }
+;
+
+OBJETOS
+    : 
+    OBJETOS ',' OBJECT
+    {
+        $1.push($3)
+        $$ = $1
+    }
+    | OBJECT
+    {
+        $$ = [$1]
+    }
+;
+
+OBJECT
+    : ID ':' EXPRESION
+    {
+        $$ = new Value($1, $3, @1.first_line, @1.first_column);
     }
 ;
 
@@ -635,7 +682,7 @@ TIPOFOR
 DECLARACION_FOR
     : 'PR_LET' ID ':' TIPO '=' EXPRESION
     {
-        $$ = new Declaracion($2, $4, $6, @1.first_line, @1.first_column);
+        $$ = new Declaracion($2, $4.type, $6, @1.first_line, @1.first_column);
     }
     |
     'PR_LET' ID '=' EXPRESION
