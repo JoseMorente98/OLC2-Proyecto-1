@@ -4,6 +4,7 @@
     const {Relacional, OpcionRelacional} = require('../expresion/relacional.expresion');
     const {Logica, OpcionLogica} = require('../expresion/logica.expresion');
     const { Acceso } = require('../expresion/acceso.expresion');
+    const { AccesoType } = require('../expresion/acceso-type.expresion');
     const { Literal } = require('../expresion/literal.expresion');
     const { LiteralObjeto } = require('../expresion/literal-objeto.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
@@ -287,6 +288,11 @@ DECLARACION_SIN_TIPO
         $$ = new SinTipo($1, $3, @1.first_line, @1.first_column);
     }
     |
+    ID '.' ID '=' EXPRESION ';'
+    {
+        $$ = $1;
+    }
+    |
     EXPRESION ';'
     {
         $$ = $1
@@ -503,6 +509,11 @@ IDENTIFICADOR
     | ID
     { 
         $$ = new Acceso($1, @1.first_line, @1.first_column)
+    }
+    |
+    ID '.' ID 
+    {
+        $$ = new AccesoType($1, $3, @1.first_line, @1.first_column)
     }
 ;
 

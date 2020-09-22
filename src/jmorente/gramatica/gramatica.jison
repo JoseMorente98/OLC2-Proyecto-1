@@ -482,6 +482,13 @@ IDENTIFICADOR
             ejecutar: new Acceso($1, @1.first_line, @1.first_column)
         };
     }
+    |
+    ID '.' ID 
+    {
+        $$ = {
+            node: newNode(yy, yystate, $1, $2, $3)
+        };
+    }
 ;
 
 EXPRESION_JSON

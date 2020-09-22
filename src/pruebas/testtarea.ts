@@ -14,23 +14,18 @@ type persona = {
 type hola = {
     nombre:string,
     apellido: string,
-    edad: hola
+    edad: string
 };
 
 let comoestas:hola = { 
     nombre:"nombre",
     apellido: "apellido",
-    edad: { 
-        nombre:"nombre",
-        apellido: "apellido",
-        edad: { 
-            nombre:"nombre",
-            apellido: "apellido",
-            edad: "hola"
-        }
-    }
+    edad: "hola"
 };
 
 
 console.log(comoestas);
+console.log(comoestas.nombre);
+console.log(comoestas.apellido);
+console.log(comoestas.edad);
 let persona1:hola;
