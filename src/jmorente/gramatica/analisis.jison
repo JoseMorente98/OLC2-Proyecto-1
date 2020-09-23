@@ -1,14 +1,15 @@
  
 %{
-    const {Aritmetica, OpcionAritmetica} = require('../expresion/aritmetica.expresion');
-    const {Relacional, OpcionRelacional} = require('../expresion/relacional.expresion');
-    const {Logica, OpcionLogica} = require('../expresion/logica.expresion');
+    const { Aritmetica, OpcionAritmetica } = require('../expresion/aritmetica.expresion');
+    const { Relacional, OpcionRelacional } = require('../expresion/relacional.expresion');
+    const { Logica, OpcionLogica } = require('../expresion/logica.expresion');
     const { Acceso } = require('../expresion/acceso.expresion');
     const { AccesoType } = require('../expresion/acceso-type.expresion');
     const { Literal } = require('../expresion/literal.expresion');
     const { LiteralObjeto } = require('../expresion/literal-objeto.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
     const { SinTipo } = require('../instruccion/sintipo.instruccion');
+    const { SinTipoType } = require('../instruccion/sin-tipo-type.instruccion');
     const { Imprimir } = require('../instruccion/console.instruccion');
     const { While } = require('../instruccion/while.instruccion');
     const { For } = require('../instruccion/for.instruccion');
@@ -24,6 +25,8 @@
     const { Types } = require('../instruccion/type.instruccion');
     const { TypePrimitivo } = require('../instruccion/type-primitivo.instruccion');
     const { Value } = require('../instruccion/value.instruccion');
+    const { Funcion } = require('../instruccion/funcion.instruccion');
+    const { LlamarFuncion } = require('../instruccion/llamar.instruccion');
 %}
 
 %lex
@@ -210,7 +213,7 @@ INSTRUCCION
     |
     LLAMADA_FUNCION
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     FUNCIONES
@@ -290,7 +293,7 @@ DECLARACION_SIN_TIPO
     |
     ID '.' ID '=' EXPRESION ';'
     {
-        $$ = $1;
+        $$ = new SinTipoType($1, $3, $5, @1.first_line, @1.first_column);
     }
     |
     EXPRESION ';'
@@ -710,14 +713,14 @@ CONSOLE:
 ;
 
 FUNCIONES: 
-    'PR_FUNCTION' ID '(' ')' SENTENCIA_FUNCION
+    'PR_FUNCTION' ID '(' ')' SENTENCIA
     {
-        $$ = $1;
+        $$ = new Funcion($2, $5, [], @1.first_line, @1.first_column);
     }
     |
-    'PR_FUNCTION' ID '(' PARAMETROS ')' SENTENCIA_FUNCION
+    'PR_FUNCTION' ID '(' PARAMETROS ')' SENTENCIA
     {
-        $$ = $1;
+        $$ = new Funcion($2, $6, $4, @1.first_line, @1.first_column);
     }
 ;
 
@@ -766,12 +769,13 @@ OTRA_INSTRUCCION:
 PARAMETROS: 
     PARAMETROS ',' PARAMETRO
     {
+        $1.push($3);
         $$ = $1;
     }
     |
     PARAMETRO
     {
-        $$ = $1;
+        $$ = [$1];
     }
 ;
 
@@ -782,26 +786,28 @@ PARAMETRO:
     }
 ;
 
-LLAMADA_FUNCION:
+LLAMADA_FUNCION
+    :
     ID '(' ')' ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4)};
+        $$ = new LlamarFuncion($1, [], @1.first_line, @1.first_column);
     }
     |
     ID '(' PARAMETROS_LLAMADA ')' ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5)};
+        $$ = new LlamarFuncion($1, $3, @1.first_line, @1.first_column);
     }
 ;
 
 PARAMETROS_LLAMADA: 
     PARAMETROS_LLAMADA ',' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $1.push($3);
+        $$ = $1;
     }
     |
     EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = [$1]
     }
 ;

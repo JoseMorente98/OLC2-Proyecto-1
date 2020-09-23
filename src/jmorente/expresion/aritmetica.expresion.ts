@@ -1,6 +1,8 @@
 import { Expression } from '../abstract/expresion.abstract';
 import { Retorno, Type } from '../abstract/retorno.abstract';
 import { Environment } from '../simbolos/enviroment.simbolos';
+import { AccesoType } from './acceso-type.expresion';
+import { Acceso } from './acceso.expresion';
 
 export enum OpcionAritmetica{
     SUMA,
@@ -174,8 +176,12 @@ export class Aritmetica extends Expression {
              */
             switch (leftValue.type) {
                 case 0:
+                    console.log(leftValue)
+                    console.log(this.left.id)
+                    let newVal = leftValue.value + 1;
                     if(rightValue.type == 0) {
-                        result = {value : (leftValue.value+1), type : Type.NUMBER};
+                        result = {value : newVal, type : Type.NUMBER};
+                        environment.setVar(this.left.id, result.value, result.type);
                     } else {
                         throw {error: "Operador " + this.obtenerOperador(this.type) + " NO puede ser aplicado a los tipos " + this.obtenerTipo(leftValue.type), fila: this.fila, columna : this.columna};
                     }
@@ -191,8 +197,12 @@ export class Aritmetica extends Expression {
              */
             switch (leftValue.type) {
                 case 0:
+                    console.log(leftValue)
+                    console.log(this.left.id)
                     if(rightValue.type == 0) {
-                        result = {value : (leftValue.value-1), type : Type.NUMBER};
+                        let newVal = leftValue.value - 1;
+                        result = {value : newVal, type : Type.NUMBER};
+                        environment.setVar(this.left.id, result.value, result.type);
                     } else {
                         throw {error: "Operador " + this.obtenerOperador(this.type) + " NO puede ser aplicado a los tipos " + this.obtenerTipo(leftValue.type), fila: this.fila, columna : this.columna};
                     }

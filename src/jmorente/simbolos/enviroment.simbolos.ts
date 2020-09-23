@@ -1,10 +1,11 @@
 import { Type } from '../abstract/retorno.abstract';
+import { Funcion } from '../instruccion/funcion.instruccion';
 import { Symbol } from './symbol.simbolos';
 
 export class Environment{
     private variables: Map<string, Symbol>;
     private types: Map<string, Symbol>;
-    public funciones: Map<string, Function>;
+    public funciones: Map<string, Funcion>;
 
     /**
      * CONSTRUCTOR
@@ -62,6 +63,29 @@ export class Environment{
         }
         return env;
     }*/
+
+    public getFuncion(id: string) : Funcion | undefined{
+        let env : Environment | null = this;
+        while(env != null){
+            if(env.funciones.has(id)){
+                return env.funciones.get(id);
+            }
+            env = env.anterior;
+        }
+        return undefined;
+    }
+
+    public getGlobal() : Environment{
+        let env : Environment | null = this;
+        while(env?.anterior != null){
+            env = env.anterior;
+        }
+        return env;
+    }
+
+    public guardarFuncion(id: string, funcion : Funcion){
+        this.funciones.set(id, funcion);
+    }
 
     public getVar(id: string) : Symbol | undefined | null{
         let env : Environment | null = this;

@@ -11,7 +11,11 @@ export class Acceso extends Expression {
      * @param fila 
      * @param columna 
      */
-    constructor(private id: string, fila : number, columna: number){
+    constructor(
+        public id: string,
+        public fila : number,
+        public columna: number
+    ){
         super(fila, columna);
     }
 

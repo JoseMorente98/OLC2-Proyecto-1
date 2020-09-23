@@ -194,7 +194,7 @@ INSTRUCCION
     |
     FUNCIONES
     {
-        $$ = $1;
+        $$ = {node: newNode(yy, yystate, $1)};
     }
 ;
 
@@ -265,6 +265,11 @@ DECLARACION_SIN_TIPO
     ID '=' EXPRESION ';'
     {
         $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+    }
+    |
+    ID '.' ID '=' EXPRESION ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4, $5.node, $6)};
     }
     |
     EXPRESION ';'
@@ -702,12 +707,12 @@ CONSOLE:
 ;
 
 FUNCIONES: 
-    'PR_FUNCTION' ID '(' ')' SENTENCIA_FUNCION
+    'PR_FUNCTION' ID '(' ')' SENTENCIA
     {
         $$ = $1;
     }
     |
-    'PR_FUNCTION' ID '(' PARAMETROS ')' SENTENCIA_FUNCION
+    'PR_FUNCTION' ID '(' PARAMETROS ')' SENTENCIA
     {
         $$ = $1;
     }

@@ -5,6 +5,7 @@ import * as analisis from '../../jmorente/gramatica/analisis';
 import * as graficar from '../../jmorente/ast/chart';
 import { Environment } from 'src/jmorente/simbolos/enviroment.simbolos';
 import { SalidaControlador } from 'src/jmorente/controlador/salida.controlador';
+import { Funcion } from 'src/jmorente/instruccion/funcion.instruccion';
 
 
 @Component({
@@ -61,6 +62,18 @@ export class Tab1Page {
 
       
       let analisisAST = analisis.parse(this.strEntrada);
+
+      /**
+       * EJECUTAR FUNCIONES
+       */
+      for(const instr of analisisAST){
+          try {
+              if(instr instanceof Funcion)
+                  instr.execute(env);
+          } catch (error) {
+            console.log(error) 
+          }
+      }
 
       /**
        * EJECUTAR EJECUCION
