@@ -6,6 +6,7 @@
     const { Acceso } = require('../expresion/acceso.expresion');
     const { AccesoType } = require('../expresion/acceso-type.expresion');
     const { Literal } = require('../expresion/literal.expresion');
+    const { Nullable } = require('../expresion/nullable.expresion');
     const { LiteralObjeto } = require('../expresion/literal-objeto.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
     const { SinTipo } = require('../instruccion/sintipo.instruccion');
@@ -106,6 +107,8 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 "of"                    return 'PR_OF'
 "in"                    return 'PR_IN'
 "type"                  return 'PR_TYPE'
+"null"                  return 'PR_NULL'
+"undefined"             return 'PR_UNDEFINED'
 
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'ID';
@@ -509,6 +512,10 @@ IDENTIFICADOR
     { 
         $$ = new Literal($1, @1.first_line, @1.first_column, 2)
     }
+    | 'PR_NULL'
+    { 
+        $$ = new Nullable(@1.first_line, @1.first_column, 4)
+    }
     | ID
     { 
         $$ = new Acceso($1, @1.first_line, @1.first_column)
@@ -718,9 +725,19 @@ FUNCIONES:
         $$ = new Funcion($2, $5, [], @1.first_line, @1.first_column);
     }
     |
+    'PR_FUNCTION' ID '(' ')' ':' TIPO SENTENCIA
+    {
+        $$ = new Funcion($2, $7, [], @1.first_line, @1.first_column);
+    }
+    |
     'PR_FUNCTION' ID '(' PARAMETROS ')' SENTENCIA
     {
         $$ = new Funcion($2, $6, $4, @1.first_line, @1.first_column);
+    }
+    |
+    'PR_FUNCTION' ID '(' PARAMETROS ')' ':' TIPO SENTENCIA
+    {
+        $$ = new Funcion($2, $8, $4, @1.first_line, @1.first_column);
     }
 ;
 

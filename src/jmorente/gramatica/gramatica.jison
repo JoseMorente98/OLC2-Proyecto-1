@@ -83,6 +83,8 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 "of"                    return 'PR_OF'
 "in"                    return 'PR_IN'
 "type"                  return 'PR_TYPE'
+"null"                  return 'PR_NULL'
+"undefined"             return 'PR_UNDEFINED'
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'ID';
 <<EOF>>               return 'EOF';
@@ -98,6 +100,7 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 %left '*' '/'
 %left '%' '^'
 %left '!'
+%left ID
 
 %start Init
 
@@ -194,7 +197,7 @@ INSTRUCCION
     |
     FUNCIONES
     {
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = {node: newNode(yy, yystate, $1.node)};
     }
 ;
 
@@ -429,6 +432,11 @@ EXPRESION
         $$ = {node: newNode(yy, yystate, $1.node, $2, $3)};
     }
     |
+    LLAMADA_FUNCION2
+    {
+        $$ = {node: newNode(yy, yystate, $1.node)};
+    }
+    |
     IDENTIFICADOR
     {
         $$ = {node: newNode(yy, yystate, $1.node)};
@@ -479,6 +487,10 @@ IDENTIFICADOR
             node: newNode(yy, yystate, $1),
             ejecutar: new Literal($1, @1.first_line, @1.first_column, 2)
         };
+    }
+    | 'PR_NULL'
+    { 
+        $$ = { node: newNode(yy, yystate, $1)};
     }
     | ID
     { 
@@ -707,14 +719,32 @@ CONSOLE:
 ;
 
 FUNCIONES: 
+    'PR_FUNCTION' ID '(' ')' ':' TIPO SENTENCIA
+    {
+        $$ = {
+            node: newNode(yy, yystate, $1, $2, $3, $4, $5, $6.node, $7.node)
+        };
+    }
+    |
     'PR_FUNCTION' ID '(' ')' SENTENCIA
     {
-        $$ = $1;
+        $$ = {
+            node: newNode(yy, yystate, $1, $2, $3, $4, $5.node)
+        };
+    }
+    |
+    'PR_FUNCTION' ID '(' PARAMETROS ')' ':' TIPO SENTENCIA
+    {
+        $$ = {
+            node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6, $7.node, $8.node)
+        };
     }
     |
     'PR_FUNCTION' ID '(' PARAMETROS ')' SENTENCIA
     {
-        $$ = $1;
+        $$ = {
+            node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node)
+        };
     }
 ;
 
@@ -763,19 +793,25 @@ OTRA_INSTRUCCION:
 PARAMETROS: 
     PARAMETROS ',' PARAMETRO
     {
-        $$ = $1;
+        $$ = {
+            node: newNode(yy, yystate, $1.node, $2, $3.node)
+        };
     }
     |
     PARAMETRO
     {
-        $$ = $1;
+        $$ = {
+            node: newNode(yy, yystate, $1.node)
+        };
     }
 ;
 
 PARAMETRO: 
     ID ':' TIPO
     {
-        $$ = $1;
+        $$ = {
+            node: newNode(yy, yystate, $1, $2, $3.node)
+        };
     }
 ;
 
@@ -786,6 +822,19 @@ LLAMADA_FUNCION:
     }
     |
     ID '(' PARAMETROS_LLAMADA ')' ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5)};
+    }
+;
+
+LLAMADA_FUNCION2
+    :
+    ID '(' ')'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4)};
+    }
+    |
+    ID '(' PARAMETROS_LLAMADA ')'
     {
         $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5)};
     }

@@ -13,7 +13,7 @@ export class Funcion extends Instruction {
      */
     constructor(
         public id: string,
-        public statment: Instruction,
+        public code: Instruction,
         public parametros : Array<string>, 
         public line : number,
         public column : number

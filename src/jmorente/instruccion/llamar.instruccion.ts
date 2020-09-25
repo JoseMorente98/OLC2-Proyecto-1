@@ -21,14 +21,25 @@ export class LlamarFuncion extends Instruction {
     }
 
     public execute(environment : Environment) {
+        console.error("FUNCIONES LLAMAR")
+        console.log(this.expresiones)
+        
         const func = environment.getFuncion(this.id);
+        console.log(func)
+
+
+
         if(func != undefined){
+            console.log(func)
             const newEnv = new Environment(environment.getGlobal());
+            console.log(newEnv)
             for(let i = 0; i < this.expresiones.length; i++){
                 const value = this.expresiones[i].execute(environment);
+                console.log(value)
                 newEnv.guardar(func.parametros[i], value.value, value.type);
             }
-            func.statment.execute(newEnv);
+            func.code.execute(newEnv);
+            console.log(func)
         }
     }
 }
