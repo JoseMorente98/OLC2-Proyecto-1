@@ -9,6 +9,7 @@
     const { Nullable } = require('../expresion/nullable.expresion');
     const { LiteralObjeto } = require('../expresion/literal-objeto.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
+    const { DeclaracionLlamada } = require('../instruccion/declaracion-llamada.instruccion');
     const { SinTipo } = require('../instruccion/sintipo.instruccion');
     const { SinTipoType } = require('../instruccion/sin-tipo-type.instruccion');
     const { Imprimir } = require('../instruccion/console.instruccion');
@@ -231,6 +232,11 @@ DECLARACION_LET
         $$ = new Declaracion($2, $4.type, $6, @1.first_line, @1.first_column, $4.tipo);
     }
     |
+    'PR_LET' ID ':' TIPO '=' LLAMADA_FUNCION2 ';'
+    {
+        $$ = new DeclaracionLlamada($2, $4.type, $6, @1.first_line, @1.first_column);
+    }
+    |
     'PR_LET' ID ':' TIPO ';'
     {
         $$ = new Declaracion($2, $4.type, null, @1.first_line, @1.first_column, $4.tipo);
@@ -239,6 +245,11 @@ DECLARACION_LET
     'PR_LET' ID '=' EXPRESION ';'
     {
         $$ = new Declaracion($2, null, $4, @1.first_line, @1.first_column);
+    }
+    |
+    'PR_LET' ID '=' LLAMADA_FUNCION2 ';'
+    {
+        $$ = new DeclaracionLlamada($2, null, $4, @1.first_line, @1.first_column);
     }
     |
     'PR_LET' ID ';'
@@ -294,7 +305,17 @@ DECLARACION_SIN_TIPO
         $$ = new SinTipo($1, $3, @1.first_line, @1.first_column);
     }
     |
+    ID '=' LLAMADA_FUNCION2 ';'
+    {
+        $$ = new SinTipo($1, $3, @1.first_line, @1.first_column);
+    }
+    |
     ID '.' ID '=' EXPRESION ';'
+    {
+        $$ = new SinTipoType($1, $3, $5, @1.first_line, @1.first_column);
+    }
+    |
+    ID '.' ID '=' LLAMADA_FUNCION2 ';'
     {
         $$ = new SinTipoType($1, $3, $5, @1.first_line, @1.first_column);
     }
@@ -811,6 +832,19 @@ LLAMADA_FUNCION
     }
     |
     ID '(' PARAMETROS_LLAMADA ')' ';'
+    {
+        $$ = new LlamarFuncion($1, $3, @1.first_line, @1.first_column);
+    }
+;
+
+LLAMADA_FUNCION2
+    :
+    ID '(' ')'
+    {
+        $$ = new LlamarFuncion($1, [], @1.first_line, @1.first_column);
+    }
+    |
+    ID '(' PARAMETROS_LLAMADA ')'
     {
         $$ = new LlamarFuncion($1, $3, @1.first_line, @1.first_column);
     }

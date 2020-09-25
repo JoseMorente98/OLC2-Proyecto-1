@@ -30,7 +30,7 @@ export class Declaracion extends Instruction{
 
     public execute(environment: Environment) {
         try {
-            console.error("DECLARACION")
+            console.error("DECLARACION" + this.id)
             console.error(environment)
             console.error(this.type)
             console.error(this.value)

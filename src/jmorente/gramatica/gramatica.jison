@@ -100,7 +100,6 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 %left '*' '/'
 %left '%' '^'
 %left '!'
-%left ID
 
 %start Init
 
@@ -207,12 +206,22 @@ DECLARACION_LET
         $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
     }
     |
+    'PR_LET' ID ':' TIPO '=' LLAMADA_FUNCION2 ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
+    }
+    |
     'PR_LET' ID ':' TIPO ';'
     {
         $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
     }
     |
     'PR_LET' ID '=' EXPRESION ';'
+    {
+        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
+    }
+    |
+    'PR_LET' ID '=' LLAMADA_FUNCION2 ';'
     {
         $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
     }
@@ -430,11 +439,6 @@ EXPRESION
     EXPRESION '-' '-'
     {
         $$ = {node: newNode(yy, yystate, $1.node, $2, $3)};
-    }
-    |
-    LLAMADA_FUNCION2
-    {
-        $$ = {node: newNode(yy, yystate, $1.node)};
     }
     |
     IDENTIFICADOR
@@ -831,12 +835,12 @@ LLAMADA_FUNCION2
     :
     ID '(' ')'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4)};
+        $$ = {node: newNode(yy, yystate, $1, $2, $3)};
     }
     |
     ID '(' PARAMETROS_LLAMADA ')'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5)};
+        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
     }
 ;
 

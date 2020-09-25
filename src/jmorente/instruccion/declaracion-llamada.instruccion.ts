@@ -4,49 +4,44 @@ import { Environment } from '../simbolos/enviroment.simbolos';
 import { Type } from '../abstract/retorno.abstract';
 import { ErrorControlador } from '../controlador/error.controlador';
 
-export class SinTipoType extends Instruction{
+export class DeclaracionLlamada extends Instruction{
 
     /**
      * CONSTRUCTOR
      * @param id 
-     * @param id2 
+     * @param type 
      * @param value 
      * @param fila 
      * @param columna 
      */
     constructor(
         public id: string, 
-        public id2: string, 
-        public value: Expression,
+        public type:any, 
+        public code:Instruction, 
         public fila: number, 
-        public columna: number){
+        public columna: number,
+        public typeType?:any){
         super(fila, columna);
         this.id = id;
-        this.value = value;
+        this.code = code;
+        this.typeType = typeType;
     }
 
     public execute(environment: Environment) {
         try {
-            console.error("SIN TIPO TYPE")
-            console.log(environment)
-            const val = this.value.execute(environment);
-            console.log(val)
-            // TODO: SIN TIPO
-            /**
-             * VALIDAR VALOR
-             */
-
-            const value = environment.getVar(this.id);
-            console.log(value);
-            if(value == null) {
-                throw new Error("La variable no existe D:");
-            }
-    
-            for (const iterator of value.valor.value) {
-                if(iterator.id == this.id2) {
-                        console.log(iterator.value.value)
-                    iterator.value.value = val.value;
-                    return {value : iterator.value.value, type : iterator.value.type};
+            console.error("DECLARACION" + this.id)
+            console.error(environment)
+            console.error(this.code)
+            console.error(this.typeType)
+            const val = this.code.execute(environment);
+            console.error(val)
+            if(this.type == undefined) {
+                environment.guardar(this.id, val.value, val.type);
+            } else {
+                if(this.type != val.type) {
+                    throw {error: "El tipo " + val.value + " no es asignable con " + this.obtenerTipo(this.type), fila: this.fila, columna : this.columna};
+                } else {
+                    environment.guardar(this.id, val.value, val.type);
                 }
             }
         } catch (error) {
@@ -66,6 +61,8 @@ export class SinTipoType extends Instruction{
                 return "STRING"
             case 2:
                 return "BOOLEAN"
+            case 3:
+                return "TYPE"
         }
         return ""
     }
