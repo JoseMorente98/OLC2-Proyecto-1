@@ -26,7 +26,7 @@ export class Switch extends Instruction {
      * @param environment 
      */
     public execute(environment: Environment){
-        console.error('SWITCH')
+        //console.error('SWITCH')
         var condicion = this.condicion.execute(environment);
         var numeroCaso = -1;
 

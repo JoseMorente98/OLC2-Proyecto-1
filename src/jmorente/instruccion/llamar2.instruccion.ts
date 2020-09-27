@@ -4,7 +4,7 @@ import { Environment } from '../simbolos/enviroment.simbolos';
 import { Type } from '../abstract/retorno.abstract';
 import { ErrorControlador } from '../controlador/error.controlador';
 
-export class DeclaracionLlamada extends Instruction{
+export class LlamarFuncion2 extends Instruction{
 
     /**
      * CONSTRUCTOR
@@ -16,32 +16,43 @@ export class DeclaracionLlamada extends Instruction{
      */
     constructor(
         public id: string, 
-        public type:any, 
-        public code:Instruction, 
+        public expresiones : Array<Expression>,
         public fila: number, 
-        public columna: number,
-        public typeType?:any){
+        public columna: number){
         super(fila, columna);
         this.id = id;
-        this.code = code;
-        this.typeType = typeType;
     }
 
     public execute(environment: Environment) {
         try {
-            //console.error("DECLARACION" + this.id)
+            console.error("LLAMADA REGRESA EXPRESION" + this.id)
             //console.error(environment)
             //console.error(this.code)
             //console.error(this.typeType)
-            const val = this.code.execute(environment);
+            const func = environment.getFuncion(this.id);
             //console.error(val)
-            if(this.type == undefined) {
-                environment.guardar(this.id, val.value, val.type);
-            } else {
-                if(this.type != val.type) {
-                    throw {error: "El tipo " + val.value + " no es asignable con " + this.obtenerTipo(this.type), fila: this.fila, columna : this.columna};
-                } else {
-                    environment.guardar(this.id, val.value, val.type);
+
+            if(func != undefined){
+                //console.log(func)
+                const newEnv = new Environment(environment.getGlobal());
+                //console.log(newEnv)
+                for(let i = 0; i < this.expresiones.length; i++){
+                    const value = this.expresiones[i].execute(environment);
+                    console.log(value)
+                    newEnv.guardar(func.parametros[i], value.value, value.type);
+                }
+    
+                const funcionElement = func.code.execute(newEnv);
+                console.log(funcionElement)
+                if(funcionElement != null || funcionElement != undefined){
+                    //console.log(funcionElement);
+                    if(funcionElement.type == 'Return') {
+                        if(funcionElement.value == null || funcionElement.value == undefined) {
+                            return undefined;
+                        } else {
+                            return funcionElement.value;
+                        }
+                    }
                 }
             }
         } catch (error) {

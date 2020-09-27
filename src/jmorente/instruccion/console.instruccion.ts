@@ -20,7 +20,7 @@ export class Imprimir extends Instruction {
 
     public execute(environment : Environment) {
         const value = this.value.execute(environment);
-        console.log(value)
+        //console.log(value)
         if(value.type == 3) {
             SalidaControlador.getInstancia().asignarValor(value.value.valorSTR + "\n");
         } else {

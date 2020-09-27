@@ -14,7 +14,7 @@ export class Tab2Page {
   }
 
   segmentChanged(ev: any) {
-    console.log('Segment changed', ev);
+    //console.log('Segment changed', ev);
     this.itemSelect = ev.detail.value;
     switch (this.itemSelect) {
       case "Error":

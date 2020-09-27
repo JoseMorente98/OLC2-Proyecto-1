@@ -34,18 +34,18 @@ export class LexicoControlador {
         //var parser = new JisonLex(symbols);
         let ast = parser.parse(strEntrada);
         let ast2 = analisis.parse(strEntrada);
-        console.log("==========AST===========")
-        console.log(ast)
+        //console.log("==========AST===========")
+        //console.log(ast)
 
         setTimeout(() => {
             graficar.generateTree([ast.node]);
-            //console.log(grafica)
+            ////console.log(grafica)
         }, 1000);
 
-        console.log("=========PRIMERA ITERACION=========")
+        //console.log("=========PRIMERA ITERACION=========")
         for (const iterator of ast2) {
             if (iterator instanceof Declaracion) {
-                console.log(iterator)
+                //console.log(iterator)
                 iterator.execute(env);
             }
             if (iterator instanceof Imprimir) {
@@ -55,11 +55,11 @@ export class LexicoControlador {
                 iterator.execute(env);
             }
         }
-        console.log("=========SEGUNDA ITERACION=========")
+        //console.log("=========SEGUNDA ITERACION=========")
 
         for(const instr of ast2){
             if (instr instanceof Declaracion) {
-                console.log(instr)
+                //console.log(instr)
                 instr.execute(env);
 
             }
@@ -71,14 +71,14 @@ export class LexicoControlador {
             }
             try {
                 const actual = instr.execute(env);
-                console.log(actual)
+                //console.log(actual)
                 if(actual != null || actual != undefined){
                     //errores.push(new Error_(actual.line, actual.column, 'Semantico', actual.type + ' fuera de un ciclo'));
-                    console.error("ERROR SEMANTICO")
+                    //console.error("ERROR SEMANTICO")
                 }
             } catch (error) {
                // errores.push(error);  
-               console.error(error)
+               //console.error(error)
             }
         }
         /*for(const instr of ast){
@@ -93,7 +93,7 @@ export class LexicoControlador {
             let token = parser.lex();
             columna = parser.yylloc.first_column;
             fila = parser.yylloc.first_line;
-            //console.log('<' + token + ', ' + parser.yytext + "Fila: " + fila + " Columna: "+ columna + '>')
+            ////console.log('<' + token + ', ' + parser.yytext + "Fila: " + fila + " Columna: "+ columna + '>')
             if(token=='TK_Desconocido') {
                 TokenControlador.getInstancia().agregarError(parser.yytext, token, fila, columna);
             }else if(token=='EOF') {

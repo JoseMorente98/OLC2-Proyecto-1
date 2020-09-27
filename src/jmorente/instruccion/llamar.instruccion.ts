@@ -21,29 +21,29 @@ export class LlamarFuncion extends Instruction {
     }
 
     public execute(environment : Environment) {
-        console.error("FUNCIONES LLAMAR")
-        console.error("================================")
-        console.log(this.expresiones)
+        //console.error("FUNCIONES LLAMAR")
+        //console.error("================================")
+        //console.log(this.expresiones)
         
         const func = environment.getFuncion(this.id);
-        console.log(func)
+        //console.log(func)
 
 
 
         if(func != undefined){
-            console.log(func)
+            //console.log(func)
             const newEnv = new Environment(environment.getGlobal());
-            console.log(newEnv)
+            //console.log(newEnv)
             for(let i = 0; i < this.expresiones.length; i++){
                 const value = this.expresiones[i].execute(environment);
-                console.log(value)
+                //console.log(value)
                 newEnv.guardar(func.parametros[i], value.value, value.type);
             }
 
             const funcionElement = func.code.execute(newEnv);
-            console.log(funcionElement)
+            //console.log(funcionElement)
             if(funcionElement != null || funcionElement != undefined){
-                console.log(funcionElement);
+                //console.log(funcionElement);
                 if(funcionElement.type == 'Return') {
                     if(funcionElement.value == null || funcionElement.value == undefined) {
                         return undefined;
@@ -53,7 +53,7 @@ export class LlamarFuncion extends Instruction {
                 }
             }
         }
-        console.error("================================")
+        //console.error("================================")
 
     }
 }

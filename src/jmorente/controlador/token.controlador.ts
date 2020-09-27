@@ -40,13 +40,13 @@ export class TokenControlador {
 
     imprimirToken(){
         this.arregloToken.forEach(e => {
-            console.log(e.toString());
+            //console.log(e.toString());
         });
     }
 
     imprimirError(){
         this.arregloError.forEach(e => {
-            console.error(e.toString());
+            //console.error(e.toString());
         });
     }
 

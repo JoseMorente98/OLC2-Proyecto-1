@@ -5,13 +5,13 @@
 Inicio();
 
  function  Inicio() {
-    console.log("-----------------CALIFICACION-----------------");
+    //console.log("-----------------CALIFICACION-----------------");
     let let1 = 0;
     //Verificar ámbitos, se toma con prioridad la letiable local ante la global.
     if (let1 != 0)
     {
-        console.log("No se toma con prioridad la letiable local ante la global");
-        console.log("Perdiste 5 puntos :c");
+        //console.log("No se toma con prioridad la letiable local ante la global");
+        //console.log("Perdiste 5 puntos :c");
     }
     else{
         punteo = punteo + 5;
@@ -36,7 +36,7 @@ Inicio();
     Relacionales();
 
     //punteo final
-    console.log("punteo Final: "+punteo);
+    //console.log("punteo Final: "+punteo);
 }
 
  function  Declaracion(){
@@ -47,7 +47,7 @@ Inicio();
             ======================================
     
     */
-    console.log("========= Metodo Declaracion =========");
+    //console.log("========= Metodo Declaracion =========");
     let n1 = 2;
     let n2 = 2;
     let n3 = 2;
@@ -66,25 +66,25 @@ Inicio();
     let chr4 = "s";
     //if n modificar la asignación
     if (db1 == db4){
-        console.log(str4 + chr4 +" " +n4+" :D");
+        //console.log(str4 + chr4 +" " +n4+" :D");
     }else {
-        console.log("Problemas en el metodo declaracion :(");
+        //console.log("Problemas en el metodo declaracion :(");
     }
-    console.log("======================================");
+    //console.log("======================================");
     punteo = punteo + 5;
 }
 
  function  Ambitos2(){
     //debería lanzar un error, cualquiera
     //comentar luego de que lanze el error
-    console.log("========= Error Ambitos ==============");
-    //console.log("Debería lanzar error: "+amb1);
+    //console.log("========= Error Ambitos ==============");
+    ////console.log("Debería lanzar error: "+amb1);
     let amb1 = "Desde ambito2";
-    console.log("======================================");
-    console.log("================ Nice ================");
+    //console.log("======================================");
+    //console.log("================ Nice ================");
     punteo = punteo + 5;
-    console.log("Sin error: "+amb1);
-    console.log("======================================");
+    //console.log("Sin error: "+amb1);
+    //console.log("======================================");
 
 }
 
@@ -103,106 +103,106 @@ Inicio();
     d) 256
     ======================================
     */
-    console.log("==============Aritmeticas=============");
+    //console.log("==============Aritmeticas=============");
     let art1 = "Hola "+"C"+""+"O"+""+"M"+""+"P"+""+"I";
-    console.log(art1);
+    //console.log(art1);
     if (art1=="Hola COMPI"){
         punteo = punteo + 3;
     }else {
-        console.log("Perdiste 3 puntos en suma de let y let :c");
+        //console.log("Perdiste 3 puntos en suma de let y let :c");
     }
 
     let n1 = 0.0 + 1 + 1 + 1 + 0.1 + 49;
-    console.log("El valor de  n1 = "+n1);
+    //console.log("El valor de  n1 = "+n1);
     if (n1 == 52.1){
         punteo = punteo + 5;
     }else {
-        console.log("Perdiste 5 puntos en suma de enteros booleanos y caracteres :c");
+        //console.log("Perdiste 5 puntos en suma de enteros booleanos y caracteres :c");
     }
 
     let n4 = (5750 * 2) - 11800 + 1.0;
     let n3 = (((3 * 3) + 4) - 80 + 40.00 * 2 + 358.50 - (29 / 14.50)) - (0.50) + n4;
-    console.log("El valor de n3 = "+n3);
+    //console.log("El valor de n3 = "+n3);
     if (n3 == 70)
     {
         punteo = punteo + 3;
     }
     else 
     {
-        console.log("Perdiste 3 puntos :c ");
+        //console.log("Perdiste 3 puntos :c ");
     }
     
     operacionesBasicas();
     operacionesAvanzadas();
-    console.log("======================================");
+    //console.log("======================================");
     
 }
 
  function  operacionesBasicas(){
-    console.log("Operaciones Aritmeticas 1: valor esperado:  \na)62   \nb)0   \nc)-19   \nd)256   \nresultados>");
+    //console.log("Operaciones Aritmeticas 1: valor esperado:  \na)62   \nb)0   \nc)-19   \nd)256   \nresultados>");
     let a = (20-10+8/2*3+10-10-10+50);
     let b = (50/50*50+50-100+100-100);
     let c = (100/20*9-78+6-7+8-7+7*1*2*3/3);
     let d = (2 **(20/5*2));
-    console.log("a) " +a);
-    console.log("b) " +b);
-    console.log("c) " +c);
-    console.log("d) " +d);
+    //console.log("a) " +a);
+    //console.log("b) " +b);
+    //console.log("c) " +c);
+    //console.log("d) " +d);
     if (a==62 && b==0 && c == -19 && d ==256){
-        console.log("Operaciones aritmeticas 1 bien :D");
+        //console.log("Operaciones aritmeticas 1 bien :D");
         punteo = punteo + 5;
     }else {
-        console.log("Error en las operaciones basicas :(");
+        //console.log("Error en las operaciones basicas :(");
     }
 }
 
  function  operacionesAvanzadas(){
     let aritmetica1 = 2;
     let aritmetica2 = -10;
-    console.log("Operaciones Aritmeticas 2: valor esperado> -20  41, resultado>");
+    //console.log("Operaciones Aritmeticas 2: valor esperado> -20  41, resultado>");
     let aritmetica3 = aritmetica2*aritmetica1;
-    console.log(aritmetica3+"");
+    //console.log(aritmetica3+"");
     aritmetica1 = aritmetica3/aritmetica1+50 **2/50+50*2-100+100/100-0;
-    console.log(aritmetica1+"");
+    //console.log(aritmetica1+"");
     if (aritmetica3 == -20 && aritmetica1 == 41){
-        console.log("Operaciones aritmeticas 2 bien :D");
+        //console.log("Operaciones aritmeticas 2 bien :D");
         punteo = punteo + 5;
     }else {
-        console.log("Error Operaciones Aritmeticas :c alv :c");
+        //console.log("Error Operaciones Aritmeticas :c alv :c");
     }
 }
 
 //FN5HU-3uykL
 
  function  logicas(){
-     console.log("==============logicas1=============");
+     //console.log("==============logicas1=============");
     if (!!!!!!!!!!!!!!!!!!!!!!true){
         punteo = punteo + 1;
-        console.log("Bien primera condicion :)");
+        //console.log("Bien primera condicion :)");
     }else {
-        console.log("Perdiste 1 punto :c");
+        //console.log("Perdiste 1 punto :c");
     }
 
     if (true && true || false && false && false || !true){
         punteo = punteo + 1;
-        console.log("Bien segunda condicion:)");
+        //console.log("Bien segunda condicion:)");
     }else {
-        console.log("Perdiste 1 punto :c");
+        //console.log("Perdiste 1 punto :c");
     }
-    console.log("======================================");
+    //console.log("======================================");
     logicas2();
 }
 
  function  logicas2(){
     let n0 = 16;
-         console.log("==============logicas2=============");
+         //console.log("==============logicas2=============");
 
     if (!(!(n0 == 16 && false == true) && !(true))){
-            console.log("Not y Ands Correctos");
+            //console.log("Not y Ands Correctos");
                         punteo = punteo +3;
 
     }else {
-                console.log("No funcionan nots y ands :(");
+                //console.log("No funcionan nots y ands :(");
         }
     let n1 = n0 /16;
     n1 = n1 + 1;
@@ -212,12 +212,12 @@ Inicio();
         let condicion3 = !true; //false
         
     if (!(!(!(condicion1||condicion2) || condicion3 ))){
-        console.log("Nots y Ors correectos");
+        //console.log("Nots y Ors correectos");
                 punteo = punteo + 3;
     }else {
-            console.log("No Funciona nots y ands :(");
+            //console.log("No Funciona nots y ands :(");
         }
-            console.log("======================================");
+            //console.log("======================================");
 }
 
  function  Relacionales(){
@@ -231,7 +231,7 @@ Inicio();
 
  function  relaciones1(salida:number)
 {
-        console.log("==============relacionales1=============");
+        //console.log("==============relacionales1=============");
         let n0 = salida + 0.0;
         if (n0 < 34.44)
             {
@@ -249,55 +249,55 @@ Inicio();
             {
                 if (salida == 50)
                     {
-                        console.log("salida Correcta Relacionales 1!");
+                        //console.log("salida Correcta Relacionales 1!");
                         punteo = punteo + 5;
                     }
                     else {
-                        console.log("salida incorrecta!!");
+                        //console.log("salida incorrecta!!");
                     }
             }
             else {
-                console.log("salida incorrecta!!");
+                //console.log("salida incorrecta!!");
             }
-        console.log("======================================");
+        //console.log("======================================");
 }
 
  function  relaciones2(n0:number){
-            console.log("vas bien, animo :D");
-            console.log("============Relacionales2=============");
+            //console.log("vas bien, animo :D");
+            //console.log("============Relacionales2=============");
 
             if (10-15 >= 0 && 44.44 == 44.44)
             {
-                console.log("salida incorrecta primer if relacionales2!!");
+                //console.log("salida incorrecta primer if relacionales2!!");
             }
             else {
                 if (15+8 == 22-10+5*3-4 && 13*0>-1)
                     {
                         if (10.0 != 11.0-1.01 )
                             {
-                                console.log("salida CORRECTA en relacionales2!!");
+                                //console.log("salida CORRECTA en relacionales2!!");
                                 punteo = punteo + 5;
                             }
                             else {
-                                console.log("salida incorrecta segundo if relacionales 2!!");
+                                //console.log("salida incorrecta segundo if relacionales 2!!");
                             }
                     }
                     else {
                         if (1 == 1)
                             {
-                                console.log("salida incorrecta relacionales 2 3er if !!");
+                                //console.log("salida incorrecta relacionales 2 3er if !!");
                             }
                             else {
-                                console.log("salida incorrecta relacionales 2 Sino3er if !!");
+                                //console.log("salida incorrecta relacionales 2 Sino3er if !!");
                             }
                     }
             }
-        console.log("======================================");
+        //console.log("======================================");
         FactorialIterativo(7);
 }
 
 function  FactorialIterativo(n2:number){
-                     console.log("==============for Calificar Ciclos=============");
+                     //console.log("==============for Calificar Ciclos=============");
 
     let numeroFactorial = n2;
     while(numeroFactorial > -1){
@@ -305,7 +305,7 @@ function  FactorialIterativo(n2:number){
         numeroFactorial--;
     }
         SentenciasAnidadas();
-        console.log("======================================");
+        //console.log("======================================");
 
 }
 
@@ -325,7 +325,7 @@ function  FactorialIterativo(n2:number){
         }
     }
         str = str + fact+ ";";
-    console.log(str);
+    //console.log(str);
 }
 
 
@@ -353,9 +353,9 @@ function  FactorialIterativo(n2:number){
                     letFigura = letFigura + ". ";
                 }
             }
-            console.log(letFigura);
+            //console.log(letFigura);
         }
-    console.log("if la figura es un corazon +10 <3");
+    //console.log("if la figura es un corazon +10 <3");
 }
 
  function  figura2(){
@@ -372,7 +372,7 @@ function  FactorialIterativo(n2:number){
                 letFigura = letFigura + c;
             }
             
-            console.log(letFigura);
+            //console.log(letFigura);
             letFigura ="";
         }
          letFigura = "";
@@ -384,7 +384,7 @@ function  FactorialIterativo(n2:number){
                 letFigura = letFigura + c;
             }
             
-            console.log(letFigura);
+            //console.log(letFigura);
             letFigura = "";
         }
          letFigura = "";
@@ -396,7 +396,7 @@ function  FactorialIterativo(n2:number){
                 letFigura = letFigura +c;
             }
             
-            console.log(letFigura);
+            //console.log(letFigura);
             letFigura = "";
         }
         
@@ -409,7 +409,7 @@ function  FactorialIterativo(n2:number){
                 letFigura = letFigura + c;
             }
             
-            console.log(letFigura);
+            //console.log(letFigura);
             letFigura = "";
         }
         letFigura = "";
@@ -421,11 +421,11 @@ function  FactorialIterativo(n2:number){
                 letFigura = letFigura + c;
             }
             
-            console.log(letFigura);
+            //console.log(letFigura);
             letFigura = "";
         }
         
-            console.log("if la figura es un Arbol +10 <3");
+            //console.log("if la figura es un Arbol +10 <3");
 
        }
 
@@ -443,7 +443,7 @@ function  FactorialIterativo(n2:number){
             figura2();
             break;
         default:
-            console.log("Esto se va a console.log 2 veces :3");
+            //console.log("Esto se va a //console.log 2 veces :3");
             
     }
     numero1 = numero1 + 1;
@@ -461,10 +461,10 @@ function  figura0(numero:number){
             numeroMostrar  = numeroMostrar + 1;
             j = j + 1;
         }
-        console.log(unaFila);
+        //console.log(unaFila);
         i = i + 1;
     }
-    console.log("if la figura es un triangulo de numeros + 5 :3");
+    //console.log("if la figura es un triangulo de numeros + 5 :3");
 }
 
 /**

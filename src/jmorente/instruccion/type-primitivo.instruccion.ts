@@ -23,8 +23,8 @@ export class TypePrimitivo extends Instruction{
     }
 
     public execute(environment: Environment) {
-        console.error("TYPO")
-        console.log(environment)
+        //console.error("TYPO")
+        //console.log(environment)
         return {id: this.id, type: this.type};
     }
 

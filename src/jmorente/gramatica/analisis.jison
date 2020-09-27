@@ -5,6 +5,7 @@
     const { Logica, OpcionLogica } = require('../expresion/logica.expresion');
     const { Acceso } = require('../expresion/acceso.expresion');
     const { AccesoType } = require('../expresion/acceso-type.expresion');
+    const { AccesoType3 } = require('../expresion/acceso-type3.expresion');
     const { Literal } = require('../expresion/literal.expresion');
     const { Nullable } = require('../expresion/nullable.expresion');
     const { LiteralObjeto } = require('../expresion/literal-objeto.expresion');
@@ -12,6 +13,8 @@
     const { DeclaracionLlamada } = require('../instruccion/declaracion-llamada.instruccion');
     const { SinTipo } = require('../instruccion/sintipo.instruccion');
     const { SinTipoType } = require('../instruccion/sin-tipo-type.instruccion');
+    const { SinTipoLLamada } = require('../instruccion/sin-tipo-type-llamada.instruccion');
+    const { SinTipoTypeLlamada } = require('../instruccion/sin-tipo-type.instruccion');
     const { Imprimir } = require('../instruccion/console.instruccion');
     const { While } = require('../instruccion/while.instruccion');
     const { For } = require('../instruccion/for.instruccion');
@@ -29,6 +32,7 @@
     const { Value } = require('../instruccion/value.instruccion');
     const { Funcion } = require('../instruccion/funcion.instruccion');
     const { LlamarFuncion } = require('../instruccion/llamar.instruccion');
+    const { LlamarFuncion2 } = require('../instruccion/llamar2.instruccion');
 %}
 
 %lex
@@ -126,6 +130,8 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 %left '*' '/'
 %left '%' '^'
 %left '!'
+%left '('
+%left ')'
 
 %start Init
 
@@ -170,42 +176,42 @@ INSTRUCCION
         $$ = $1
     }
     |
-    BREAK
+    SENTENCIA_BREAK
     {
         $$ = $1
     }
     |
-    CONTINUE
+    SENTENCIA_CONTINUE
     {
         $$ = $1
     }
     |
-    RETURN
+    SENTENCIA_RETURN
     {
         $$ = $1
     }
     |
-    IF
+    SENTENCIA_IF
     {
         $$ = $1
     }
     |
-    SWITCH
+    SENTENCIA_SWITCH
     {
         $$ = $1
     }
     |
-    WHILE
+    SENTENCIA_WHILE
     {
         $$ = $1
     }
     |
-    DOWHILE
+    SENTENCIA_DO_WHILE
     {
         $$ = $1
     }
     |
-    FOR
+    SENTENCIA_FOR
     {
         $$ = $1
     }
@@ -220,7 +226,7 @@ INSTRUCCION
         $$ = $1
     }
     |
-    FUNCIONES
+    SENTENCIA_FUNCIONES
     {
         $$ = $1;
     }
@@ -232,11 +238,6 @@ DECLARACION_LET
         $$ = new Declaracion($2, $4.type, $6, @1.first_line, @1.first_column, $4.tipo);
     }
     |
-    'PR_LET' ID ':' TIPO '=' LLAMADA_FUNCION2 ';'
-    {
-        $$ = new DeclaracionLlamada($2, $4.type, $6, @1.first_line, @1.first_column);
-    }
-    |
     'PR_LET' ID ':' TIPO ';'
     {
         $$ = new Declaracion($2, $4.type, null, @1.first_line, @1.first_column, $4.tipo);
@@ -245,11 +246,6 @@ DECLARACION_LET
     'PR_LET' ID '=' EXPRESION ';'
     {
         $$ = new Declaracion($2, null, $4, @1.first_line, @1.first_column);
-    }
-    |
-    'PR_LET' ID '=' LLAMADA_FUNCION2 ';'
-    {
-        $$ = new DeclaracionLlamada($2, null, $4, @1.first_line, @1.first_column);
     }
     |
     'PR_LET' ID ';'
@@ -305,17 +301,7 @@ DECLARACION_SIN_TIPO
         $$ = new SinTipo($1, $3, @1.first_line, @1.first_column);
     }
     |
-    ID '=' LLAMADA_FUNCION2 ';'
-    {
-        $$ = new SinTipo($1, $3, @1.first_line, @1.first_column);
-    }
-    |
     ID '.' ID '=' EXPRESION ';'
-    {
-        $$ = new SinTipoType($1, $3, $5, @1.first_line, @1.first_column);
-    }
-    |
-    ID '.' ID '=' LLAMADA_FUNCION2 ';'
     {
         $$ = new SinTipoType($1, $3, $5, @1.first_line, @1.first_column);
     }
@@ -497,6 +483,11 @@ EXPRESION
         $$ = new Aritmetica($1, $1, OpcionAritmetica.DECREMENTO, @1.first_line,@1.first_column);
     }
     |
+    LLAMADA_FUNCION2
+    {
+        $$ = $1
+    }
+    |
     IDENTIFICADOR
     {
         $$ = $1
@@ -513,7 +504,8 @@ IDENTIFICADOR
     {
         $$ = $2;
     }
-    | CADENA
+    |
+    CADENA
     { 
         $$ = new Literal($1, @1.first_line, @1.first_column, 1);
     }
@@ -546,6 +538,11 @@ IDENTIFICADOR
     {
         $$ = new AccesoType($1, $3, @1.first_line, @1.first_column)
     }
+    |
+    ID '.' ID '.' ID 
+    {
+        $$ = new AccesoType3($1, $3, $5, @1.first_line, @1.first_column)
+    }
 ;
 
 EXPRESION_JSON
@@ -575,21 +572,21 @@ OBJECT
     }
 ;
 
-BREAK 
+SENTENCIA_BREAK 
     : 'PR_BREAK'  ';'
     {
         $$ = new Break(@1.first_line, @1.first_column);
     }
 ;
 
-CONTINUE 
+SENTENCIA_CONTINUE 
     : 'PR_CONTINUE'  ';'
     {
         $$ = new Continue(@1.first_line, @1.first_column);
     }
 ;
 
-RETURN 
+SENTENCIA_RETURN 
     : 'PR_RETURN'  ';'
     {
         $$ = new Return(@1.first_line, @1.first_column);
@@ -600,7 +597,7 @@ RETURN
     }
 ;
 
-IF 
+SENTENCIA_IF 
     : 'PR_IF' '(' EXPRESION ')' SENTENCIA ELSEIF
     {
         $$ = new If($3, $5, $6, @1.first_line, @1.first_column);
@@ -623,7 +620,7 @@ ELSEIF
     {
         $$ = $2;
     }
-    | 'PR_ELSE' IF
+    | 'PR_ELSE' SENTENCIA_IF
     {
         $$ = $2;
     }
@@ -633,21 +630,21 @@ ELSEIF
     }
 ;
 
-WHILE 
+SENTENCIA_WHILE 
     : 'PR_WHILE' '(' EXPRESION ')' SENTENCIA
     {
         $$ = new While($3, $5, @1.first_line, @1.first_column);
     }
 ;
 
-DOWHILE 
+SENTENCIA_DO_WHILE 
     : 'PR_DO' SENTENCIA 'PR_WHILE' '(' EXPRESION ')' ';'
     {
         $$ = new DoWhile($5, $2, @1.first_line, @1.first_column);
     }
 ;
 
-SWITCH
+SENTENCIA_SWITCH
     : 'PR_SWITCH' '(' EXPRESION ')' '{' CASES DEFAULT '}'
     {
         $$ = new Switch($3, $6, $7, @1.first_line, @1.first_column);
@@ -684,7 +681,7 @@ DEFAULT
     }
 ;
 
-FOR 
+SENTENCIA_FOR 
     : 'PR_FOR' '(' DECLARACION_FOR ';' EXPRESION ';' EXPRESION ')' SENTENCIA
     {
         $$ = new For($3, $5, $7, $9, @1.first_line, @1.first_column);
@@ -740,7 +737,7 @@ CONSOLE:
     }
 ;
 
-FUNCIONES: 
+SENTENCIA_FUNCIONES: 
     'PR_FUNCTION' ID '(' ')' SENTENCIA
     {
         $$ = new Funcion($2, $5, [], @1.first_line, @1.first_column);
@@ -841,12 +838,12 @@ LLAMADA_FUNCION2
     :
     ID '(' ')'
     {
-        $$ = new LlamarFuncion($1, [], @1.first_line, @1.first_column);
+        $$ = new LlamarFuncion2($1, [], @1.first_line, @1.first_column);
     }
     |
     ID '(' PARAMETROS_LLAMADA ')'
     {
-        $$ = new LlamarFuncion($1, $3, @1.first_line, @1.first_column);
+        $$ = new LlamarFuncion2($1, $3, @1.first_line, @1.first_column);
     }
 ;
 

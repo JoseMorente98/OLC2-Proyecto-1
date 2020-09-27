@@ -20,10 +20,10 @@ export class LiteralObjeto extends Expression {
     }
 
     public execute(enviroment: Environment) : Retorno {
-        console.error("____________________________")
-        console.error("LITERAL OBJETO")
-        console.error("____________________________")
-        console.error(this.value)
+        //console.error("____________________________")
+        //console.error("LITERAL OBJETO")
+        //console.error("____________________________")
+        //console.error(this.value)
 
         var strJSON = "{"
         for (const iterator of this.value) {

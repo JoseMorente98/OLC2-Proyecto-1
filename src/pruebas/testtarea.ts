@@ -1,4 +1,4 @@
-console.log("HOla");
+//console.log("HOla");
 
 /**
  * TYPES
@@ -25,20 +25,20 @@ let comoestas:hola = {
 
 comoestas.nombre = "JOSE RAFAEL";
 
-console.log(comoestas);
-console.log(comoestas.nombre);
-console.log(comoestas.apellido);
-console.log(comoestas.edad);
+//console.log(comoestas);
+//console.log(comoestas.nombre);
+//console.log(comoestas.apellido);
+//console.log(comoestas.edad);
 comoestas.nombre = "JOSE CHIQUIN";
 
-console.log(comoestas);
-console.log(comoestas.nombre);
-console.log(comoestas.apellido);
-console.log(comoestas.edad);
-console.log(comoestas);
+//console.log(comoestas);
+//console.log(comoestas.nombre);
+//console.log(comoestas.apellido);
+//console.log(comoestas.edad);
+//console.log(comoestas);
 comoestas.nombre = "DAVID MORENTE";
 
-console.log(comoestas.nombre);
-console.log(comoestas.apellido);
-console.log(comoestas.edad);
+//console.log(comoestas.nombre);
+//console.log(comoestas.apellido);
+//console.log(comoestas.edad);
 let persona1:hola;

@@ -17,7 +17,7 @@ export class Sentencia extends Instruction{
                     return element;                
             } catch (error) {
                 ///errores.push(error);
-                console.error(error)
+                //console.error(error)
             }
         }
     }

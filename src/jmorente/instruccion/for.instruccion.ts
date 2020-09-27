@@ -27,30 +27,30 @@ export class For extends Instruction {
     }
 
     public execute(environment : Environment) {
-        console.error('FOR')
-        console.log(environment)
-        console.log(this.condicion)
+        //console.error('FOR')
+        //console.log(environment)
+        //console.log(this.condicion)
         let inicializacion = this.inicializacion.execute(environment);
         let condicion = this.condicion.execute(environment);
         //let actualizacion = this.actualizacion.execute(environment);
-        console.error('INICIALIZACION')
-        console.log(inicializacion)
+        //console.error('INICIALIZACION')
+        //console.log(inicializacion)
 
-        //console.log(actualizacion)
-        console.log(condicion)
-        console.log(this.code)
+        ////console.log(actualizacion)
+        //console.log(condicion)
+        //console.log(this.code)
 
         if(condicion.type != Type.BOOLEAN){
             throw {error: "La condicion no es booleana", linea: this.fila, columna : this.columna};
         }
         
-        console.log(condicion.value == true)
+        //console.log(condicion.value == true)
 
         while(condicion.value == true){
             const element = this.code.execute(environment);
-            console.log(element)
+            //console.log(element)
             if(element != null || element != undefined){
-                console.log(element);
+                //console.log(element);
                 if(element.type == 'Break')
                     break;
                 else if(element.type == 'Continue')

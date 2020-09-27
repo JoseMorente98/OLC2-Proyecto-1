@@ -18,14 +18,14 @@ export class Types extends Instruction {
 
     public execute(environment: Environment) {
         try {
-            console.error("DECLARACION TYPE")
-            console.log(environment)
-            console.log(this.value)
+            //console.error("DECLARACION TYPE")
+            //console.log(environment)
+            //console.log(this.value)
 
             environment.guardarTypes(this.id, this.value, this.type);
 
             //const val = this.value.execute(environment);
-            //console.log(val)
+            ////console.log(val)
             /*if(this.type == undefined) {
                 environment.guardar(this.id, val.value, val.type);
             } else {
@@ -36,7 +36,7 @@ export class Types extends Instruction {
                 }
             }8*/
         } catch (error) {
-            console.log(error)
+            //console.log(error)
             /**
              * INGRESAR ERRORES SEMANTICOS
              */

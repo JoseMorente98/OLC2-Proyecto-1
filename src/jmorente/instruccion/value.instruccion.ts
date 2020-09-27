@@ -26,9 +26,9 @@ export class Value extends Instruction{
 
     public execute(environment: Environment) {
         try {
-            console.error("VALUE TYPE")
-            console.log(this.id)
-            console.log(this.value)
+            //console.error("VALUE TYPE")
+            //console.log(this.id)
+            //console.log(this.value)
             const val = this.value.execute(environment);
 
             return {id: this.id, value: val.value, type: val.type};

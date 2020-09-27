@@ -10,7 +10,12 @@ export class Literal extends Expression {
      * @param columna 
      * @param type 
      */
-    constructor(private value : any, fila : number, columna: number, private type : number){
+    constructor(
+        public value: any, 
+        public fila : number, 
+        public columna: number, 
+        public type : number
+    ){
         super(fila, columna);
     }
 
@@ -22,7 +27,7 @@ export class Literal extends Expression {
             case 0:
                 return {value : Number(this.value), type : Type.NUMBER};
             case 1:
-                return {value : this.value, type : Type.STRING};
+                return {value : this.value.replace(/"/g,'').replace(/'/g,'').replace(/`/g,''), type : Type.STRING};
             case 2:
                 return {value : (this.value=="false")?false:true, type : Type.BOOLEAN};
         }

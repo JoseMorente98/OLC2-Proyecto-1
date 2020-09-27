@@ -22,15 +22,15 @@ export class Relacional extends Expression {
     }
 
     public execute(environment : Environment) : Retorno{
-        console.error("RELACIONAL")
-        console.error(this.left)
-        console.error(this.right)
+        //console.error("RELACIONAL")
+        //console.error(this.left)
+        //console.error(this.right)
         const leftValue = this.left.execute(environment);
         const rightValue = this.right.execute(environment);
         if(this.type == OpcionRelacional.IGUAL){
-            console.error(leftValue.value)
-            console.error(rightValue.value)
-            console.error(leftValue.value == rightValue.value)
+            //console.error(leftValue.value)
+            //console.error(rightValue.value)
+            //console.error(leftValue.value == rightValue.value)
             const result = leftValue.value == rightValue.value;
             return {value : result, type : Type.BOOLEAN};
         }

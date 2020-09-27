@@ -22,9 +22,9 @@ export class If extends Instruction {
     }
 
     public execute(env : Environment) {
-        console.error('SENTENCIA IF')
-        console.error(this.code)
-        console.error(this.elseDeclaracion)
+        //console.error('SENTENCIA IF')
+        //console.error(this.code)
+        //console.error(this.elseDeclaracion)
         const condition = this.condition.execute(env);
         if(condition.type != Type.BOOLEAN){
             throw {error: "La condicion no es booleana", linea: this.fila, columna: this.columna};

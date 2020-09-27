@@ -71,7 +71,7 @@ export class Tab1Page {
               if(instr instanceof Funcion)
                   instr.execute(env);
           } catch (error) {
-            console.log(error) 
+            //console.log(error) 
           }
       }
 
@@ -83,17 +83,17 @@ export class Tab1Page {
             const actual = instr.execute(env);
             if(actual != null || actual != undefined){
                 //errores.push(new Error_(actual.line, actual.column, 'Semantico', actual.type + ' fuera de un ciclo'));
-                console.error("ERROR SEMANTICO")
+                //console.error("ERROR SEMANTICO")
             }
         } catch (error) {
-            console.error(error)
+            //console.error(error)
         }
       }
     } catch (error) {
       /**
        * INGRESAR ERRORES PARA REPORTE
        */
-      console.log(error)
+      //console.log(error)
       //ErrorControlador.getInstancia().agregarError(error.error, "Semántico", error.fila, error.columna);
     }
     this.strSalida = SalidaControlador.getInstancia().getSalida;

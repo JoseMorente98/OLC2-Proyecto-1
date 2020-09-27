@@ -30,13 +30,13 @@ export class Declaracion extends Instruction{
 
     public execute(environment: Environment) {
         try {
-            console.error("DECLARACION" + this.id)
-            console.error(environment)
-            console.error(this.type)
-            console.error(this.value)
-            console.error(this.typeType)
+            //console.error("DECLARACION" + this.id)
+            //console.error(environment)
+            //console.error(this.type)
+            //console.error(this.value)
+            //console.error(this.typeType)
             const val = this.value.execute(environment);
-            console.error(val)
+            //console.error(val)
             if(this.type == undefined) {
                 environment.guardar(this.id, val.value, val.type);
             } else {
@@ -47,25 +47,25 @@ export class Declaracion extends Instruction{
                      * AGREGAR VALIDACIONES DE TIPO TYPE
                      */
                     /*if(val.type == 3) {
-                        console.log("================TYPE======================")
+                        //console.log("================TYPE======================")
                         let typeType = environment.getTypes(this.typeType); 
                         typeType.valor
-                        console.log(typeType)
-                        console.log("================ITEMS======================")
-                        console.log(val.value)
+                        //console.log(typeType)
+                        //console.log("================ITEMS======================")
+                        //console.log(val.value)
                         for (const item of val.value) {
-                            console.log("================ITEMS VALIDAR======================")
+                            //console.log("================ITEMS VALIDAR======================")
 
                             let ejecutar = item.execute(environment);
-                            console.log("================EJECUTAR======================")
-                            console.error(ejecutar)
+                            //console.log("================EJECUTAR======================")
+                            //console.error(ejecutar)
                             for (const item2 of typeType.valor) {
-                                console.log(item2)
+                                //console.log(item2)
                                 if(ejecutar.id == item2.id) {
-                                    console.error(ejecutar)
-                                    console.error(item2)
-                                    console.error(ejecutar.type)
-                                    console.error(item2.type)
+                                    //console.error(ejecutar)
+                                    //console.error(item2)
+                                    //console.error(ejecutar.type)
+                                    //console.error(item2.type)
 
                                     
                                     switch (item2) {
@@ -86,8 +86,8 @@ export class Declaracion extends Instruction{
                                             break;
                                         default:
                                             //TODO: BUSCAR AMBITO Y VALIDAR QUE EXISTA
-                                            console.error("==========AMBITO==========")
-                                            console.error(item2.typeType)
+                                            //console.error("==========AMBITO==========")
+                                            //console.error(item2.typeType)
                                             let ambito = environment.getTypes(item2.type); 
                                             if(ambito != undefined) {
                                                 if(ambito.type!=3) {
@@ -100,10 +100,10 @@ export class Declaracion extends Instruction{
                                 
                             }
                             continue;
-                            console.log(item)
+                            //console.log(item)
                             
                         }
-                        console.log("================ITEMS======================")
+                        //console.log("================ITEMS======================")
                     } else {*/
                         /**
                          * ALMACENAR STRING, NUMBER, BOOLEAN

@@ -27,9 +27,9 @@ export class ErrorControlador {
     }
 
     imprimirError(){
-        console.log("MOSTRAR REPORTE DE ERRORES")
+        //console.log("MOSTRAR REPORTE DE ERRORES")
         this.arregloError.forEach(e => {
-            console.error(e.toString());
+            //console.error(e.toString());
         });
     }
 

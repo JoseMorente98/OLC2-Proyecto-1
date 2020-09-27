@@ -285,20 +285,20 @@ for (const iterator of object) {
  * 
  * IMPRIMIR LOGS
  *
-console.log(2+variable1*variable1);
-console.log(232%12);
-console.log(232^2);
-console.log(2.52);
-console.log((variable1==variable1));
-console.log(!!!!!!!!!!variable2);
-console.log((variable1!=variable1 )&&(variable1!=variable1 ));
-console.log((variable1!=variable1 && variable1 == variable4));
-console.log((variable1!=variable1));
-console.log("HOLA PERROS!" + "cOMO Estas" + variable1);
-console.log(variable1++);
-console.log(variable1--);*
+//console.log(2+variable1*variable1);
+//console.log(232%12);
+//console.log(232^2);
+//console.log(2.52);
+//console.log((variable1==variable1));
+//console.log(!!!!!!!!!!variable2);
+//console.log((variable1!=variable1 )&&(variable1!=variable1 ));
+//console.log((variable1!=variable1 && variable1 == variable4));
+//console.log((variable1!=variable1));
+//console.log("HOLA PERROS!" + "cOMO Estas" + variable1);
+//console.log(variable1++);
+//console.log(variable1--);*
 
-console.log('Hola')
+//console.log('Hola')
 
 function HolaAbc() {
     function Saludar(params:string) {
@@ -326,7 +326,7 @@ function f1() : number{
 if(true){
     if(true){
         f1();
-        console.log("hola mundo");
+        //console.log("hola mundo");
     }
 }*/
 

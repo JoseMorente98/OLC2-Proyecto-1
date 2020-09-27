@@ -20,10 +20,10 @@ export class Acceso extends Expression {
     }
 
     public execute(environment: Environment): Retorno {
-        // console.error("ACCESO")
-        // console.log(environment)
+        // //console.error("ACCESO")
+        // //console.log(environment)
         const value = environment.getVar(this.id);
-        // console.log(value)
+        // //console.log(value)
 
         if(value == null) {
             throw new Error("La variable no existe D:");

@@ -39,6 +39,9 @@ export class Aritmetica extends Expression {
         const leftValue = this.left.execute(environment);
         const rightValue = this.right.execute(environment);
 
+        console.log(leftValue)
+        console.log(rightValue)
+
         if(this.type == OpcionAritmetica.SUMA) {
             switch (leftValue.type) {
                 /**
@@ -176,8 +179,8 @@ export class Aritmetica extends Expression {
              */
             switch (leftValue.type) {
                 case 0:
-                    console.log(leftValue)
-                    console.log(this.left.id)
+                    //console.log(leftValue)
+                    //console.log(this.left.id)
                     let newVal = leftValue.value + 1;
                     if(rightValue.type == 0) {
                         result = {value : newVal, type : Type.NUMBER};
@@ -197,8 +200,8 @@ export class Aritmetica extends Expression {
              */
             switch (leftValue.type) {
                 case 0:
-                    console.log(leftValue)
-                    console.log(this.left.id)
+                    //console.log(leftValue)
+                    //console.log(this.left.id)
                     if(rightValue.type == 0) {
                         let newVal = leftValue.value - 1;
                         result = {value : newVal, type : Type.NUMBER};

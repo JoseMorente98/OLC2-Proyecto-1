@@ -17,8 +17,8 @@ export class Return extends Instruction {
     }
 
     public execute(environment : Environment) {
-        console.log("RETURN")
-        console.log(this.value)
+        //console.log("RETURN")
+        //console.log(this.value)
         const val = this.value.execute(environment);
 
         return {value: val, fila : this.fila, columna: this.columna, type : 'Return'};

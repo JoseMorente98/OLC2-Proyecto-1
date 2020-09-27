@@ -5,7 +5,7 @@
 
 var saludar:string = "Hola Mundo";
 
-console.log(saludar);
+//console.log(saludar);
 
 
 /**
@@ -13,7 +13,7 @@ console.log(saludar);
  */
 while (true) {
 
-    console.log(saludar);
+    //console.log(saludar);
     break;
 }
 
@@ -85,7 +85,7 @@ var varCF:number =  5 % true;
 var varD:number =  5 ^ false;
 var varE:number =  5 + 6;
 var varG:string =  5 + "Hola mundos";
-console.log(varE);
+//console.log(varE);
 
 
 /**
@@ -163,26 +163,26 @@ var constanteNOT:boolean = !false;//true
 var varAAA:number = 10 + 12;//22
 var constanteAND1:boolean = varAAA && true;//true
 var constanteNOT2:boolean = varAAA || true;//true
-console.log(constanteAND1)
-console.log(constanteNOT2)
+//console.log(constanteAND1)
+//console.log(constanteNOT2)
 
 var varAAA:number = 10 + 12;//22
 var varAAAs:string = "hola" + 12;//22
 var constanteNOT:boolean = !varAAA;//false
 var constanteNOT2:boolean = !varAAAs;//false
 
-console.log(varAAA);
-console.log(varAAAs);
-console.log(constanteNOT);
-console.log(constanteNOT2);
-console.log(varAAA);
-console.log(varAAAs);
-console.log(constanteNOT);
-console.log(constanteNOT2);
-console.log(varAAA);
-console.log(varAAAs);
-console.log(constanteNOT);
-console.log(constanteNOT2);
+//console.log(varAAA);
+//console.log(varAAAs);
+//console.log(constanteNOT);
+//console.log(constanteNOT2);
+//console.log(varAAA);
+//console.log(varAAAs);
+//console.log(constanteNOT);
+//console.log(constanteNOT2);
+//console.log(varAAA);
+//console.log(varAAAs);
+//console.log(constanteNOT);
+//console.log(constanteNOT2);
 
 /**
  * DECLARACION DE VARIABLES
@@ -219,33 +219,33 @@ var cadena3:string = `cadena de texto ${apellido} \r texto`;
 var cadena4:string = `cadena de texto ${apellido} \t texto`;
 var cadena5:string = `cadena de texto ${apellido} \" texto`;
 var cadena6:string = `cadena de texto ${apellido} texto`;
-console.log(cadena);
+//console.log(cadena);
 
 /**
  * MANEJO DE SIN TIPOS
  */
 var apellido:string = "Morente";
 apellido = "González" + true;
-console.log(apellido);
+//console.log(apellido);
 var nombre:string = "Morente";
 //nombre = 1;
-console.log(nombre);
+//console.log(nombre);
 var sexo:boolean = true;
 sexo = false;//
 //sexo = "true";
-console.log(sexo);
+//console.log(sexo);
 
 //var edad:number = "aba";
 while (edad < 5) {
     edad = edad + 1;
-    console.log('HOLA MUNDO');
+    //console.log('HOLA MUNDO');
 }
 
 var edad:number = 0;
 do {
     edad = edad + 1;
-    console.log('HOLA MUNDO');
+    //console.log('HOLA MUNDO');
 } while (edad < 5);
 
 var edad:number = 7^2/14;
-console.log(edad);
+//console.log(edad);

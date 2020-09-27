@@ -32,11 +32,11 @@ export class Logica extends Expression {
             return {value : result, type : Type.BOOLEAN};
         } 
         else if(this.type == OpcionLogica.NOT){
-            console.error("EVALUCION")
+            //console.error("EVALUCION")
             
             const leftValue = this.left.execute(environment);
-            console.error(leftValue.value)
-            console.error(!leftValue.value)
+            //console.error(leftValue.value)
+            //console.error(!leftValue.value)
             const result = !leftValue.value;
             return {value : result, type : Type.BOOLEAN};
         }

@@ -21,22 +21,22 @@ export class DoWhile extends Instruction{
     }
 
     public execute(env : Environment) {
-        console.error('WHILE')
-        console.log(env)
-        console.log(this.condicion)
+        //console.error('WHILE')
+        //console.log(env)
+        //console.log(this.condicion)
         let condicion = this.condicion.execute(env);
-        console.log(condicion)
-        console.log(this.code)
+        //console.log(condicion)
+        //console.log(this.code)
 
         if(condicion.type != Type.BOOLEAN){
             throw {error: "La condicion no es booleana", linea: this.fila, columna : this.columna};
         }
-        console.log(condicion.value == true)
+        //console.log(condicion.value == true)
         do {
             const element = this.code.execute(env);
-            console.log(element)
+            //console.log(element)
             if(element != null || element != undefined){
-                console.log(element);
+                //console.log(element);
                 if(element.type == 'Break')
                     break;
                 else if(element.type == 'Continue')

@@ -4,12 +4,20 @@ import { Environment } from '../simbolos/enviroment.simbolos';
 import { Type } from '../abstract/retorno.abstract';
 import { ErrorControlador } from '../controlador/error.controlador';
 
-export class SinTipo extends Instruction{
-    private id: string;
-    private value: Expression;
-    private type: any;
+export class SinTipoLLamada extends Instruction{
 
-    constructor(id: string, value: Expression, fila: number, columna: number){
+    /**
+     * CONSTRUCTOR
+     * @param id 
+     * @param value 
+     * @param fila 
+     * @param columna 
+     */
+    constructor(
+        public id: string,
+        public value: Instruction,
+        public fila: number,
+        public columna: number){
         super(fila, columna);
         this.id = id;
         this.value = value;
@@ -17,7 +25,7 @@ export class SinTipo extends Instruction{
 
     public execute(environment: Environment) {
         try {
-            //console.error("SIN TIPO")
+            //console.error("SIN TIPO LLAMADA")
             //console.log(environment)
             const val = this.value.execute(environment);
             //console.log(val)
