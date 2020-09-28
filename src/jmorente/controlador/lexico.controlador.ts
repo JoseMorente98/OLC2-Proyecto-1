@@ -1,4 +1,3 @@
-import { TokenControlador } from './token.controlador';
 //import { ASTControlador } from './ast/chart.ast.ts';
 //declare var parser: any;
 //var analizadorLexico = require('../analizador/lexico.analizador');

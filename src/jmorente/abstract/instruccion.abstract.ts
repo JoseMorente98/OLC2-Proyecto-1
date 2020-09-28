@@ -1,15 +1,15 @@
 import { Environment } from '../simbolos/enviroment.simbolos';
 
 export abstract class Instruction {
-    public fila: number;
-    public columna: number;
 
     /**
      * CONSTRUCTOR
      * @param fila 
      * @param columna 
      */
-    constructor(fila: number, columna: number) {
+    constructor(
+        public fila: number,
+        public columna: number) {
         this.fila = fila;
         this.columna = columna;
     }

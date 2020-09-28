@@ -25,6 +25,8 @@ export class Acceso extends Expression {
         const value = environment.getVar(this.id);
         // //console.log(value)
 
+        
+
         if(value == null) {
             throw new Error("La variable no existe D:");
         }

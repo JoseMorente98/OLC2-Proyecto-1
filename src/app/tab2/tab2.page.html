@@ -33,4 +33,17 @@
       </ion-label>
     </ion-item>
   </div>
+
+  <div *ngIf="itemSelect=='Tabla'">
+    <ion-item *ngFor="let item of dataSimbol">
+      <ion-label class="ion-text-wrap">
+        <p><strong>ID: </strong>{{item.id}}</p>
+        <p><strong>Fila: </strong>{{item.fila}}</p>
+        <p><strong>Columna: </strong>{{item.columna}}</p>
+        <p><strong>Tipo: </strong>{{item.tipo}}</p>
+        <p><strong>descripcion: </strong>{{item.descripcion}}</p>
+        <p><strong>Valor: </strong>{{item.content}}</p>
+      </ion-label>
+    </ion-item>
+  </div>
 </ion-content>

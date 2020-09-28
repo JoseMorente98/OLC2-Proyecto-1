@@ -3,18 +3,22 @@ import { Funcion } from '../instruccion/funcion.instruccion';
 import { Symbol } from './symbol.simbolos';
 
 export class Environment{
-    private variables: Map<string, Symbol>;
-    private types: Map<string, Symbol>;
+    public variables: Map<string, Symbol>;
+    public types: Map<string, Symbol>;
     public funciones: Map<string, Funcion>;
 
     /**
      * CONSTRUCTOR
      * @param anterior 
      */
-    constructor(public anterior : Environment | null){
+    constructor(
+        public anterior : Environment | null,
+        public nombre?: string
+    ){
         this.variables = new Map();
         this.funciones = new Map();
         this.types = new Map();
+        this.nombre = nombre;
     }
 
     /*public guardar(id: string, valor: any, type: Type){
@@ -109,16 +113,16 @@ export class Environment{
         }
     }
 
-    public guardar(id: string, valor: any, type: Type){
+    public guardar(id: string, valor: any, type: Type, descripcion?: any, fila?: any, columna?: any){
         let env : Environment | null = this;
         while(env != null){
             if(env.variables.has(id)){
-                env.variables.set(id, new Symbol(valor, id, type));
+                env.variables.set(id, new Symbol(valor, id, type, descripcion, fila, columna));
                 return;
             }
             env = env.anterior;
         }
-        this.variables.set(id, new Symbol(valor, id, type));
+        this.variables.set(id, new Symbol(valor, id, type, descripcion, fila, columna));
     }
 
     public guardarTypes(id: string, valor: any, type: Type){

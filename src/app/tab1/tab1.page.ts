@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { ErrorControlador } from 'src/jmorente/controlador/error.controlador';
-import * as parser from '../../jmorente/gramatica/gramatica';
-import * as analisis from '../../jmorente/gramatica/analisis';
+import * as parser from '../../jmorente/gramatica/ast';
+import * as analisis from '../../jmorente/gramatica/sintactico';
 import * as graficar from '../../jmorente/ast/chart';
 import { Environment } from 'src/jmorente/simbolos/enviroment.simbolos';
 import { SalidaControlador } from 'src/jmorente/controlador/salida.controlador';
 import { Funcion } from 'src/jmorente/instruccion/funcion.instruccion';
+import { TablaControlador } from 'src/jmorente/controlador/tabla.controlador';
 
 
 @Component({
@@ -42,7 +43,7 @@ export class Tab1Page {
   constructor() {}
 
 
-  analizar() {
+  analizar = () => {
     if (document.getElementById("grafo")) {
       document.getElementById("grafo").remove();
     }
@@ -54,18 +55,13 @@ export class Tab1Page {
       console.clear()
       this.strSalida = "";
       const env = new Environment(null);
-      let graficaAST = parser.parse(this.strEntrada);
-  
-      setTimeout(() => {
-          graficar.generateTree([graficaAST.node]);
-      }, 1000);
-
       
       let analisisAST = analisis.parse(this.strEntrada);
 
       /**
        * EJECUTAR FUNCIONES
        */
+      ErrorControlador.getInstancia().clear();
       for(const instr of analisisAST){
           try {
               if(instr instanceof Funcion)
@@ -89,6 +85,17 @@ export class Tab1Page {
             //console.error(error)
         }
       }
+
+
+      console.log("CONSTANTES");
+      console.log(env);
+      //TablaControlador.getInstancia().agregarToken(this.id, val.type, 'LET', val.value, this.fila, this.columna);
+      for (const iterator of env.variables) {
+        console.log(iterator[1])
+        TablaControlador.getInstancia()
+        .agregarToken(iterator[1].id, this.obtenerTipo(iterator[1].type), 'LET', iterator[1].valor, iterator[1].fila, iterator[1].columna);
+      }
+      TablaControlador.getInstancia().imprimirToken();
     } catch (error) {
       /**
        * INGRESAR ERRORES PARA REPORTE
@@ -100,5 +107,29 @@ export class Tab1Page {
     // IMPRIMIR ERRORES
     ErrorControlador.getInstancia().imprimirError();
   }
+
+  generarAST = () => {
+    SalidaControlador.getInstancia().clear();
+    console.clear()
+    this.strSalida = "";
+    let graficaAST = parser.parse(this.strEntrada);
+
+    setTimeout(() => {
+        graficar.generateTree([graficaAST.node]);
+    }, 1000);
+  }
+
+  public obtenerTipo(type: any):string {
+    switch (type) {
+        case 0:
+            return "NUMBER"
+        case 1:
+            return "STRING"
+        case 2:
+            return "BOOLEAN"
+    }
+    return "OTHER"
+  }
+
 
 }

@@ -1,11 +1,6 @@
 import { Type } from '../abstract/retorno.abstract';
 
 export class Symbol {
-    public valor: any;
-    public id: string;
-    public type: Type;
-    public fila: number;
-    public columna : number;
 
     /**
      * CONSTRUCTOR
@@ -15,10 +10,18 @@ export class Symbol {
      * @param fila 
      * @param columna 
      */
-    constructor(valor: any, id: string, type: Type, fila?:number, columna?:number){
+    constructor(
+        public valor: any, 
+        public id: string, 
+        public type: Type, 
+        public descripcion?:any, 
+        public fila?:number, 
+        public columna?:number
+    ){
         this.valor = valor;
         this.id = id;
         this.type = type;
+        this.descripcion = descripcion;
         this.fila = fila;
         this.columna = columna;
     }

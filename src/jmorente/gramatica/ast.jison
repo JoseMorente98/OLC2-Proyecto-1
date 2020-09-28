@@ -88,8 +88,7 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'ID';
 <<EOF>>               return 'EOF';
-.                     return 'TK_Desconocido';
-
+.                     return 'ERRORS'
 /lex
 
 %left '||'
@@ -108,17 +107,17 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 Init    
     : INSTRUCCIONES EOF 
     {
-        $$ = { node: newNode(yy, yystate, $1.node) };
+        $$ = { node: nodoAST(yy, yystate, $1.node) };
         return $$;
     } 
 ;
 
 INSTRUCCIONES
     : INSTRUCCIONES INSTRUCCION{
-        $$ = { node: newNode(yy, yystate, $1.node, $2.node) };
+        $$ = { node: nodoAST(yy, yystate, $1.node, $2.node) };
     }
     | INSTRUCCION{
-        $$ = { node: newNode(yy, yystate, $1.node)};
+        $$ = { node: nodoAST(yy, yystate, $1.node)};
     }
 ;
 
@@ -126,309 +125,312 @@ INSTRUCCION
     : 
     DECLARACION_LET
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     DECLARACION_CONST
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     DECLARACION_TYPE
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     DECLARACION_SIN_TIPO
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     SENTENCIA_BREAK
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     SENTENCIA_CONTINUE
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     SENTENCIA_RETURN
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     SENTENCIA_IF
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     SENTENCIA_SWITCH
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     SENTENCIA_WHILE
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     SENTENCIA_DO_WHILE
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     SENTENCIA_FOR
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     CONSOLE
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     LLAMADA_FUNCION
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     SENTENCIA_FUNCIONES
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
+    }
+    | error { 
+        $$ = $1
     }
 ;
 
 DECLARACION_LET
     : 'PR_LET' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
     }
     |
     'PR_LET' ID ':' TIPO ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5)};
     }
     |
     'PR_LET' ID '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5)};
     }
     |
     'PR_LET' ID ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3)};
     }
     | 'PR_LET' ID ':' TIPO ARREGLO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6, $7.node, $8)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5.node, $6, $7.node, $8)};
     }
     |
     'PR_LET' ID ':' TIPO ARREGLO ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5.node, $6)};
     }
     |
     'PR_LET' ID ARREGLO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
     }
     |
     'PR_LET' ID ARREGLO ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4)};
     }
 ;
 
 DECLARACION_CONST
     : 'PR_CONST' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
     }
     |
     'PR_CONST' ID '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5)};
     }
 ;
 
 DECLARACION_SIN_TIPO
     : ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
     }
     |
     ID ':' TIPO ARREGLO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $7)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $7)};
     }
     |
     ID '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4)};
     }
     |
     ID '.' ID '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4, $5.node, $6)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4, $5.node, $6)};
     }
     |
     EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
 ;
 
 DECLARACION_TYPE
     : 'PR_TYPE' ID '=' '{' DATOS_PRIMITIVOS '}' ';' 
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4, $5.node, $6, $7)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4, $5.node, $6, $7)};
     }
 ;
 
 DATOS_PRIMITIVOS
     : DATOS_PRIMITIVOS ',' DATO_PRIMITIVO
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     }
     | DATO_PRIMITIVO
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
 ;
 
 DATO_PRIMITIVO
     : ID ':' TIPO
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node)};
     }
 ;
 
 TIPO
     : 'PR_STRING'
     {
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = {node: nodoAST(yy, yystate, $1)};
     }
     | 'PR_NUMBER'
     { 
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = {node: nodoAST(yy, yystate, $1)};
     }
     | 'PR_BOOLEAN'
     { 
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = {node: nodoAST(yy, yystate, $1)};
     }
     | ID
     { 
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = {node: nodoAST(yy, yystate, $1)};
     }
 ;
 
 ARREGLO
     : '[' ']'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2)};
     }
     | '[' ']' '[' ']'
     { 
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4)};
     }
 ;
 
 EXPRESION     
     : EXPRESION '+' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '-' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '*' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '/' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '%' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '^' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '*' '*' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, "**", $4.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, "**", $4.node)};
     } 
     |
     '-' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, "-", $2.node)};
+        $$ = {node: nodoAST(yy, yystate, "-", $2.node)};
     } 
     |
     EXPRESION '<' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '>' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '<' '=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, "<=", $4.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, "<=", $4.node)};
     }
     |
     EXPRESION '>' '=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, "<=", $4.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, "<=", $4.node)};
     } 
     |
     EXPRESION '==' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     } 
     |
     EXPRESION '!=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     }
     |
     EXPRESION '&&' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     }
     |
     EXPRESION '||' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     }
     |
     '!' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2.node)};
     }
     |
     EXPRESION '+' '+'
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3)};
     }
     |
     EXPRESION '-' '-'
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3)};
     }
     |
     LLAMADA_FUNCION2
@@ -438,78 +440,72 @@ EXPRESION
     |
     IDENTIFICADOR
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     EXPRESION_JSON
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
 ;
 
 IDENTIFICADOR
     : '(' EXPRESION ')'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node, $3)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2.node, $3)};
     }
     | CADENA
     { 
         $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Literal($1, @1.first_line, @1.first_column, 1)
+            node: nodoAST(yy, yystate, $1)
         };
     }
     | NUMERO
     { 
         $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Literal($1, @1.first_line, @1.first_column, 0)
+            node: nodoAST(yy, yystate, $1)
         };
     }
     | DECIMAL
     { 
         $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Literal($1, @1.first_line, @1.first_column, 0)
+            node: nodoAST(yy, yystate, $1)
         };
     }
     | 'PR_TRUE'
     { 
         $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Literal($1, @1.first_line, @1.first_column, 2)
+            node: nodoAST(yy, yystate, $1)
         };
     }
     | 'PR_FALSE'
     { 
         $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Literal($1, @1.first_line, @1.first_column, 2)
+            node: nodoAST(yy, yystate, $1)
         };
     }
     | 'PR_NULL'
     { 
-        $$ = { node: newNode(yy, yystate, $1)};
+        $$ = { node: nodoAST(yy, yystate, $1)};
     }
     | ID
     { 
         $$ = {
-            node: newNode(yy, yystate, $1),
-            ejecutar: new Acceso($1, @1.first_line, @1.first_column)
+            node: nodoAST(yy, yystate, $1)
         };
     }
     |
     ID '.' ID 
     {
         $$ = {
-            node: newNode(yy, yystate, $1, $2, $3)
+            node: nodoAST(yy, yystate, $1, $2, $3)
         };
     }
     |
     ID '.' ID '.' ID 
     {
         $$ = {
-            node: newNode(yy, yystate, $1, $2, $3,$4, $5)
+            node: nodoAST(yy, yystate, $1, $2, $3,$4, $5)
         };
     }
 ;
@@ -517,7 +513,7 @@ IDENTIFICADOR
 EXPRESION_JSON
     : '{' OBJETOS '}'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node, $3)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2.node, $3)};
     }
 ;
 
@@ -525,43 +521,43 @@ OBJETOS
     : 
     OBJETOS ',' OBJECT
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     }
     | OBJECT
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
 ;
 
 OBJECT
     : ID ':' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node)};
     }
 ;
 
 SENTENCIA_BREAK 
     : 'PR_BREAK'  ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2)};
     }
 ;
 
 SENTENCIA_CONTINUE 
     : 'PR_CONTINUE'  ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2)};
     }
 ;
 
 SENTENCIA_RETURN 
     : 'PR_RETURN'  ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2)};
     }
     | 'PR_RETURN' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node, $3)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2.node, $3)};
     }
 ;
 
@@ -569,9 +565,9 @@ SENTENCIA_IF
     : 'PR_IF' '(' EXPRESION ')' SENTENCIA ELSEIF
     {
         if($6 == undefined) {
-            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node)};
+            $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5.node)};
         } else {
-            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6.node)};
+            $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5.node, $6.node)};
         }
     }
 ;
@@ -579,22 +575,22 @@ SENTENCIA_IF
 SENTENCIA 
     : '{' INSTRUCCIONES '}'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node, $3)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2.node, $3)};
     }
     | '{' '}'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2)};
     }
 ;
 
 ELSEIF 
     : 'PR_ELSE' SENTENCIA
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2.node)};
     }
     | 'PR_ELSE' SENTENCIA_IF
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2.node)};
     }
     | /* EPSILON */
     {
@@ -605,14 +601,14 @@ ELSEIF
 SENTENCIA_WHILE 
     : 'PR_WHILE' '(' EXPRESION ')' SENTENCIA
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5.node)};
     }
 ;
 
 SENTENCIA_DO_WHILE 
     : 'PR_DO' SENTENCIA 'PR_WHILE' '(' EXPRESION ')' ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node, $3, $4, $5.node, $6, $7)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2.node, $3, $4, $5.node, $6, $7)};
     }
 ;
 
@@ -620,9 +616,9 @@ SENTENCIA_SWITCH
     : 'PR_SWITCH' '(' EXPRESION ')' '{' CASES DEFAULT '}'
     {
         if($7 == undefined) {
-            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $8)};
+            $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $8)};
         } else {
-            $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $7.node, $8)};
+            $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $7.node, $8)};
         }
     }
 ;
@@ -630,25 +626,25 @@ SENTENCIA_SWITCH
 CASES 
     : CASES CASE
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2.node)};
     }
     | CASE
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
 ;
 
 CASE
     : 'PR_CASE'  EXPRESION ':' INSTRUCCIONES
     {
-        $$ = {node: newNode(yy, yystate, $1, $2.node, $3, $4.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2.node, $3, $4.node)};
     }
 ;
 
 DEFAULT 
     : 'PR_DEFAULT' ':' INSTRUCCIONES
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node)};
     }
     | /* EPSILON */
     {
@@ -659,58 +655,58 @@ DEFAULT
 SENTENCIA_FOR 
     : 'PR_FOR' '(' FOREXP ')' SENTENCIA
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5.node)};
     }
 ;
 
 FOREXP
     : 'PR_LET' ID TIPOFOR ID
     {
-       $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+       $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4)};
     }
     | 'PR_VAR' ID TIPOFOR ID
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4)};
     }
     | 'PR_CONST' ID TIPOFOR ID
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4)};
     }
     | DECLARACION_FOR ';' EXPRESION ';' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node, $4, $5.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node, $4, $5.node)};
     }
 ;
 
 TIPOFOR
     : 'PR_OF'
     {
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = {node: nodoAST(yy, yystate, $1)};
     }
     | 'PR_IN'
     { 
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = {node: nodoAST(yy, yystate, $1)};
     }
 ;
 
 DECLARACION_FOR
     : 'PR_VAR' ID ':' TIPO '=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5, $6.node)};
     }
     |
     'PR_VAR' ID '=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node)};
     }
     | 'PR_LET' ID ':' TIPO '=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5, $6.node)};
     }
     |
     'PR_LET' ID '=' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node)};
     }
 ;
 
@@ -718,8 +714,7 @@ CONSOLE:
     'PR_CONSOLE' '.' 'PR_LOG' '(' EXPRESION ')' ';'
     {
         $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4, $5.node, $6, $7),
-            ejecutar: new Imprimir($5, @1.first_line, @1.first_column)
+            node: nodoAST(yy, yystate, $1, $2, $3, $4, $5.node, $6, $7)
         };
     }
 ;
@@ -728,28 +723,28 @@ SENTENCIA_FUNCIONES:
     'PR_FUNCTION' ID '(' ')' ':' TIPO SENTENCIA
     {
         $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4, $5, $6.node, $7.node)
+            node: nodoAST(yy, yystate, $1, $2, $3, $4, $5, $6.node, $7.node)
         };
     }
     |
     'PR_FUNCTION' ID '(' ')' SENTENCIA
     {
         $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4, $5.node)
+            node: nodoAST(yy, yystate, $1, $2, $3, $4, $5.node)
         };
     }
     |
     'PR_FUNCTION' ID '(' PARAMETROS ')' ':' TIPO SENTENCIA
     {
         $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6, $7.node, $8.node)
+            node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5, $6, $7.node, $8.node)
         };
     }
     |
     'PR_FUNCTION' ID '(' PARAMETROS ')' SENTENCIA
     {
         $$ = {
-            node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node)
+            node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5, $6.node)
         };
     }
 ;
@@ -800,14 +795,14 @@ PARAMETROS:
     PARAMETROS ',' PARAMETRO
     {
         $$ = {
-            node: newNode(yy, yystate, $1.node, $2, $3.node)
+            node: nodoAST(yy, yystate, $1.node, $2, $3.node)
         };
     }
     |
     PARAMETRO
     {
         $$ = {
-            node: newNode(yy, yystate, $1.node)
+            node: nodoAST(yy, yystate, $1.node)
         };
     }
 ;
@@ -816,7 +811,7 @@ PARAMETRO:
     ID ':' TIPO
     {
         $$ = {
-            node: newNode(yy, yystate, $1, $2, $3.node)
+            node: nodoAST(yy, yystate, $1, $2, $3.node)
         };
     }
 ;
@@ -824,12 +819,12 @@ PARAMETRO:
 LLAMADA_FUNCION:
     ID '(' ')' ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4)};
     }
     |
     ID '(' PARAMETROS_LLAMADA ')' ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5)};
     }
 ;
 
@@ -837,23 +832,23 @@ LLAMADA_FUNCION2
     :
     ID '(' ')'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3)};
     }
     |
     ID '(' PARAMETROS_LLAMADA ')'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4)};
     }
 ;
 
 PARAMETROS_LLAMADA: 
     PARAMETROS_LLAMADA ',' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node)};
     }
     |
     EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
 ;

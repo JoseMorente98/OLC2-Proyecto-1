@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ErrorControlador } from 'src/jmorente/controlador/error.controlador';
+import { TablaControlador } from 'src/jmorente/controlador/tabla.controlador';
 
 @Component({
   selector: 'app-tab2',
@@ -9,6 +10,8 @@ import { ErrorControlador } from 'src/jmorente/controlador/error.controlador';
 export class Tab2Page {
   itemSelect:any = 'Error'
   data:any = [];
+  dataSimbol:any = [];
+
   constructor() {
     this.obtenerErrores();
   }
@@ -21,7 +24,7 @@ export class Tab2Page {
         this.obtenerErrores();
         break;
       case "Tabla":
-        
+        this.obtenerTablaSimbol();
         break;
     }
   }
@@ -29,6 +32,11 @@ export class Tab2Page {
   obtenerErrores() {
     this.data = [];
     this.data = ErrorControlador.getInstancia().getArregloError;
+  }
+
+  obtenerTablaSimbol() {
+    this.dataSimbol = [];
+    this.dataSimbol = TablaControlador.getInstancia().getArregloToken;
   }
 
 }

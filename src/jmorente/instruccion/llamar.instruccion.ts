@@ -1,5 +1,6 @@
 import { Expression } from '../abstract/expresion.abstract';
 import { Instruction } from '../abstract/instruccion.abstract';
+import { TablaControlador } from '../controlador/tabla.controlador';
 import { Environment } from '../simbolos/enviroment.simbolos';
 
 export class LlamarFuncion extends Instruction {
@@ -38,12 +39,15 @@ export class LlamarFuncion extends Instruction {
                 const value = this.expresiones[i].execute(environment);
                 //console.log(value)
                 newEnv.guardar(func.parametros[i], value.value, value.type);
+                
             }
-
+            
             const funcionElement = func.code.execute(newEnv);
-            //console.log(funcionElement)
+            
+
+
             if(funcionElement != null || funcionElement != undefined){
-                //console.log(funcionElement);
+                console.log(funcionElement);
                 if(funcionElement.type == 'Return') {
                     if(funcionElement.value == null || funcionElement.value == undefined) {
                         return undefined;
@@ -51,9 +55,24 @@ export class LlamarFuncion extends Instruction {
                         return funcionElement.value;
                     }
                 }
+            } else {
+                console.log("AMBIENTE")
+            console.log(newEnv)
             }
         }
         //console.error("================================")
 
+    }
+
+    public obtenerTipo(type: any):string {
+        switch (type) {
+            case 0:
+                return "NUMBER"
+            case 1:
+                return "STRING"
+            case 2:
+                return "BOOLEAN"
+        }
+        return "OTHER"
     }
 }

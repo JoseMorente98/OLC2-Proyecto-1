@@ -24,8 +24,13 @@ export class Case extends Instruction {
     public execute(environment: Environment) {
         const element = this.code.execute(environment);
         if(element != null || element != undefined){
-            if(element.type == 'break')
-                return;
+            if(element != null || element != undefined){
+                //console.log(element);
+                if(element.type == 'Break')
+                    return;
+                else if(element.type == 'Return')
+                    return element.value;
+            }
         }
     }
 

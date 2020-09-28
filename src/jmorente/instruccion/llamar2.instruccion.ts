@@ -30,10 +30,11 @@ export class LlamarFuncion2 extends Instruction{
             //console.error(this.code)
             //console.error(this.typeType)
             const func = environment.getFuncion(this.id);
-            //console.error(val)
+            console.error(func)
 
             if(func != undefined){
-                //console.log(func)
+            console.error("ENTRA FUNC" + this.id)
+                console.log(func)
                 const newEnv = new Environment(environment.getGlobal());
                 //console.log(newEnv)
                 for(let i = 0; i < this.expresiones.length; i++){
@@ -43,17 +44,9 @@ export class LlamarFuncion2 extends Instruction{
                 }
     
                 const funcionElement = func.code.execute(newEnv);
+                console.log("LO QUE TRAE LA LLAMADA")
                 console.log(funcionElement)
-                if(funcionElement != null || funcionElement != undefined){
-                    //console.log(funcionElement);
-                    if(funcionElement.type == 'Return') {
-                        if(funcionElement.value == null || funcionElement.value == undefined) {
-                            return undefined;
-                        } else {
-                            return funcionElement.value;
-                        }
-                    }
-                }
+                return funcionElement.value;
             }
         } catch (error) {
             /**

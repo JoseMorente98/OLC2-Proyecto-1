@@ -3,6 +3,8 @@
     const { Aritmetica, OpcionAritmetica } = require('../expresion/aritmetica.expresion');
     const { Relacional, OpcionRelacional } = require('../expresion/relacional.expresion');
     const { Logica, OpcionLogica } = require('../expresion/logica.expresion');
+    const { ErrorAnalisis } = require('../expresion/error.expresion');
+    const { ErrorLexico } = require('../expresion/errorl.expresion');
     const { Acceso } = require('../expresion/acceso.expresion');
     const { AccesoType } = require('../expresion/acceso-type.expresion');
     const { AccesoType3 } = require('../expresion/acceso-type3.expresion');
@@ -118,7 +120,8 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 
 ([a-zA-Z_])[a-zA-Z0-9_ñÑ]*	return 'ID';
 <<EOF>>               return 'EOF';
-.                     return 'TK_Desconocido';
+.                     { new ErrorLexico(yytext, yylloc.first_line, yylloc.first_column) }
+
 
 /lex
 
@@ -163,7 +166,7 @@ INSTRUCCION
     |
     DECLARACION_CONST
     {
-        $$ = {node: newNode(yy, yystate, $1.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node)};
     }
     |
     DECLARACION_TYPE
@@ -230,6 +233,10 @@ INSTRUCCION
     {
         $$ = $1;
     }
+    | error 
+    { 
+        console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
+    }
 ;
 
 DECLARACION_LET
@@ -250,50 +257,50 @@ DECLARACION_LET
     |
     'PR_LET' ID ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3)};
     }
     | 'PR_LET' ID ':' TIPO ARREGLO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6, $7.node, $8)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5.node, $6, $7.node, $8)};
     }
     |
     'PR_LET' ID ':' TIPO ARREGLO ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5.node, $6)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5.node, $6)};
     }
     |
     'PR_LET' ID ARREGLO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
     }
     |
     'PR_LET' ID ARREGLO ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4)};
     }
 ;
 
 DECLARACION_CONST
     : 'PR_CONST' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
     }
     |
     'PR_CONST' ID '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4.node, $5)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5)};
     }
 ;
 
 DECLARACION_SIN_TIPO
     : ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
     }
     |
     ID ':' TIPO ARREGLO '=' EXPRESION ';'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $7)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5, $6.node, $7)};
     }
     |
     ID '=' EXPRESION ';'
@@ -379,11 +386,11 @@ TIPO
 ARREGLO
     : '[' ']'
     {
-        $$ = {node: newNode(yy, yystate, $1, $2)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2)};
     }
     | '[' ']' '[' ']'
     { 
-        $$ = {node: newNode(yy, yystate, $1, $2, $3, $4)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4)};
     }
 ;
 
@@ -691,30 +698,30 @@ SENTENCIA_FOR
 FOREXP
     : 'PR_LET' ID TIPOFOR ID
     {
-       $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+       $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4)};
     }
     | 'PR_VAR' ID TIPOFOR ID
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4)};
     }
     | 'PR_CONST' ID TIPOFOR ID
     {
-        $$ = {node: newNode(yy, yystate, $1, $2, $3.node, $4)};
+        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4)};
     }
     | DECLARACION_FOR ';' EXPRESION ';' EXPRESION
     {
-        $$ = {node: newNode(yy, yystate, $1.node, $2, $3.node, $4, $5.node)};
+        $$ = {node: nodoAST(yy, yystate, $1.node, $2, $3.node, $4, $5.node)};
     }
 ;
 
 TIPOFOR
     : 'PR_OF'
     {
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = {node: nodoAST(yy, yystate, $1)};
     }
     | 'PR_IN'
     { 
-        $$ = {node: newNode(yy, yystate, $1)};
+        $$ = {node: nodoAST(yy, yystate, $1)};
     }
 ;
 

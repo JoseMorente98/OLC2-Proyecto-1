@@ -38,7 +38,7 @@ export class Declaracion extends Instruction{
             const val = this.value.execute(environment);
             //console.error(val)
             if(this.type == undefined) {
-                environment.guardar(this.id, val.value, val.type);
+                environment.guardar(this.id, val.value, val.type, "LET", this.fila, this.columna);
             } else {
                 if(this.type != val.type) {
                     throw {error: "El tipo " + val.value + " no es asignable con " + this.obtenerTipo(this.type), fila: this.fila, columna : this.columna};
@@ -108,7 +108,7 @@ export class Declaracion extends Instruction{
                         /**
                          * ALMACENAR STRING, NUMBER, BOOLEAN
                          */
-                        environment.guardar(this.id, val.value, val.type);
+                        environment.guardar(this.id, val.value, val.type, "LET", this.fila, this.columna);
                     //}
                 }
             }

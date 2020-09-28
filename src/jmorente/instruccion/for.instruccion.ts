@@ -55,6 +55,8 @@ export class For extends Instruction {
                     break;
                 else if(element.type == 'Continue')
                     continue;
+                else if(element.type == 'Return')
+                    return element.value;
             }
             
             let actualizacion = this.actualizacion.execute(environment);

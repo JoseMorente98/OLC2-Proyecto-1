@@ -41,6 +41,7 @@ export class Aritmetica extends Expression {
 
         console.log(leftValue)
         console.log(rightValue)
+        console.log(this.type)
 
         if(this.type == OpcionAritmetica.SUMA) {
             switch (leftValue.type) {
@@ -179,8 +180,8 @@ export class Aritmetica extends Expression {
              */
             switch (leftValue.type) {
                 case 0:
-                    //console.log(leftValue)
-                    //console.log(this.left.id)
+                    console.log(leftValue)
+                    console.log(this.left.id)
                     let newVal = leftValue.value + 1;
                     if(rightValue.type == 0) {
                         result = {value : newVal, type : Type.NUMBER};

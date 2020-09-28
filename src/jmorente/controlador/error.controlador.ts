@@ -20,16 +20,15 @@ export class ErrorControlador {
         return this.arregloError; 
     }
 
-    agregarError(descripcion:string, tipo:string, fila: number, columna:number){
+    agregarError = (descripcion:string, tipo:string, fila: number, columna:number) => {
         var token = new ModeloError(this.idError, descripcion, tipo, fila, columna);
         this.arregloError.push(token);
         this.idError++;
     }
 
-    imprimirError(){
-        //console.log("MOSTRAR REPORTE DE ERRORES")
+    imprimirError = () => {
         this.arregloError.forEach(e => {
-            //console.error(e.toString());
+            console.error(e.toString());
         });
     }
 
