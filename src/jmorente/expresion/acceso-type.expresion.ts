@@ -1,4 +1,3 @@
-import { type } from "os";
 import { Expression } from '../abstract/expresion.abstract';
 import { Environment } from '../simbolos/enviroment.simbolos';
 import { Retorno } from '../abstract/retorno.abstract';

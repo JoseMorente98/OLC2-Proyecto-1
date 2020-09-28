@@ -181,11 +181,11 @@ export class Aritmetica extends Expression {
             switch (leftValue.type) {
                 case 0:
                     console.log(leftValue)
-                    console.log(this.left.id)
                     let newVal = leftValue.value + 1;
                     if(rightValue.type == 0) {
                         result = {value : newVal, type : Type.NUMBER};
-                        environment.setVar(this.left.id, result.value, result.type);
+                        let variable:any = this.left;
+                        environment.setVar(variable.id, result.value, result.type);
                     } else {
                         throw {error: "Operador " + this.obtenerOperador(this.type) + " NO puede ser aplicado a los tipos " + this.obtenerTipo(leftValue.type), fila: this.fila, columna : this.columna};
                     }
@@ -206,7 +206,8 @@ export class Aritmetica extends Expression {
                     if(rightValue.type == 0) {
                         let newVal = leftValue.value - 1;
                         result = {value : newVal, type : Type.NUMBER};
-                        environment.setVar(this.left.id, result.value, result.type);
+                        let variable:any = this.left;
+                        environment.setVar(variable.id, result.value, result.type);
                     } else {
                         throw {error: "Operador " + this.obtenerOperador(this.type) + " NO puede ser aplicado a los tipos " + this.obtenerTipo(leftValue.type), fila: this.fila, columna : this.columna};
                     }

@@ -1,11 +1,3 @@
- 
-%{
-    const { Acceso } = require('../expresion/acceso.expresion');
-    const { Literal } = require('../expresion/literal.expresion');
-    const { Declaracion } = require('../instruccion/declaracion.instruccion');
-    const { Imprimir } = require('../instruccion/console.instruccion');
-%}
-
 %lex
 %options case-insensitive
 BSL                 "\\".
@@ -26,37 +18,35 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 {string}                return 'CADENA'
 {string2}               return 'CADENA'
 {string3}               return 'CADENA'
-"*"                     return '*'
-"/"                     return '/'
-"-"                     return '-'
-"+"                     return '+'
-"%"                     return '%'
-"^"                     return '^'
+
 ";"                     return ';'
 ":"                     return ':'
 ","                     return ','
+"||"                    return '||'
+"*"                     return '*'
+"/"                     return '/'
+"-"                     return '-'
+"&&"                    return '&&'
+"!"                     return '!'
 "."                     return '.'
-
-"<"                     return '<'
-">"                     return '>'
+"("                     return '('
+")"                     return ')' 
+"+"                     return '+'
+"%"                     return '%'
+"^"                     return '^'
+"{"                     return '{'
+"}"                     return '}'
 "<="                    return '<='
 ">="                    return '>='
 "=="                    return '=='
-"!="                    return '!='
-"||"                    return '||'
-"&&"                    return '&&'
-"!"                     return '!'
-"="                     return '='
-
-"("                     return '('
-")"                     return ')' 
-"{"                     return '{'
-"}"                     return '}'
 "["                     return '['
 "]"                     return ']'
 "}"                     return '}'
 "}"                     return '}'
-
+"<"                     return '<'
+">"                     return '>'
+"!="                    return '!='
+"="                     return '='
 
 "let"                   return 'PR_LET'
 "var"                   return 'PR_VAR'

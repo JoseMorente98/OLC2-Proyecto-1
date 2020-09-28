@@ -57,37 +57,35 @@ string3             (\`([^`]|{BSL}|{BSL2})*\`)
 {string}                return 'CADENA'
 {string2}               return 'CADENA'
 {string3}               return 'CADENA'
-"*"                     return '*'
-"/"                     return '/'
-"-"                     return '-'
-"+"                     return '+'
-"%"                     return '%'
-"^"                     return '^'
+
 ";"                     return ';'
 ":"                     return ':'
 ","                     return ','
+"||"                    return '||'
+"*"                     return '*'
+"/"                     return '/'
+"-"                     return '-'
+"&&"                    return '&&'
+"!"                     return '!'
 "."                     return '.'
-
-"<"                     return '<'
-">"                     return '>'
+"("                     return '('
+")"                     return ')' 
+"+"                     return '+'
+"%"                     return '%'
+"^"                     return '^'
+"{"                     return '{'
+"}"                     return '}'
 "<="                    return '<='
 ">="                    return '>='
 "=="                    return '=='
-"!="                    return '!='
-"||"                    return '||'
-"&&"                    return '&&'
-"!"                     return '!'
-"="                     return '='
-
-"("                     return '('
-")"                     return ')' 
-"{"                     return '{'
-"}"                     return '}'
 "["                     return '['
 "]"                     return ']'
 "}"                     return '}'
 "}"                     return '}'
-
+"<"                     return '<'
+">"                     return '>'
+"!="                    return '!='
+"="                     return '='
 
 "let"                   return 'PR_LET'
 "var"                   return 'PR_VAR'
@@ -283,19 +281,19 @@ DECLARACION_LET
 DECLARACION_CONST
     : 'PR_CONST' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5, $6.node, $7)};
+        $$ = new Declaracion($2, $4.type, $6, @1.first_line, @1.first_column, $4.tipo);
     }
     |
     'PR_CONST' ID '=' EXPRESION ';'
     {
-        $$ = {node: nodoAST(yy, yystate, $1, $2, $3, $4.node, $5)};
+        $$ = new Declaracion($2, null, $4, @1.first_line, @1.first_column);
     }
 ;
 
 DECLARACION_SIN_TIPO
     : ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = {node: nodoAST(yy, yystate, $1, $2, $3.node, $4, $5.node, $6)};
+        $$ = new Declaracion($1, $3.type, $5, @1.first_line, @1.first_column, $3.tipo);
     }
     |
     ID ':' TIPO ARREGLO '=' EXPRESION ';'

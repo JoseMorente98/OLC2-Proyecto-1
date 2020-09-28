@@ -116,10 +116,10 @@ case 18: case 40: case 92: case 93: case 123:
 break;
 case 19:
  
-        this.$ = new ErrorAnalisis(error,this.$.first_line, this.$.first_column);
+        console.error('Este es un error sintáctico: ' + yytext + ', en la linea: ' + this._$.first_line + ', en la columna: ' + this._$.first_column); 
     
 break;
-case 20:
+case 20: case 28:
 
         this.$ = new Declaracion($$[$0-5], $$[$0-3].type, $$[$0-1], _$[$0-6].first_line, _$[$0-6].first_column, $$[$0-3].tipo);
     
@@ -129,7 +129,7 @@ case 21:
         this.$ = new Declaracion($$[$0-3], $$[$0-1].type, null, _$[$0-4].first_line, _$[$0-4].first_column, $$[$0-1].tipo);
     
 break;
-case 22:
+case 22: case 29:
 
         this.$ = new Declaracion($$[$0-3], null, $$[$0-1], _$[$0-4].first_line, _$[$0-4].first_column);
     
@@ -149,7 +149,7 @@ case 25:
         this.$ = {node: nodoAST(yy, yystate, $$[$0-5], $$[$0-4], $$[$0-3], $$[$0-2].node, $$[$0-1].node, $$[$0])};
     
 break;
-case 26: case 30:
+case 26:
 
         this.$ = {node: nodoAST(yy, yystate, $$[$0-5], $$[$0-4], $$[$0-3].node, $$[$0-2], $$[$0-1].node, $$[$0])};
     
@@ -159,14 +159,9 @@ case 27: case 105: case 106:
         this.$ = {node: nodoAST(yy, yystate, $$[$0-3], $$[$0-2], $$[$0-1].node, $$[$0])};
     
 break;
-case 28:
+case 30:
 
-        this.$ = {node: nodoAST(yy, yystate, $$[$0-6], $$[$0-5], $$[$0-4], $$[$0-3].node, $$[$0-2], $$[$0-1].node, $$[$0])};
-    
-break;
-case 29:
-
-        this.$ = {node: nodoAST(yy, yystate, $$[$0-4], $$[$0-3], $$[$0-2], $$[$0-1].node, $$[$0])};
+        this.$ = new Declaracion($$[$0-5], $$[$0-3].type, $$[$0-1], _$[$0-5].first_line, _$[$0-5].first_column, $$[$0-3].tipo);
     
 break;
 case 31:

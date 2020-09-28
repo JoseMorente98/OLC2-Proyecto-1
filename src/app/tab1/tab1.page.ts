@@ -39,6 +39,7 @@ export class Tab1Page {
   };
   strEntrada:string;
   strSalida:string;
+  obj:string;
 
   constructor() {}
 
