@@ -26,6 +26,8 @@ export class Tab2Page {
       case "Tabla":
         this.obtenerTablaSimbol();
         break;
+      default: 
+        this.obtenerErrores();
     }
   }
 

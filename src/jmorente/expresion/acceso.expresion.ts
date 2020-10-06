@@ -1,6 +1,7 @@
 import { Expression } from '../abstract/expresion.abstract';
 import { Environment } from '../simbolos/enviroment.simbolos';
 import { Retorno } from '../abstract/retorno.abstract';
+import { ErrorControlador } from '../controlador/error.controlador';
 
 export class Acceso extends Expression {
 
@@ -27,7 +28,8 @@ export class Acceso extends Expression {
         
 
         if(value == null) {
-            throw new Error("La variable no existe D:");
+            ErrorControlador.getInstancia().agregarError(this.id + " NO esta definido", "Sintactico", this.fila, this.columna)
+            return {value : undefined, type : 4};
         }
         return {value : value.valor, type : value.type};
     }
