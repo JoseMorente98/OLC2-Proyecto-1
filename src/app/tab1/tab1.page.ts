@@ -7,6 +7,7 @@ import { Environment } from 'src/jmorente/simbolos/enviroment.simbolos';
 import { SalidaControlador } from 'src/jmorente/controlador/salida.controlador';
 import { Funcion } from 'src/jmorente/instruccion/funcion.instruccion';
 import { TablaControlador } from 'src/jmorente/controlador/tabla.controlador';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -41,7 +42,9 @@ export class Tab1Page {
   strSalida:string;
   obj:string;
 
-  constructor() {}
+  constructor(
+    private alertController: AlertController
+  ) {}
 
 
   analizar = () => {
@@ -50,23 +53,25 @@ export class Tab1Page {
     }
     try {
       /**
-       * LIMPIAR VARIABLES
+       * INICIO DE ANALISIS SINTACTICO
        */
       SalidaControlador.getInstancia().clear();
+      ErrorControlador.getInstancia().clear();
+      TablaControlador.getInstancia().clear();
       console.clear()
       this.strSalida = "";
-      const env = new Environment(null);
+      const entorno = new Environment(null, "Global");
       
       let analisisAST = analisis.parse(this.strEntrada);
 
       /**
        * EJECUTAR FUNCIONES
        */
-      ErrorControlador.getInstancia().clear();
       for(const instr of analisisAST){
           try {
-              if(instr instanceof Funcion)
-                  instr.execute(env);
+              if(instr instanceof Funcion) {
+                instr.execute(entorno);
+              }
           } catch (error) {
             //console.log(error) 
           }
@@ -77,7 +82,7 @@ export class Tab1Page {
        */
       for(const instr of analisisAST){
         try {
-            const actual = instr.execute(env);
+            const actual = instr.execute(entorno);
             if(actual != null || actual != undefined){
                 //errores.push(new Error_(actual.line, actual.column, 'Semantico', actual.type + ' fuera de un ciclo'));
                 //console.error("ERROR SEMANTICO")
@@ -86,27 +91,19 @@ export class Tab1Page {
             //console.error(error)
         }
       }
-
-
-      console.log("CONSTANTES");
-      console.log(env);
-      //TablaControlador.getInstancia().agregarToken(this.id, val.type, 'LET', val.value, this.fila, this.columna);
-      for (const iterator of env.variables) {
+      for (const iterator of entorno.variables) {
         console.log(iterator[1])
         TablaControlador.getInstancia()
-        .agregarToken(iterator[1].id, this.obtenerTipo(iterator[1].type), 'LET', iterator[1].valor, iterator[1].fila, iterator[1].columna);
+        .addToken(iterator[1].id, this.obtenerTipo(iterator[1].type), iterator[1].descripcion, iterator[1].valor, iterator[1].fila, iterator[1].columna);
       }
-      TablaControlador.getInstancia().imprimirToken();
+      TablaControlador.getInstancia().imprimir();
     } catch (error) {
       /**
-       * INGRESAR ERRORES PARA REPORTE
+       * ERRORES
        */
-      //console.log(error)
-      //ErrorControlador.getInstancia().agregarError(error.error, "Semántico", error.fila, error.columna);
+      ErrorControlador.getInstancia().agregarError(error.error, "Semántico", error.fila, error.columna);
     }
     this.strSalida = SalidaControlador.getInstancia().getSalida;
-    // IMPRIMIR ERRORES
-    ErrorControlador.getInstancia().imprimirError();
   }
 
   generarAST = () => {
@@ -115,8 +112,10 @@ export class Tab1Page {
     this.strSalida = "";
     let graficaAST = parser.parse(this.strEntrada);
 
-    setTimeout(() => {
-        graficar.generateTree([graficaAST.node]);
+    setTimeout(async () => {
+        await graficar.generateTree([graficaAST.node]);
+        console.log("ARBOL GENERADO")
+        this.presentAlert();
     }, 1000);
   }
 
@@ -130,6 +129,17 @@ export class Tab1Page {
             return "BOOLEAN"
     }
     return "OTHER"
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'AST Generado',
+      message: 'El arbol se ha generado exitosamente.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 

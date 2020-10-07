@@ -26,41 +26,45 @@ export class LlamarFuncion extends Instruction {
         //console.error("================================")
         //console.log(this.expresiones)
         
-        const func = environment.getFuncion(this.id);
-        //console.log(func)
+        const funcion_llamada = environment.getFuncion(this.id);
+        //console.error(funcion_llamada);
 
 
 
-        if(func != undefined){
-            //console.log(func)
-            const newEnv = new Environment(environment.getGlobal());
-            //console.log(newEnv)
+        if(funcion_llamada != null || funcion_llamada != undefined){
+            const nuevoEntorno = new Environment(environment.getGlobal());
+            
+            /**
+             * EJECUTAR EXPRESIONES RECIBIDAS
+             */
             for(let i = 0; i < this.expresiones.length; i++){
                 const value = this.expresiones[i].execute(environment);
                 //console.log(value)
-                newEnv.guardar(func.parametros[i], value.value, value.type);
+                nuevoEntorno.guardar(funcion_llamada.parametros[i], value.value, value.type);
                 
             }
             
-            const funcionElement = func.code.execute(newEnv);
-            
+            const funcion_Elementos = funcion_llamada.code.execute(nuevoEntorno);
+            //console.error("funcino element")
+            //console.error(funcion_Elementos)
 
 
-            if(funcionElement != null || funcionElement != undefined){
-                console.log(funcionElement);
-                if(funcionElement.type == 'Return') {
-                    if(funcionElement.value == null || funcionElement.value == undefined) {
+            if(funcion_Elementos != null || funcion_Elementos != undefined){
+                //console.log(funcion_Elementos);
+                if(funcion_Elementos.type == 'Break') {
+                    return;
+                } else 
+                if(funcion_Elementos.type == 'Return') {
+                    if(funcion_Elementos.value == null || funcion_Elementos.value == undefined) {
                         return undefined;
                     } else {
-                        return funcionElement.value;
+                        return funcion_Elementos.value;
                     }
                 }
-            } else {
-                console.log("AMBIENTE")
-            console.log(newEnv)
             }
         }
         //console.error("================================")
+        
 
     }
 

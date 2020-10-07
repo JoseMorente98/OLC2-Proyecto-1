@@ -3,9 +3,8 @@ import { Expression } from '../abstract/expresion.abstract';
 import { Environment } from '../simbolos/enviroment.simbolos';
 import { Type } from '../abstract/retorno.abstract';
 import { ErrorControlador } from '../controlador/error.controlador';
-import { TablaControlador } from '../controlador/tabla.controlador';
 
-export class Declaracion extends Instruction{
+export class DeclaracionConstante extends Instruction{
 
     /**
      * CONSTRUCTOR
@@ -31,20 +30,16 @@ export class Declaracion extends Instruction{
 
     public execute(environment: Environment) {
         try {
-            //console.error("DECLARACION" + this.id)
-            //console.error(environment)
+            console.error("DECLARACION CONST" + this.id)
+            console.error(this.fila)
+            console.error(this.columna)
             //console.error(this.type)
             //console.error(this.value)
             //console.error(this.typeType)
             const val = this.value.execute(environment);
             //console.error(val)
             if(this.type == undefined) {
-                environment.guardar(this.id, val.value, val.type, "LET", this.fila, this.columna);
-                /**
-                 * AGREGAR TOKEN
-                 */
-                //TablaControlador.getInstancia()
-                //.agregarToken(this.id, this.obtenerTipo(val.type), 'LET', val.value, this.fila, this.columna);
+                environment.guardar(this.id, val.value, val.type, "CONST", this.fila, this.columna);
             } else {
                 if(this.type != val.type) {
                     throw {error: "El tipo " + val.value + " no es asignable con " + this.obtenerTipo(this.type), fila: this.fila, columna : this.columna};
@@ -114,14 +109,8 @@ export class Declaracion extends Instruction{
                         /**
                          * ALMACENAR STRING, NUMBER, BOOLEAN
                          */
-                        
+                        environment.guardar(this.id, val.value, val.type, "CONST", this.fila, this.columna);
                     //}
-                    environment.guardar(this.id, val.value, val.type, "LET", this.fila, this.columna);
-                    /**
-                     * AGREGAR TOKEN
-                     */
-                    //TablaControlador.getInstancia()
-                    //.agregarToken(this.id, this.obtenerTipo(val.type), 'LET', val.value, this.fila, this.columna);
                 }
             }
         } catch (error) {

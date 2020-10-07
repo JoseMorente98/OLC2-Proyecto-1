@@ -10,11 +10,13 @@ export class Environment{
     /**
      * CONSTRUCTOR
      * @param anterior 
+     * @param nombre 
      */
     constructor(
         public anterior : Environment | null,
         public nombre?: string
     ){
+        //INICIALIAZAR MAPS
         this.variables = new Map();
         this.funciones = new Map();
         this.types = new Map();

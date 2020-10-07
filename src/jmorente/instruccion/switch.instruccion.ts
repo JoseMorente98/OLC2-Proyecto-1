@@ -31,6 +31,7 @@ export class Switch extends Instruction {
         var numeroCaso = -1;
 
         for (var item in this.cases) {
+        console.log(numeroCaso)
             
             let cases = this.cases[item].obtenerCondicion(environment);
             
@@ -43,8 +44,9 @@ export class Switch extends Instruction {
                 break;
             }
         }
-
         if (numeroCaso == -1) {
+            console.log("DEFAULT SWITCH")
+            console.log(this.code)
             if (this.code != null) {
                 this.code.execute(environment)                
             }  

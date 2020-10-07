@@ -12,6 +12,7 @@
     const { Nullable } = require('../expresion/nullable.expresion');
     const { LiteralObjeto } = require('../expresion/literal-objeto.expresion');
     const { Declaracion } = require('../instruccion/declaracion.instruccion');
+    const { DeclaracionConstante } = require('../instruccion/declaracion-constante.instruccion');
     const { DeclaracionLlamada } = require('../instruccion/declaracion-llamada.instruccion');
     const { SinTipo } = require('../instruccion/sintipo.instruccion');
     const { SinTipoType } = require('../instruccion/sin-tipo-type.instruccion');
@@ -164,7 +165,7 @@ INSTRUCCION
     |
     DECLARACION_CONST
     {
-        $$ = {node: nodoAST(yy, yystate, $1.node)};
+        $$ = $1
     }
     |
     DECLARACION_TYPE
@@ -281,12 +282,12 @@ DECLARACION_LET
 DECLARACION_CONST
     : 'PR_CONST' ID ':' TIPO '=' EXPRESION ';'
     {
-        $$ = new Declaracion($2, $4.type, $6, @1.first_line, @1.first_column, $4.tipo);
+        $$ = new DeclaracionConstante($2, $4.type, $6, @1.first_line, @1.first_column, $4.tipo);
     }
     |
     'PR_CONST' ID '=' EXPRESION ';'
     {
-        $$ = new Declaracion($2, null, $4, @1.first_line, @1.first_column);
+        $$ = new DeclaracionConstante($2, null, $4, @1.first_line, @1.first_column);
     }
 ;
 

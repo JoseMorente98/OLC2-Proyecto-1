@@ -3,6 +3,7 @@ import { Expression } from '../abstract/expresion.abstract';
 import { Environment } from '../simbolos/enviroment.simbolos';
 import { Type } from '../abstract/retorno.abstract';
 import { ErrorControlador } from '../controlador/error.controlador';
+import { TablaControlador } from '../controlador/tabla.controlador';
 
 export class SinTipo extends Instruction{
     private id: string;
@@ -17,17 +18,22 @@ export class SinTipo extends Instruction{
 
     public execute(environment: Environment) {
         try {
-            //console.error("SIN TIPO")
+            console.error("SIN TIPO")
             //console.log(environment)
             const val = this.value.execute(environment);
-            //console.log(val)
+            console.log(val)
             // TODO: SIN TIPO
             /**
              * VALIDAR VALOR
              */
 
             const valor = environment.getVar(this.id);
-            //console.log(valor);
+            console.log(valor);
+            if(valor.descripcion == 'CONST') {
+                //TablaControlador.getInstancia().agregarToken(val.value, val.valor, valor.descripcion, valor.valor, this.fila, this.columna);
+                ErrorControlador.getInstancia().agregarError("No se puede asignar a una constante", "Sintactico", this.fila, this.columna);
+                return;
+            }
             switch (val.type) {
                 /**
                  * VALIDAR NUMBER

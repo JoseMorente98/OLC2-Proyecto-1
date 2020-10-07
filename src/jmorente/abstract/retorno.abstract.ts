@@ -4,7 +4,7 @@ export enum Type{
     BOOLEAN = 2,
     TYPE = 3,
     NULL = 4,
-    ARRAY = 5
+    UNDEFINED = 5,
 }
 
 export type Retorno ={

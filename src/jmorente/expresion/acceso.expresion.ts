@@ -29,7 +29,7 @@ export class Acceso extends Expression {
 
         if(value == null) {
             ErrorControlador.getInstancia().agregarError(this.id + " NO esta definido", "Sintactico", this.fila, this.columna)
-            return {value : undefined, type : 4};
+            return {value : undefined, type : 5};
         }
         return {value : value.valor, type : value.type};
     }
