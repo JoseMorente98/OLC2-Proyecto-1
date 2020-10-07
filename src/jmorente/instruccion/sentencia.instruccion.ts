@@ -30,17 +30,7 @@ export class Sentencia extends Instruction {
                 
 
                 if (element != undefined || element != null) {
-                    if(element.type == 'Break') {
-                        return;
-                    } else
-                    if(element.type == 'Return') {
-                        if(element.value == null || element.value == undefined) {
-                            return element;
-                        } else {
-                            console.log(element.value)
-                            return element.value;
-                        }
-                    }
+                    
                     return element;
                 }
             } catch (error) {
